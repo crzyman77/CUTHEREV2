@@ -2,6 +2,7 @@
 /*
  * ME Testing the change log system of git, and did the repo change locations. So One folder fits all
  */
+global $venueLocation;
         function getDBConnection() {
 		$dataSetName = 'mysql:host=localhost; dbname=cis411_EventRegistration';
 		$username = 's_cgillis';
@@ -84,12 +85,12 @@
                             . " event.end_time, \n"
                             . " event.event_date, \n"
                             . " venue.building_name, \n"
-                            . " venue.room_number \n"
+                            . " venue.room_number, venue.id AS location \n"
                             . "FROM \n"
                             . " event \n"
                             . " INNER JOIN venue ON event.venue_id = venue.id \n"
                             . "WHERE \n"
-                            . " event.event_date > CURDATE() \n"
+                            . " event.event_date >= CURDATE() \n"
                             . "ORDER BY \n"
                             . " event.event_date";
                 $statement = $dataBase->prepare($query);
@@ -105,22 +106,34 @@
             }
         }
         
-        function locationCheckBecker(){
-            try{
+        function locationForEvent($venue){
+            global $venueLocation;
+            $venueLocation = $venue;
+        }
+        function getLocationForEvent(){
+            global $venueLocation;
+            $restrictedVenue = $venueLocation;
+            print_r($restrictedVenue);
+            return $restrictedVenue;
+        }
+        
+        function locationCheckBecker($venueID){
+          try{ 
                 $dataBase = getDBConnection();
                 $sql = "select venue.id,venue.building_name,venue.room_number,venue.corner1_lat,venue.corner1_lng,venue.corner2_lat,venue.corner2_lng,venue.corner3_lat,venue.corner3_lng,"
-                . "venue.corner4_lat,venue.corner4_lng FROM venue WHERE id = 6";      
+                . "venue.corner4_lat,venue.corner4_lng FROM venue WHERE id = :location";      
                 $statement = $dataBase->prepare($sql);
+                $statement->bindValue(':location', $venueID);
                 $statement->execute();
                 $results = $statement->fetchAll();
                 $statement->closeCursor();
+                print_r($results);
                 return $results;
             } catch (Exception $ex) {
                 $errorMessage = $ex->getMessage();
                         echo $errorMessage;
 			include '../view/404.php';
 			die;
-
             }
         }
         
