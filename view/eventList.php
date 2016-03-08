@@ -21,6 +21,11 @@
         <div class="container">
             <div class="row">
                 <!-- CG: Just Was Printing out for test purposes, feel free to delete whenver -->
+                <?php 
+                        
+                        print_r($_SESSION);
+                        
+                        ?>
                 <table id="eventsTable" class="table table-hover table-bordered">
                     <thead>
                         <tr>

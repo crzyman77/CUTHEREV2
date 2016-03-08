@@ -1,4 +1,8 @@
 <?php
+   if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 /*
  * ME Testing the change log system of git, and did the repo change locations. So One folder fits all
  */

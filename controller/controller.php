@@ -1,5 +1,8 @@
 <?php
-session_start();
+   if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 //DOES THIS WORK NOW?
 //require_once '../model/locationModel.php';
 require_once '../model/model.php';

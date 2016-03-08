@@ -1,11 +1,14 @@
  <?php
-    //session_start();
+    if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
     $title = "Database Tests";
     require '../view/headerInclude.php';
     
     require '../model/oauth.php';
-   // $loggedIn = false;
-    $loggedIn = !is_null($_SESSION['access_token']);
+    $loggedIn = false;
+    
     $redirectUri = 'http://localhost/CuThereV2/model/authorize.php';
  ?>
 <div id="body">
@@ -23,13 +26,19 @@
                                 <!-- User not logged in, prompt for login -->
                                 <p>Please <a href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">sign in</a> with your Office 365 or Outlook.com account.</p>
                               <?php
+                                 
                                 }
                                 else {
                               ?>
                               
                                 <!-- User is logged in, do something here -->
-                                 <p><?php echo $_SESSION['user_email'] ?></p>
-                                 <p><a href="<?php echo oAuthService::getLoginUrl($redirectUri)?>"> LOG OUT </a>
+                                <p> SCREW THIS PROJECT </p>
+                               
+                                <?php   
+                                     $loggedIn = !is_null( $_SESSION['access_token']);
+                                        //session_destroy(); ?>
+                                
+                                <a href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">Log Out?</a>
                                 
                               <?php    
                                 }

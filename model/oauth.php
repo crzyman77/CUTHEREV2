@@ -1,5 +1,8 @@
 <?php
-  class oAuthService {
+   if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+class oAuthService {
     private static $clientId = "e88af294-2558-4e75-9000-c6c08e6403d5";
     private static $clientSecret = "5Jh5cB4qGf42KxU7cU54Noa";
     private static $authority = "https://login.microsoftonline.com";
@@ -94,8 +97,11 @@
       $jwt = base64_decode($token);
       // Finally parse it as JSON
       $json_token = json_decode($jwt, true);
-      return $json_token['preferred_username'];
+      print_r($json_token);
+      return $json_token['unique_name'];
     }
+    
+    
   }
 ?>
     
