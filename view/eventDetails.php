@@ -23,6 +23,11 @@
         <div class="container" id='body'>
             <div class="row">
                 <!-- CG: Just Was Printing out for test purposes, feel free to delete whenver -->
+                <?php 
+                        
+                        print_r($_SESSION);
+                        
+                        ?>
               <!--  <div id ='gmap' class="col-sm-6" style="background-color: #DDD">Insert map here? Maybe allow a picture to be uploaded? If not, it's cool.</div>
                 --><div class="col-sm-6">
                     <div class="project-name overflow">

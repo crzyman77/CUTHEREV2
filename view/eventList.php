@@ -23,7 +23,9 @@
                 <!-- CG: Just Was Printing out for test purposes, feel free to delete whenver -->
                 <?php 
                         
-                        print_r($_SESSION);
+                        //print_r($_SESSION);
+                       print_r($_SESSION['preferred_username']);
+                       print_r($_SESSION['user_name']);
                         
                         ?>
                 <table id="eventsTable" class="table table-hover table-bordered">

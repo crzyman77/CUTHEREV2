@@ -9,19 +9,22 @@
   $redirectUri = 'http://localhost/CuThereV2/model/authorize.php';
 
   $tokens = oAuthService::getTokenFromAuthCode($auth_code, $redirectUri);
-print_r($tokens);
     if ($tokens['access_token']) {
-    $_SESSION['access_token'] = $tokens['access_token'];
+        $_SESSION['access_token'] = $tokens['access_token'];
     // Get the user's email from the ID token
+        $_SESSION['id_token'] = $tokens['id_token'];
 	$user_email =oAuthService::getUserEmailFromIdToken($tokens['id_token']);
-	$_SESSION['user_email'] = $user_email;
+        $user_name= oAuthService::getUserNameFromIdToken($tokens['id_token']);
+	$_SESSION['preferred_username'] = $user_email;
+        $_SESSION['user_name'] = $user_name;
        
-
     // Redirect back to home page
     header("Location: http://localhost/CuThereV2/controller/controller.php?action=ListEvents");
   }
   else
   {
-    echo "<p>ERROR: ".$tokens['error']."</p>";
+      //Should redirect when the user logs out
+    header("Location: http//localhost/CuThereV2/controller/controller.php?action=Home");
+    //echo "<p>ERROR: ".$tokens['error']."</p>";
   }
 ?>

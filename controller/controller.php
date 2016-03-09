@@ -1,6 +1,8 @@
 <?php
    if (session_status() == PHP_SESSION_NONE) {
     session_start();
+      //  $_SESSION['access_token'];
+
 }
 
 //DOES THIS WORK NOW?

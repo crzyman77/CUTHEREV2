@@ -3,14 +3,16 @@
     session_start();
 }
 class oAuthService {
-    private static $clientId = "e88af294-2558-4e75-9000-c6c08e6403d5";
-    private static $clientSecret = "5Jh5cB4qGf42KxU7cU54Noa";
+    private static $clientId = "b735ce00-ddac-4325-9e7e-3ea99e59e999"; //b735ce00-ddac-4325-9e7e-3ea99e59e999
+    private static $clientSecret = "Ekjf4poV1NJrgrbm3ZHM9mt"; //Ekjf4poV1NJrgrbm3ZHM9mt
     private static $authority = "https://login.microsoftonline.com";
     private static $authorizeUrl = '/common/oauth2/v2.0/authorize?client_id=%1$s&redirect_uri=%2$s&response_type=code&scope=%3$s';
     private static $tokenUrl = "/common/oauth2/v2.0/token";
     
     // The app only needs openid (for user's ID info), and Mail.Read
-    private static $scopes = array("openid", 
+    private static $scopes = array("openid",
+                                   "email",
+                                   "profile", 
                                    "https://outlook.office.com/mail.read",
                                    "https://outlook.office.com/calendars.read",
                                    "https://outlook.office.com/contacts.read");
@@ -24,6 +26,17 @@ class oAuthService {
       
       error_log("Generated login URL: ".$loginUrl);
       return $loginUrl;
+    }
+    // Use to hopefully logout and end the session
+    public static function getLogoutUrl($redirectUri){
+        // Build scope string. Multiple scopes are separated
+      // by a space
+      $scopestr = implode(" ", self::$scopes);
+      
+      $logoutUrl = self::$authority.sprintf(self::$authorizeUrl, self::$clientId, urlencode($redirectUri), urlencode($scopestr));
+      session_destroy();
+      error_log("Generated logout URL: ".$logoutUrl);
+      return $logoutUrl;
     }
     
     public static function getTokenFromAuthCode($authCode, $redirectUri) {
@@ -43,7 +56,7 @@ class oAuthService {
       error_log("Request body: ".$token_request_body);
       
       $curl = curl_init(self::$authority.self::$tokenUrl);
-      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //Need to delete if we are running https
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
       curl_setopt($curl, CURLOPT_POST, true);
       curl_setopt($curl, CURLOPT_POSTFIELDS, $token_request_body);
@@ -83,22 +96,45 @@ class oAuthService {
     
     public static function getUserEmailFromIdToken($idToken) {
       error_log("ID TOKEN: ".$idToken);
-      
+    
       // JWT is made of three parts, separated by a '.' 
       // First part is the header 
       // Second part is the token 
       // Third part is the signature 
       $token_parts = explode(".", $idToken);
-      
+      //$_SESSION['token_parts'] = $token_parts;
       // We care about the token
       // URL decode first
       $token = strtr($token_parts[1], "-_", "+/");
       // Then base64 decode
       $jwt = base64_decode($token);
+      $_SESSION['jwt'] = $jwt;
       // Finally parse it as JSON
       $json_token = json_decode($jwt, true);
-      print_r($json_token);
-      return $json_token['unique_name'];
+      //$_SESSION['json_token'] = $json_token;
+     // print_r($json_token);
+      return $json_token['preferred_username'];
+    }
+    public static function getUserNameFromIdToken($idToken) {
+      error_log("ID TOKEN: ".$idToken);
+    
+      // JWT is made of three parts, separated by a '.' 
+      // First part is the header 
+      // Second part is the token 
+      // Third part is the signature 
+      $token_parts = explode(".", $idToken);
+      //$_SESSION['token_parts'] = $token_parts;
+      // We care about the token
+      // URL decode first
+      $token = strtr($token_parts[1], "-_", "+/");
+      // Then base64 decode
+      $jwt = base64_decode($token);
+      $_SESSION['jwt'] = $jwt;
+      // Finally parse it as JSON
+      $json_token = json_decode($jwt, true);
+      //$_SESSION['json_token'] = $json_token;
+     // print_r($json_token);
+      return $json_token['name'];
     }
     
     

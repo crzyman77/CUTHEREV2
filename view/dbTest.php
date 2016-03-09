@@ -2,14 +2,8 @@
     if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
     $title = "Database Tests";
-    require '../view/headerInclude.php';
-    
-    require '../model/oauth.php';
-    $loggedIn = false;
-    
-    $redirectUri = 'http://localhost/CuThereV2/model/authorize.php';
+    require '../view/headerInclude.php';  
  ?>
 <div id="body">
     <section id="page-breadcrumb">
@@ -32,16 +26,13 @@
                               ?>
                               
                                 <!-- User is logged in, do something here -->
-                                <p> SCREW THIS PROJECT </p>
+                                <p> Welcome User </p>
                                
-                                <?php   
-                                     $loggedIn = !is_null( $_SESSION['access_token']);
-                                        //session_destroy(); ?>
                                 
-                                <a href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">Log Out?</a>
+                                <a href="<?php echo oAuthService::getLogoutUrl($redirectUri)?>">Log Out?</a>
                                 
-                              <?php    
-                                }
+                              <?php     
+                                     }
                               ?>
                             </div>
                      </div>
