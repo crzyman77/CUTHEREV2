@@ -19,16 +19,7 @@
  *          Yellow Screen = Try Again
  *          Red Screen = BAD
  *          
- *           $.getJSON("../model/locationModel.php", function(array){
-     alert('data loaded' + array);
-     array.toString();
-     document.getElementById("test").innerHTML = array;
-  })
-  .error(function() { alert("error"); });
- $.post("../model/locationModel.php?ajax", function(array){
-     alert('data loaded(' + JSON.stringify(array)+')');
-  })
-  .error(function() { alert("error"); });
+ *           
  */
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -70,22 +61,21 @@ function myFunction() {
      corner3_lat = array[4];
      corner3_lng = array[5];
      corner4_lat = array[6];
-     corner4_lng = array[7];     
+     corner4_lng = array[7];
+     alert(JSON.stringify(array));
   });   
 } //END GET BUILDING FUNC
 function locationCheck(){
-
+        
     myFunction();
-	document.getElementById("test").innerHTML =  "corner 1 ( " + corner1_lat + ", " + corner1_lng + ")" + "<br/>" + "corner 2 ( " + corner2_lat + ", " + corner2_lng + ")" + "<br/>" + "corner 3 ( " + corner3_lat + ", " + corner3_lng + ")" + "<br/>" +"corner 4 ( " + corner4_lat + ", " + corner4_lng +  ")" + "<br/>";
+    document.getElementById("test").innerHTML =  "corner 1 ( " + corner1_lat + ", " + corner1_lng + ")" + "<br/>" + "corner 2 ( " + corner2_lat + ", " + corner2_lng + ")" + "<br/>" + "corner 3 ( " + corner3_lat + ", " + corner3_lng + ")" + "<br/>" +"corner 4 ( " + corner4_lat + ", " + corner4_lng +  ")" + "<br/>";
 
 if (navigator.geolocation) {
-   // watchID = navigator.geolocation.watchPosition( userPositionFill, error, {maximumAge: 30000, timeout: 10000, enableHighAccuracy: true} );
-   //document.getElementById("test").innerHTML += watchID;
 	navigator.geolocation.getCurrentPosition(function(position) {
-    initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-      //initialLocation = new google.maps.LatLng(41.205796, -79.379616);
+        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
       document.getElementById("test").innerHTML += "CurrLoc " + initialLocation + "<br/>";
         polyCheck(initialLocation);
+           
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -121,8 +111,9 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
      var polyCoords = [
          {lat: corner1_lat, lng: corner1_lng},
          {lat: corner2_lat, lng: corner2_lng},
-         {lat: corner3_lat, lng: corner3_lng},
-         {lat: corner4_lat, lng: corner4_lng}
+         {lat: corner4_lat, lng: corner4_lng},
+         {lat: corner3_lat, lng: corner3_lng}
+         
     ];
    
     var buildingPoly = new google.maps.Polygon({paths: polyCoords});

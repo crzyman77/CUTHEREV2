@@ -1,5 +1,11 @@
 <?php
-session_start();
+   if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+      //  $_SESSION['access_token'];
+
+}
+
+//DOES THIS WORK NOW?
 //require_once '../model/locationModel.php';
 require_once '../model/model.php';
 require_once '../lib/basic_funcs.php';
@@ -44,11 +50,7 @@ if (isset($_POST['action'])) {  // check get and post
             break;
     } //END SWITCH
     
-    function eventDetails(){
-        $eventID = 16;//$_GET[event.id];
-        $results = getEventDetails($eventID);
-        include '../view/eventDetails.php';
-    }
+
     
     
     function locationCheck(){
@@ -63,12 +65,16 @@ if (isset($_POST['action'])) {  // check get and post
     
     function showEventDetails() {
     $EventID = $_GET['EventID'];
+    $VenueID = $_GET['VenueID'];
+    $result = locationForEvent($VenueID);
+    print_r($result);
     if (!isset($EventID)) {
 	$errorMessage = 'You must provide an EventID to display.';
 	include '../view/404.php';
     } else {
 	$row = getEventDetails($EventID);
-        if ($row == FALSE) {
+        $class = getEligibleClasses($EventID);
+        if ($row == FALSE || $class == FALSE) {
             $errorMessage = 'No event was found.';
             include '../view/404.php';
         } else {

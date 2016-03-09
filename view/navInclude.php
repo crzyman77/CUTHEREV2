@@ -11,6 +11,13 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="../controller/controller.php?action=Home">Home</a></li>
+                        <?php 
+                                if (!$loggedIn) {
+                              ?>
+                        <li><a href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">Sign-In</a></li>
+                                <?php } else{ ?>
+                        <li><a href="<?php echo oAuthService::getLogoutUrl($redirectUri)?>">Sign Out</a></li>
+                                <?php }?>
                         <li class="dropdown"><a href="../controller/controller.php?action=CheckIn">Events<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="../controller/controller.php?action=ListEvents">Event List</a></li>
@@ -21,6 +28,7 @@
                         <li class="dropdown"><a href="#">Pages <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="../controller/controller.php?action=About">About</a></li>
+                                
                             </ul>
                         </li> 
                         <li><a href="../controller/controller.php?action=Shortcodes">Shortcodes</a></li>               

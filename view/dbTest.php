@@ -1,13 +1,11 @@
  <?php
+    if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
     $title = "Database Tests";
-    require '../view/headerInclude.php';
-    
-    
-   
-?>
+    require '../view/headerInclude.php';  
+ ?>
 <div id="body">
-<script src="../js/locationCompare.js"></script>
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
              <div class="container">
@@ -15,15 +13,28 @@
                     <div class="action">
                         <div class="col-sm-12">
                             <h1 class="title">Test Case 1 </h1>
-                            <p>Please check in and record your result based on the color of the screen</p>
-                        </div>
-                        Green : Success, you were able to successfully check in based on your geolocation
-                        <br/>
-                  
-                        Yellow: Try again, you may have been outside the bounds, or your location services may be not be enabled.
-                        <br/>
-                       
-                        Red: Unsuccessful
+                            <div>
+                         <?php 
+                                if (!$loggedIn) {
+                              ?>
+                                <!-- User not logged in, prompt for login -->
+                                <p>Please <a href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">sign in</a> with your Office 365 or Outlook.com account.</p>
+                              <?php
+                                 
+                                }
+                                else {
+                              ?>
+                              
+                                <!-- User is logged in, do something here -->
+                                <p> Welcome User </p>
+                               
+                                
+                                <a href="<?php echo oAuthService::getLogoutUrl($redirectUri)?>">Log Out?</a>
+                                
+                              <?php     
+                                     }
+                              ?>
+                            </div>
                      </div>
                 </div>
          
