@@ -78,6 +78,26 @@ global $venueLocation;
 
             }
         }
+        function getEligibleClasses($eventid){
+                $dataBase = getDBConnection();
+                $query = "SELECT \n"
+                            . " class.class_name, \n"
+                            . " class.class_number, \n"
+                            . " class.class_section,\n"
+                            . " user.first_name,\n"
+                            . " user.last_name \n"
+                            . "FROM \n"
+                            . " class \n"
+                            . " INNER JOIN user ON class.instructor_id = user.id \n"
+                            . "WHERE \n"
+                            . " class.event_id = :id";
+                $statement = $dataBase->prepare($query);
+                $statement->bindValue(':id', $eventid);
+                $statement->execute();
+                $results = $statement->fetchAll();
+                $statement->closeCursor();
+                return $results; 
+        }
         
         function getEventList(){
             try{

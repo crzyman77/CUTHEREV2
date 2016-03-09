@@ -71,8 +71,8 @@ if (isset($_POST['action'])) {  // check get and post
 	include '../view/404.php';
     } else {
 	$row = getEventDetails($EventID);
-        
-        if ($row == FALSE) {
+        $class = getEligibleClasses($EventID);
+        if ($row == FALSE || $class == FALSE) {
             $errorMessage = 'No event was found.';
             include '../view/404.php';
         } else {

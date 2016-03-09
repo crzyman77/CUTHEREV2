@@ -43,9 +43,10 @@
                     <div class="skills overflow">
                         <h3>Eligible Classes:</h3>
                         <ul id="classesList" class="nav navbar-nav navbar-default">
-                            <li><a><i class="fa fa-check-square"></i>CIS202</a></li>
-                            <li><a><i class="fa fa-check-square"></i>CIS206</a></li>
-                            <li><a><i class="fa fa-check-square"></i>CIS355</a></li>
+                        <?php foreach ($class as $row){ ?>
+         
+                            <li><a><i class="fa fa-check-square"></i><?php echo $row['class_number'], ' ',$row['class_name'],' ',$row['class_section'], ' ', $row['last_name']; ?></a></li>
+                        <?php }?>
                         </ul>
                     </div>
                     <div class="live-preview">
