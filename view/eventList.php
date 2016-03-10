@@ -21,6 +21,13 @@
         <div class="container">
             <div class="row">
                 <!-- CG: Just Was Printing out for test purposes, feel free to delete whenver -->
+                <?php 
+                        
+                        //print_r($_SESSION);
+                       print_r($_SESSION['preferred_username']);
+                       print_r($_SESSION['user_name']);
+                        
+                        ?>
                 <table id="eventsTable" class="table table-hover table-bordered">
                     <thead>
                         <tr>
@@ -34,7 +41,7 @@
                     </thead>
                     <tbody>
                         <?php $i=0; foreach ($events as $row){ $i++; ?><tr>
-                            <td><a href="../controller/controller.php?action=EventDetails&amp;EventID=<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
+                            <td><a href="../controller/controller.php?action=EventDetails&amp;EventID=<?php echo $row['id'] ?>&amp;VenueID=<?php echo $row['location']?>"> <?php echo $row['name'] ?></a></td>
                             <td><?php echo $row['building_name'] ?></td>
                             <td><?php echo $row['room_number'] ?></td>
                             <td><?php echo $row['event_date'] ?></td>

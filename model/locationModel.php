@@ -16,7 +16,8 @@
 require_once '../model/model.php';
 header("Content-type: application/json");
 
-    $results = locationCheckBecker();
+    $venue = getLocationForEvent();
+    $results = locationCheckBecker($venue);
     foreach ($results as $row){
         $building = $row['building_name'];
         $room = $row['room_number'];
