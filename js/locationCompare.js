@@ -53,7 +53,7 @@ var watchPosArray = [];
 function myFunction() {
  
      $.get("../model/locationModel.php?ajax", function(array){
-     
+    
      corner1_lat = array[0];
      corner1_lng = array[1];
      corner2_lat = array[2];
@@ -62,13 +62,15 @@ function myFunction() {
      corner3_lng = array[5];
      corner4_lat = array[6];
      corner4_lng = array[7];
-     alert(JSON.stringify(array));
+    
+    document.getElementById("test").innerHTML =  "corner 1 ( " + corner1_lat + ", " + corner1_lng + ")" + "<br/>" + "corner 2 ( " + corner2_lat + ", " + corner2_lng + ")" + "<br/>" + "corner 3 ( " + corner3_lat + ", " + corner3_lng + ")" + "<br/>" +"corner 4 ( " + corner4_lat + ", " + corner4_lng +  ")" + "<br/>";
+
   });   
 } //END GET BUILDING FUNC
 function locationCheck(){
         
     myFunction();
-    document.getElementById("test").innerHTML =  "corner 1 ( " + corner1_lat + ", " + corner1_lng + ")" + "<br/>" + "corner 2 ( " + corner2_lat + ", " + corner2_lng + ")" + "<br/>" + "corner 3 ( " + corner3_lat + ", " + corner3_lng + ")" + "<br/>" +"corner 4 ( " + corner4_lat + ", " + corner4_lng +  ")" + "<br/>";
+      
 
 if (navigator.geolocation) {
 	navigator.geolocation.getCurrentPosition(function(position) {
