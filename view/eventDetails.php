@@ -55,7 +55,7 @@
                         <ul id="classesList" class="nav navbar-nav navbar-default">
                         <?php foreach ($class as $row){ ?>
          
-                            <li><a><i class="fa fa-check-square"></i><?php echo $row['class_number'], ' ',$row['class_name'],' ',$row['class_section'], ' ', $row['name']; ?></a></li>
+                            <li><a><i class="fa fa-check-square"></i><?php echo $row['class_number'], ' ',$row['class_name'],' ',$row['class_section'], ' ', $row['instructor_name']; ?></a></li>
                         <?php }?>
                         </ul>
                     </div>

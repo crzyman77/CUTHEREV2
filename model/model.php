@@ -83,10 +83,9 @@ global $venueLocation;
                             . " class.class_name, \n"
                             . " class.class_number, \n"
                             . " class.class_section,\n"
-                            . " user.name\n"
+                            . " class.instructor_name\n"
                             . "FROM \n"
                             . " class \n"
-                            . " INNER JOIN user ON class.instructor_id = user.id \n"
                             . "WHERE \n"
                             . " class.event_id = :id";
                 $statement = $dataBase->prepare($query);
