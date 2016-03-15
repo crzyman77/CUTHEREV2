@@ -1,4 +1,7 @@
 <?php
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
     $title = "List of Events";
     require '../view/headerInclude.php';
 ?>
@@ -24,10 +27,11 @@
                 <?php 
                         
                         //print_r($_SESSION);
-                       print_r($_SESSION['preferred_username']);
-                       print_r($_SESSION['user_name']);
+                       //print_r($_SESSION['preferred_username']);
+                       //print_r($_SESSION['user_name']);
                         
                         ?>
+                <h2> Welcome <?php echo $_SESSION['user_name']?> </h2>
                 <table id="eventsTable" class="table table-hover table-bordered">
                     <thead>
                         <tr>
