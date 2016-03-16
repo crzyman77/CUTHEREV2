@@ -78,7 +78,7 @@ if (navigator.geolocation) {
            
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
-    });
+    }, {maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
   } else {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
