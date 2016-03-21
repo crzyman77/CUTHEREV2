@@ -1,10 +1,12 @@
 <?php
-   if (session_status() == PHP_SESSION_NONE) {
+      if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 class oAuthService {
-    private static $clientId = "b735ce00-ddac-4325-9e7e-3ea99e59e999"; //b735ce00-ddac-4325-9e7e-3ea99e59e999
-    private static $clientSecret = "Ekjf4poV1NJrgrbm3ZHM9mt"; //Ekjf4poV1NJrgrbm3ZHM9mt
+//    private static $clientId = "ad860be6-982a-432b-8353-874a58cc9795"; //Prod account
+//    private static $clientSecret = "g2B92r1HRfoKDQ1ticmPxLy"; //You5m3AmjPVQC5p3ipxg4uH prodPass
+    private static $clientId = "b735ce00-ddac-4325-9e7e-3ea99e59e999"; //localHost
+    private static $clientSecret = "Ekjf4poV1NJrgrbm3ZHM9mt"; //localHost
     private static $authority = "https://login.microsoftonline.com";
     private static $authorizeUrl = '/common/oauth2/v2.0/authorize?client_id=%1$s&redirect_uri=%2$s&response_type=code&scope=%3$s';
     private static $tokenUrl = "/common/oauth2/v2.0/token";
@@ -140,4 +142,3 @@ class oAuthService {
     
   }
 ?>
-    

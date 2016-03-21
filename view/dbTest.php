@@ -1,7 +1,5 @@
  <?php
-    if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+  
     $title = "Database Tests";
     require '../view/headerInclude.php';  
  ?>

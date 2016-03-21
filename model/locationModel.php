@@ -1,7 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+
 /* 
  *All the logic for location compare data will be stored in this file
  * Including
@@ -40,7 +38,7 @@ header("Content-type: application/json");
        
     
     $array = array($corner1_lat,$corner1_lng,$corner2_lat,$corner2_lng,$corner3_lat,$corner3_lng,$corner4_lat,$corner4_lng);
-    
+   
     echo json_encode($array, JSON_NUMERIC_CHECK);
     return $array;
       

@@ -1,8 +1,6 @@
 <?php
-   if (session_status() == PHP_SESSION_NONE) {
+      if (session_status() == PHP_SESSION_NONE) {
     session_start();
-      //  $_SESSION['access_token'];
-
 }
 
 //DOES THIS WORK NOW?
@@ -58,10 +56,13 @@ if (isset($_POST['action'])) {  // check get and post
        $email = $_SESSION['preferred_username'];
        $username = $_SESSION['user_name'];
        $student_id = insertStudent($username, $email);
+       $studentLocation = $_GET['StudentLocation'];
+       $isWithinPolygon = $_GET['IsWithinPolygon'];
+     //  print_r($studentLocation);
         //NOT SURE HOW WE WaNT TO SEND THIS DATA OVER FOR THE FUNCTION Call
         //addToClassList($class_number, $class_section, $event_id, $student_id);
         // print_r($student_id); 
-       listAllEvents();
+       include '../view/checkInResult.php';
     }
     
     function locationCheck(){

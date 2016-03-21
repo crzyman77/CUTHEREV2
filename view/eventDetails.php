@@ -5,7 +5,7 @@
     
 ?>
 <script src="../js/locationCompare.js"></script>
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
              <div class="container">
@@ -60,7 +60,7 @@
                         </ul>
                     </div>
                     <div class="live-preview">
-                        <a href="../controller/controller.php?action=AddStudent" role="button" class="btn btn-common uppercase" onclick="locationCheck()">Check-In</a>
+                        <a role="button" class="btn btn-common uppercase" onclick="eventListLocationCheck()"> Check-In</a>
                     </div>
                     <div id ="test"></div>
                 </div>

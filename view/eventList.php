@@ -1,10 +1,10 @@
 <?php
-  if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+ 
     $title = "List of Events";
     require '../view/headerInclude.php';
 ?>
+<script src="../js/locationCompare.js"></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
              <div class="container">

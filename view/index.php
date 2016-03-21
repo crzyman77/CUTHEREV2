@@ -1,6 +1,7 @@
 <?php
     $title = "Home";
     require '../view/headerInclude.php';
+	phpinfo();
 ?>
 
 <section id="home-slider">

@@ -53,7 +53,7 @@ var watchPosArray = [];
 function myFunction() {
  
      $.get("../model/locationModel.php?ajax", function(array){
-    
+     
      corner1_lat = array[0];
      corner1_lng = array[1];
      corner2_lat = array[2];
@@ -62,16 +62,14 @@ function myFunction() {
      corner3_lng = array[5];
      corner4_lat = array[6];
      corner4_lng = array[7];
-    
-    document.getElementById("test").innerHTML =  "corner 1 ( " + corner1_lat + ", " + corner1_lng + ")" + "<br/>" + "corner 2 ( " + corner2_lat + ", " + corner2_lng + ")" + "<br/>" + "corner 3 ( " + corner3_lat + ", " + corner3_lng + ")" + "<br/>" +"corner 4 ( " + corner4_lat + ", " + corner4_lng +  ")" + "<br/>";
+	document.getElementById("test").innerHTML =  "corner 1 ( " + corner1_lat + ", " + corner1_lng + ")" + "<br/>" + "corner 2 ( " + corner2_lat + ", " + corner2_lng + ")" + "<br/>" + "corner 3 ( " + corner3_lat + ", " + corner3_lng + ")" + "<br/>" +"corner 4 ( " + corner4_lat + ", " + corner4_lng +  ")" + "<br/>";
 
   });   
 } //END GET BUILDING FUNC
 function locationCheck(){
         
     myFunction();
-      
-
+    
 if (navigator.geolocation) {
 	navigator.geolocation.getCurrentPosition(function(position) {
         initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
@@ -80,7 +78,7 @@ if (navigator.geolocation) {
            
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
-    });
+    }, {maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
   } else {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
@@ -130,6 +128,78 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     else{
         document.getElementById("test").innerHTML += 'false';
        document.getElementById("body").style.backgroundColor = "#FF0000";
+  
+    }
+        
+    
+    
+ }
+};
+
+function eventListLocationCheck(){
+        
+    myFunction();
+    
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function(position) {
+        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+    
+        polyCheck(initialLocation);
+           
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    }, {maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+function error() 
+    {
+	alert("Cannot locate user. Please enable Location (and high accuracy mode) on your phone and try again");
+    }
+function userPositionFill(position){
+     watchPosArray[count]= new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+     count++;
+    if(count === 5){
+        navigator.geolocation.clearWatch(watchID);
+        document.getElementById("test").innerHTML += JSON.stringify(watchPosArray);
+    }
+        
+}
+
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+}
+
+    // Define the LatLng coordinates for the polygon's path.
+ function polyCheck(pos){
+     
+     var polyCoords = [
+         {lat: corner1_lat, lng: corner1_lng},
+         {lat: corner2_lat, lng: corner2_lng},
+         {lat: corner4_lat, lng: corner4_lng},
+         {lat: corner3_lat, lng: corner3_lng}
+         
+    ];
+   
+    var buildingPoly = new google.maps.Polygon({paths: polyCoords});
+    
+    var isWithinPolygon = google.maps.geometry.poly.containsLocation(pos, buildingPoly) ?
+        true : false;
+        
+    if(isWithinPolygon === true){
+    	var studentLocation = pos;
+    	window.location.assign("../controller/controller.php?action=AddStudent&amp;StudentLocation="+studentLocation+"&amp;IsWithinPolygon="+isWithinPolygon+"");
+       
+    }
+    else{
+        var studentLocation = pos;
+    	window.location.assign("../controller/controller.php?action=AddStudent&StudentLocation="+studentLocation+"&IsWithinPolygon="+isWithinPolygon+"");
+    	
   
     }
         
