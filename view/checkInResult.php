@@ -36,8 +36,17 @@
               <!--  <div id ='gmap' class="col-sm-6" style="background-color: #DDD">Insert map here? Maybe allow a picture to be uploaded? If not, it's cool.</div>
                 --><div class="col-sm-6">
                     <div class="project-name overflow">
+                        
                         <h2> Welcome <?php echo $_SESSION['user_name']?> </h2>
-                        <h1> You Were: <?php echo $isWithinPolygon; ?></h1>
+                        <h1> You Were <?php
+                                    if($isWithinPolygon == "true")
+                                        { 
+                                            echo 'Succesfully Checked - In' ;
+                                        }else{ //False Result
+                                            echo 'Unable to Check-In, Please make sure location services are enabled and try again';
+                                        }
+                                        ?></h1>
+                                    
                         <h2> <?php echo $studentLocation ?> </h2>
                         
                         <?php checkInTesting($username,$email,$studentLocation , $isWithinPolygon); ?>
