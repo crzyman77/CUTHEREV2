@@ -1,13 +1,11 @@
-
 <?php
-     if (session_status() == PHP_SESSION_NONE) {
+      if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
   require_once('../model/oauth.php');
   $auth_code = $_GET['code'];
-  $redirectUri = 'http://localhost/CuThereV2/model/authorize.php';
-
+  $redirectUri = 'http://localhost/CuThereV2/model/authorize.php';//'https://www.cegillis.com/CuThere/model/authorize.php';
+  
   $tokens = oAuthService::getTokenFromAuthCode($auth_code, $redirectUri);
     if ($tokens['access_token']) {
         $_SESSION['access_token'] = $tokens['access_token'];
@@ -19,12 +17,9 @@
         $_SESSION['user_name'] = $user_name;
        
     // Redirect back to home page
-    header("Location: http://localhost/CuThereV2/controller/controller.php?action=ListEvents");
+    header("Location: http://localhost/CuThereV2/controller/controller.php?action=ListEvents");//("Location: https://www.cegillis.com/CuThere/controller/controller.php?action=ListEvents");
   }
-  else
-  {
-      //Should redirect when the user logs out
-    header("Location: http//localhost/CuThereV2/controller/controller.php?action=Home");
-    //echo "<p>ERROR: ".$tokens['error']."</p>";
-  }
+
+  
 ?>
+

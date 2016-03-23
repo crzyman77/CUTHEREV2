@@ -1,12 +1,11 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();}
-
-
+    if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require '../model/oauth.php';
 $loggedIn = !is_null( $_SESSION['access_token']);
 //  $loggedIn = false;  
-    $redirectUri = 'http://localhost/CuThereV2/model/authorize.php';
+    $redirectUri = 'http://localhost/CuThereV2/model/authorize.php';//'https://www.cegillis.com/CuThere/model/authorize.php'; //https://cisprod.clarion.edu/~s_cgillis/model/authorize.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +41,7 @@ $loggedIn = !is_null( $_SESSION['access_token']);
     <script type="text/javascript" src="../js/holder.js"></script>
     <script type="text/javascript" src="../js/main.js"></script>
    
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
     <script type="text/javascript" src="../js/gmaps.js"> </script>
     <script type="text/javascript" src="../js/cuThereMaps.js"></script>
     

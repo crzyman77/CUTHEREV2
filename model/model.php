@@ -1,14 +1,15 @@
 <?php
-   if (session_status() == PHP_SESSION_NONE) {
+ 
+  if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
 /*
  * ME Testing the change log system of git, and did the repo change locations. So One folder fits all
  */
+//mysql:host=myphpadmin.cegillis.com for Production
 global $venueLocation;
         function getDBConnection() {
-		$dataSetName = 'mysql:host=localhost; dbname=cis411_EventRegistration';
+		$dataSetName = 'mysql:host=localhost; dbname=cis411_eventregistration';
 		$username = 's_cgillis';
 		$password = 'Gk$98pbw';
 
@@ -22,6 +23,24 @@ global $venueLocation;
 		}
 		return $dataBase;
 	}
+	
+	function checkInTesting($username, $email, $curLocation, $checkIn){
+           
+            $db = getDBConnection();
+                $query = 'INSERT INTO locationTestingData (userName , userEmail, curLocation,checkIn) VALUES (:name, :email, :location, :check)';
+                $statement = $db -> prepare ($query);
+                $statement->bindValue (':name',$username);
+                $statement->bindValue (':email', $email);
+                $statement->bindValue(':location',$curLocation);
+                $statement->bindValue(':check',$checkIn);
+                $success  = $statement ->execute();
+                $statement->closeCursor();
+                 if ($success) {
+                            return $db->lastInsertId(); // Get generated StoryID
+                    } else {
+                            logSQLError($statement->errorInfo());  // Log error to debug
+                    }		
+        }
 	
         function getClassList() {
 		try {
