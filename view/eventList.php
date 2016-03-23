@@ -1,7 +1,10 @@
 <?php
+ 
     $title = "List of Events";
     require '../view/headerInclude.php';
 ?>
+<script src="../js/locationCompare.js"></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
              <div class="container">
@@ -24,10 +27,11 @@
                 <?php 
                         
                         //print_r($_SESSION);
-                       print_r($_SESSION['preferred_username']);
-                       print_r($_SESSION['user_name']);
+                       //print_r($_SESSION['preferred_username']);
+                       //print_r($_SESSION['user_name']);
                         
                         ?>
+                <h2> Welcome <?php echo $_SESSION['user_name']?> </h2>
                 <table id="eventsTable" class="table table-hover table-bordered">
                     <thead>
                         <tr>

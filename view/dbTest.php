@@ -1,7 +1,5 @@
  <?php
-    if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+  
     $title = "Database Tests";
     require '../view/headerInclude.php';  
  ?>
@@ -15,24 +13,15 @@
                             <h1 class="title">Test Case 1 </h1>
                             <div>
                          <?php 
-                                if (!$loggedIn) {
-                              ?>
-                                <!-- User not logged in, prompt for login -->
-                                <p>Please <a href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">sign in</a> with your Office 365 or Outlook.com account.</p>
-                              <?php
-                                 
-                                }
-                                else {
-                              ?>
-                              
-                                <!-- User is logged in, do something here -->
-                                <p> Welcome User </p>
-                               
-                                
-                                <a href="<?php echo oAuthService::getLogoutUrl($redirectUri)?>">Log Out?</a>
-                                
-                              <?php     
-                                     }
+                          $result = checkIfStudentExsists('c.gillis@eagle.clarionedu');
+                          $notRight = 'Something Else';
+                          if($result == ''){
+                          print_r($result);
+                          print_r('FOUND IT');
+                          }
+                          else{
+                              print_r($notRight);
+                          }
                               ?>
                             </div>
                      </div>

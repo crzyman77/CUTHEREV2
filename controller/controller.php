@@ -1,8 +1,6 @@
 <?php
-   if (session_status() == PHP_SESSION_NONE) {
+      if (session_status() == PHP_SESSION_NONE) {
     session_start();
-      //  $_SESSION['access_token'];
-
 }
 
 //DOES THIS WORK NOW?
@@ -42,6 +40,9 @@ if (isset($_POST['action'])) {  // check get and post
         case 'Shortcodes':
             include '../view/shortcodes.php';
             break;
+        case 'AddStudent':
+            updateStudentTable();
+            break;
         case 'AddStory':
             addStory();
             break;
@@ -51,7 +52,18 @@ if (isset($_POST['action'])) {  // check get and post
     } //END SWITCH
     
 
-    
+    function updateStudentTable(){
+       $email = $_SESSION['preferred_username'];
+       $username = $_SESSION['user_name'];
+       $student_id = insertStudent($username, $email);
+       $studentLocation = $_GET['StudentLocation'];
+       $isWithinPolygon = $_GET['IsWithinPolygon'];
+     //  print_r($studentLocation);
+        //NOT SURE HOW WE WaNT TO SEND THIS DATA OVER FOR THE FUNCTION Call
+        //addToClassList($class_number, $class_section, $event_id, $student_id);
+        // print_r($student_id); 
+       include '../view/checkInResult.php';
+    }
     
     function locationCheck(){
        // $array = beckerLocationBreak();
@@ -66,15 +78,16 @@ if (isset($_POST['action'])) {  // check get and post
     function showEventDetails() {
     $EventID = $_GET['EventID'];
     $VenueID = $_GET['VenueID'];
-    $result = locationForEvent($VenueID);
-    print_r($result);
+    $_SESSION['venue'] = $VenueID;
+    //$result = locationForEvent($VenueID);
+    //print_r($result);
     if (!isset($EventID)) {
 	$errorMessage = 'You must provide an EventID to display.';
 	include '../view/404.php';
     } else {
 	$row = getEventDetails($EventID);
         $class = getEligibleClasses($EventID);
-        if ($row == FALSE || $class == FALSE) {
+        if ($row == FALSE) {
             $errorMessage = 'No event was found.';
             include '../view/404.php';
         } else {

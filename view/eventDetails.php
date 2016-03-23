@@ -1,9 +1,11 @@
 <?php
+  
     $title = "Event Details";
     require '../view/headerInclude.php';
+    
 ?>
 <script src="../js/locationCompare.js"></script>
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
              <div class="container">
@@ -25,12 +27,15 @@
                 <!-- CG: Just Was Printing out for test purposes, feel free to delete whenver -->
                 <?php 
                         
-                        print_r($_SESSION);
-                        
+                      // print_r($_SESSION);
+                      // print_r($_SESSION['preferred_username']);
+                      // print_r($_SESSION['user_name']);
+                      // print_r($_SESSION['venue']);
                         ?>
               <!--  <div id ='gmap' class="col-sm-6" style="background-color: #DDD">Insert map here? Maybe allow a picture to be uploaded? If not, it's cool.</div>
                 --><div class="col-sm-6">
                     <div class="project-name overflow">
+                        <h2> Welcome <?php echo $_SESSION['user_name']?> </h2>
                         <h2 id="eventName" class="bold"><?php echo $row['name'] ?></h2>
                         <ul class="nav navbar-nav navbar-default">
                             <li><a><i class="fa fa-clock-o"></i><span id='eventDate'><?php echo date('l  F jS \, Y', strtotime($row['event_date'])); ?></span></a></li>
@@ -50,12 +55,12 @@
                         <ul id="classesList" class="nav navbar-nav navbar-default">
                         <?php foreach ($class as $row){ ?>
          
-                            <li><a><i class="fa fa-check-square"></i><?php echo $row['class_number'], ' ',$row['class_name'],' ',$row['class_section'], ' ', $row['last_name']; ?></a></li>
+                            <li><a><i class="fa fa-check-square"></i><?php echo $row['class_number'], ' ',$row['class_name'],' ',$row['class_section'], ' ', $row['instructor_name']; ?></a></li>
                         <?php }?>
                         </ul>
                     </div>
                     <div class="live-preview">
-                        <a href="#" role="button" class="btn btn-common uppercase" onclick="locationCheck()">Check-In</a>
+                        <a role="button" class="btn btn-common uppercase" onclick="eventListLocationCheck()"> Check-In</a>
                     </div>
                     <div id ="test"></div>
                 </div>
