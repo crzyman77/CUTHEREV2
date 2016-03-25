@@ -16,7 +16,7 @@
                               ?>
                         <li><a href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">Sign-In</a></li>
                                 <?php } else{ ?>
-                        <li><a href="">Sign Out</a></li>
+                        <li><a href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">Sign Out</a></li>
                                 <?php }?>
                         <li class="dropdown"><a href="../controller/controller.php?action=CheckIn">Events<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">

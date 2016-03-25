@@ -12,18 +12,34 @@
                         <div class="col-sm-12">
                             <h1 class="title">Test Case 1 </h1>
                             <div>
-                         <?php 
-                          $result = checkIfStudentExsists('c.gillis@eagle.clarionedu');
-                          $notRight = 'Something Else';
-                          if($result == ''){
-                          print_r($result);
-                          print_r('FOUND IT');
-                          }
-                          else{
-                              print_r($notRight);
-                          }
-                              ?>
-                            </div>
+   <?php 
+   $username = 'C.Gillis@eagle.clarion.edu';
+   $password = 'Gk$98pbw';
+        function loginStudent($username,$password){
+       //"{outlook.office365.com:993/imap/ssl}",
+        if ($mbox=@imap_open("{outlook.office365.com:993/imap/ssl/novalidate-cert}", $username, $password))
+        {
+         echo "<h1>Connected</h1>\n";
+         $imap_obj = imap_check($mbox);
+            if(isset($imap_obj)){
+                return true;
+                //Call Check-in Function
+            }else{
+                return false;
+            }
+         imap_close($mbox);
+        }else{
+         echo "<h1>FAIL!</h1>\n Errors: <br/>";
+            print_r(imap_errors());
+            echo "<br/> Alerts: \n";
+            print_r(imap_alerts());
+            return false;
+        }
+        
+        //return false;
+    }
+    loginStudent($username, $password);
+                          ?>  </div>
                      </div>
                 </div>
          

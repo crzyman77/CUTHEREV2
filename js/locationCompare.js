@@ -66,6 +66,8 @@ function myFunction() {
 
   });   
 } //END GET BUILDING FUNC
+
+// OLD LOCATION CHECK INFORMATION
 function locationCheck(){
         
     myFunction();
@@ -143,7 +145,7 @@ function eventListLocationCheck(){
 if (navigator.geolocation) {
 	navigator.geolocation.getCurrentPosition(function(position) {
         initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-    
+       // initialLocation = new google.maps.LatLng(41.205796, -79.379616);
         polyCheck(initialLocation);
            
     }, function() {
