@@ -53,10 +53,8 @@
                     <div class="skills overflow">
                         <h3>Eligible Classes:</h3>
                         <ul id="classesList" class="nav navbar-nav navbar-default">
-                        <?php foreach ($class as $row){ ?>
-         
-                            <li><a><i class="fa fa-check-square"></i><?php echo $row['class_number'], ' ',$row['class_name'],' ',$row['class_section'], ' ', $row['instructor_name']; ?></a></li>
-                        <?php }?>
+                        <?php foreach ($class as $row){ ?><li><label class="btn btn-common <?php if($i%2) echo "checkboxinline"; ?>"><input type ="checkbox" value="<?php echo $row[class_number] . " " . $row[class_section] . " " . $row[first_name] . " " . $row[last_name]; ?>"></input><?php echo $row['class_number'], ' ',$row['class_name'],' ',$row['class_section'], ' ', $row['last_name']; ?></label></li>
+                        <?php } ?>
                         </ul>
                     </div>
                     <div class="live-preview">
@@ -69,6 +67,39 @@
     </section>
      <!--/#event-information-->
         <br />
+        
+        <script>
+        var selectedClasses = [];
+        
+        //Creates an array from selected extboxes on the page.
+        //The array: 
+        //      arrayName = [ {class_number: w0, class_section: x0, instructor_fname: y0, instructor_lname: z0}, 
+        //                    {class_number: w1, class_section: x1, instructor_fname: y1, instructor_lname: z1},
+        //                    ... etc ];
+        function makeMyArray(){
+            selectedClasses = [];
+            
+        //For test cases set up a div or something with an ID of test    
+        //$("#test").html(" ");
+            var valueString;
+            $("input:checkbox:checked").each(function(){
+                valueString = ($(this).val());
+                tempRes = valueString.split(" ");
+                res = {class_number: tempRes[0], class_section: tempRes[1], instructor_fname: tempRes[2], instructor_lname: tempRes[3]};
+                selectedClasses.push(res);
+            });
+           
+        //Print's out selected checkboxes
+        //This is a test thing, not needed for actal use
+        /*
+           for(i = 0; i < selectedClasses.length; i++)
+           {
+               
+               $("#test").append(selectedClasses[i].class_number.toString() + " " + selectedClasses[i].class_section.toString() + " " + selectedClasses[i].instructor_fname.toString() + " " + selectedClasses[i].instructor_lname.toString() + "\n");
+           }
+        */
+         }  
+    </script>
 <?php
     require '../view/footerInclude.php';
 ?>

@@ -21,6 +21,7 @@
                         <li class="dropdown"><a href="../controller/controller.php?action=CheckIn">Events<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="../controller/controller.php?action=ListEvents">Event List</a></li>
+                                <li><a href="../controller/controller.php?action=AddEvent">Add Event</a></li>
                                 <li><a href="../controller/controller.php?action=TestLocation">Check-In Location Test</a></li>
                             </ul>
                         </li>
@@ -28,7 +29,6 @@
                         <li class="dropdown"><a href="#">Pages <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="../controller/controller.php?action=About">About</a></li>
-                                
                             </ul>
                         </li> 
                         <li><a href="../controller/controller.php?action=Shortcodes">Shortcodes</a></li>               
