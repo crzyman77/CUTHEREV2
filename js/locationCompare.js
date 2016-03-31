@@ -26,14 +26,14 @@
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
 // Global Variable that will be used for the polygons
-//var corner1_lat;
-//var corner1_lng;
-//var corner2_lat;
-//var corner2_lng;
-//var corner3_lat;
-//var corner3_lng;
-//var corner4_lat;
-//var corner4_lng;
+var corner1_lat;
+var corner1_lng;
+var corner2_lat;
+var corner2_lng;
+var corner3_lat;
+var corner3_lng;
+var corner4_lat;
+var corner4_lng;
 
 /*
  * Function that retrieves the json object from the PHP file
@@ -53,90 +53,16 @@ var watchPosArray = [];
 function myFunction() {
  
      $.get("../model/locationModel.php?ajax", function(array){
-     
-     corner1_lat = array[0];
-     corner1_lng = array[1];
-     corner2_lat = array[2];
-     corner2_lng = array[3];
-     corner3_lat = array[4];
-     corner3_lng = array[5];
-     corner4_lat = array[6];
-     corner4_lng = array[7];
-	document.getElementById("test").innerHTML =  "corner 1 ( " + corner1_lat + ", " + corner1_lng + ")" + "<br/>" + "corner 2 ( " + corner2_lat + ", " + corner2_lng + ")" + "<br/>" + "corner 3 ( " + corner3_lat + ", " + corner3_lng + ")" + "<br/>" +"corner 4 ( " + corner4_lat + ", " + corner4_lng +  ")" + "<br/>";
-
+     corner1_lat = parseFloat(array[0]);
+     corner1_lng = parseFloat(array[1]);
+     corner2_lat = parseFloat(array[2]);
+     corner2_lng = parseFloat(array[3]);
+     corner3_lat = parseFloat(array[4]);
+     corner3_lng = parseFloat(array[5]);
+     corner4_lat = parseFloat(array[6]);
+     corner4_lng = parseFloat(array[7]);
   });   
 } //END GET BUILDING FUNC
-
-// OLD LOCATION CHECK INFORMATION
-function locationCheck(){
-        
-    myFunction();
-    
-if (navigator.geolocation) {
-	navigator.geolocation.getCurrentPosition(function(position) {
-        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-      document.getElementById("test").innerHTML += "CurrLoc " + initialLocation + "<br/>";
-        polyCheck(initialLocation);
-           
-    }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
-    }, {maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
-  } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
-  }
-function error() 
-    {
-	alert("Cannot locate user. Please enable Location (and high accuracy mode) on your phone and try again");
-    }
-function userPositionFill(position){
-     watchPosArray[count]= new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-     count++;
-    if(count === 5){
-        navigator.geolocation.clearWatch(watchID);
-        document.getElementById("test").innerHTML += JSON.stringify(watchPosArray);
-    }
-        
-}
-
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
-                        'Error: The Geolocation service failed.' :
-                        'Error: Your browser doesn\'t support geolocation.');
-}
-
-    // Define the LatLng coordinates for the polygon's path.
- function polyCheck(pos){
-     
-     var polyCoords = [
-         {lat: corner1_lat, lng: corner1_lng},
-         {lat: corner2_lat, lng: corner2_lng},
-         {lat: corner4_lat, lng: corner4_lng},
-         {lat: corner3_lat, lng: corner3_lng}
-         
-    ];
-   
-    var buildingPoly = new google.maps.Polygon({paths: polyCoords});
-    
-    var isWithinPolygon = google.maps.geometry.poly.containsLocation(pos, buildingPoly) ?
-        true : false;
-        
-    if(isWithinPolygon === true){
-       document.getElementById("test").innerHTML += 'true';
-       document.getElementById("body").style.backgroundColor = "#00FF00";
-    }
-    else{
-        document.getElementById("test").innerHTML += 'false';
-       document.getElementById("body").style.backgroundColor = "#FF0000";
-  
-    }
-        
-    
-    
- }
-};
 
 function eventListLocationCheck(){
         
@@ -144,14 +70,15 @@ function eventListLocationCheck(){
     
 if (navigator.geolocation) {
 	navigator.geolocation.getCurrentPosition(function(position) {
-        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-       // initialLocation = new google.maps.LatLng(41.205796, -79.379616);
-        polyCheck(initialLocation);
-           
-    }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
-    }, {maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
-  } else {
+        initialLocation = new google.maps.LatLng({lat:position.coords.latitude,lng:position.coords.longitude});
+        polyCheck();  
+        }, 
+        function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        }, 
+        {maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
+      } 
+     else {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
@@ -159,17 +86,6 @@ function error()
     {
 	alert("Cannot locate user. Please enable Location (and high accuracy mode) on your phone and try again");
     }
-function userPositionFill(position){
-     watchPosArray[count]= new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-     count++;
-    if(count === 5){
-        navigator.geolocation.clearWatch(watchID);
-        document.getElementById("test").innerHTML += JSON.stringify(watchPosArray);
-    }
-        
-}
-
-
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
   infoWindow.setContent(browserHasGeolocation ?
@@ -178,34 +94,76 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
     // Define the LatLng coordinates for the polygon's path.
- function polyCheck(pos){
+ function polyCheck(){
      
-     var polyCoords = [
+     //Grab the user location Again, hopefully to help with accuarcy issues
+     var userLocation;
+     navigator.geolocation.getCurrentPosition(function(user) {
+        userLocation = new google.maps.LatLng({lat:user.coords.latitude,lng:user.coords.longitude}); 
+       
+         //Define The Polygon of the building we are in for the event
+        var polyCoords = [
          {lat: corner1_lat, lng: corner1_lng},
          {lat: corner2_lat, lng: corner2_lng},
-         {lat: corner4_lat, lng: corner4_lng},
-         {lat: corner3_lat, lng: corner3_lng}
-         
-    ];
-   
-    var buildingPoly = new google.maps.Polygon({paths: polyCoords});
-    
-    var isWithinPolygon = google.maps.geometry.poly.containsLocation(pos, buildingPoly) ?
-        true : false;
-        
-    if(isWithinPolygon === true){
-    	var studentLocation = pos;
-    	window.location.assign("../controller/controller.php?action=AddStudent&amp;StudentLocation="+studentLocation+"&amp;IsWithinPolygon="+isWithinPolygon+"");
+         {lat: corner3_lat, lng: corner3_lng},
+         {lat: corner4_lat, lng: corner4_lng}    
+         ];
        
-    }
-    else{
-        var studentLocation = pos;
-    	window.location.assign("../controller/controller.php?action=AddStudent&StudentLocation="+studentLocation+"&IsWithinPolygon="+isWithinPolygon+"");
-    	
-  
-    }
-        
-    
-    
+         //Write out location for testing
+    console.log(JSON.stringify(userLocation));
+            //Build the polygon and compare the loaction
+    var buildingPoly = new google.maps.Polygon({path: polyCoords});
+    var isWithinPolygon =  google.maps.geometry.poly.containsLocation(userLocation, buildingPoly);
+       
+       //Print out result
+    console.log(isWithinPolygon); 
+   
+    if(isWithinPolygon === true){
+         var selectedClasses =JSON.stringify(getSelectedClasses());
+         $.post('../model/extraCreditAjax.php',{'class': selectedClasses},function(response){ 
+             console.log(response);
+            });
+     window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"");
+    } else{ // NOT IN POLYGON
+   // var selectedClasses =JSON.stringify(getSelectedClasses());
+    // ONLY HERE FOR TESTING, SINCE WE ARE ALWAYS FALSE
+    // Need to redirect back to a page...... ??????eventList?????????
+   // Would like this to be the event they are on, may take some work because we need venueID and eventID
+//    $.post('../model/extraCreditAjax.php',{'class': selectedClasses},function(response){
+//        console.log(response);
+//       });
+    alert("You were unable to check-in, Please Try again");
+    window.location.assign("../controller/controller.php?action=EventDetails&EventID="+$('#eventId').html()+"&VenueID=6"+$('#venueId')+"");
+    }    
+    },function(err) {
+  console.warn('ERROR(' + err.code + '): ' + err.message);
+},{maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
+       
  }
+     function getSelectedClasses(){
+            selectedClasses = [];
+        
+            var valueString;
+            var event = $('#eventId').html();
+            var email = $('#studentEmail')[0].value + '@eagle.clarion.edu';
+            $("input:checkbox:checked").each(function(){
+                valueString = ($(this).val());
+                tempRes = valueString.split("/"); // Changed split to '/' due to spaces in instructor names
+                res = {class_number: tempRes[0], class_section: tempRes[1], instructor_id: tempRes[2], event_id: event, student_email: email };
+               // alert(JSON.stringify(res));
+                selectedClasses.push(res);
+              //alert(JSON.stringify(selectedClasses));
+            });
+           
+        //Print's out selected checkboxes
+        //This is a test thing, not needed for actal use
+//           for(i = 0; i < selectedClasses.length; i++)
+//           {
+//               $("#test").append(selectedClasses[i].class_number.toString() + " " + selectedClasses[i].class_section.toString() + " " + selectedClasses[i].instructor_name.toString() + "\n");
+//           }
+      //  alert(JSON.stringify(selectedClasses));
+        return selectedClasses;
+         }  
+ 
+ 
 };

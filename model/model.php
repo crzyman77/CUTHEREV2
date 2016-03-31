@@ -1,8 +1,8 @@
 <?php
- 
-  if (session_status() == PHP_SESSION_NONE) {
+if(!isset($_SESSION))
+  { 
     session_start();
-}
+  }
 /*
  * ME Testing the change log system of git, and did the repo change locations. So One folder fits all
  */
@@ -23,49 +23,26 @@ global $venueLocation;
 		}
 		return $dataBase;
 	}
+	//JUNK FUNCTION FOR OLD SET UP
+//	function checkInTesting($username, $email, $curLocation, $checkIn){
+//           
+//            $db = getDBConnection();
+//                $query = 'INSERT INTO locationTestingData (userName , userEmail, curLocation,checkIn) VALUES (:name, :email, :location, :check)';
+//                $statement = $db -> prepare ($query);
+//                $statement->bindValue (':name',$username);
+//                $statement->bindValue (':email', $email);
+//                $statement->bindValue(':location',$curLocation);
+//                $statement->bindValue(':check',$checkIn);
+//                $success  = $statement ->execute();
+//                $statement->closeCursor();
+//                 if ($success) {
+//                            return $db->lastInsertId(); // Get generated StoryID
+//                    } else {
+//                            logSQLError($statement->errorInfo());  // Log error to debug
+//                    }		
+//        }
 	
-	function checkInTesting($username, $email, $curLocation, $checkIn){
-           
-            $db = getDBConnection();
-                $query = 'INSERT INTO locationTestingData (userName , userEmail, curLocation,checkIn) VALUES (:name, :email, :location, :check)';
-                $statement = $db -> prepare ($query);
-                $statement->bindValue (':name',$username);
-                $statement->bindValue (':email', $email);
-                $statement->bindValue(':location',$curLocation);
-                $statement->bindValue(':check',$checkIn);
-                $success  = $statement ->execute();
-                $statement->closeCursor();
-                 if ($success) {
-                            return $db->lastInsertId(); // Get generated StoryID
-                    } else {
-                            logSQLError($statement->errorInfo());  // Log error to debug
-                    }		
-        }
-	
-        function getClassList() {
-		try {
-			$dataBase = getDBConnection();
-			$query = "SELECT
-                                    class.class_number,
-                                    class.class_section,
-                                    class.class_name,
-                                    class.semester_offered,
-                                    user.name
-                                    user.email
-                                FROM 
-                                    class INNER JOIN user ON class.instructor_id = user.id ";
-			$statement = $dataBase->prepare($query);
-			$statement->execute();
-			$results = $statement->fetchAll();
-			$statement->closeCursor();
-			return $results;           // Assoc Array of Rows
-		} catch (PDOException $e) {
-			$errorMessage = $e->getMessage();
-                        echo $errorMessage;
-			include '../view/404.php';
-			die;
-		}		
-	}
+        
         
         function getEventDetails($eventid){
             try{
@@ -102,9 +79,10 @@ global $venueLocation;
                             . " class.class_name, \n"
                             . " class.class_number, \n"
                             . " class.class_section,\n"
-                            . " class.instructor_name\n"
+                            . " instructor.name,\n"
+                            . " instructor.id \n"
                             . "FROM \n"
-                            . " class \n"
+                            . " class INNER JOIN instructor ON class.instructor_id = instructor.id \n"
                             . "WHERE \n"
                             . " class.event_id = :id";
                 $statement = $dataBase->prepare($query);
@@ -217,23 +195,28 @@ global $venueLocation;
         
         }
         
-        function addToClassList($class_number, $class_section, $event_id, $student_id){
+        function addToClassList($class_number, $class_section, $instructor_id, $event_id, $student_email){
             $db = getDBConnection();
-            $query = 'INSERT INTO extra_credit_list'
-                    . 'VALUES (:class_num, :class_section, :event_id, :student_id)';
+            $query = 'INSERT INTO extra_credit_list (`class_number`, `class_section`, `instructor_id`, `event_id`,`student_email`)'
+                    . 'VALUES (:class_num, :class_section,:instructor_id, :event_id, :student_email)';
             $statement = $db -> prepare ($query);
             $statement->bindValue (':class_num',$class_number);
             $statement->bindValue (':class_section', $class_section);
+            $statement->bindValue (':instructor_id', $instructor_id);
             $statement->bindValue (':event_id', $event_id);
-            $statement->bindValue (':student_id', $student_id);
+            $statement->bindValue (':student_email', $student_email);
             $success  = $statement ->execute();
             $statement->closeCursor();
             if ($success) {
 			return $db->lastInsertId(); // Get generated StoryID
 		} else {
-			logSQLError($statement->errorInfo());  // Log error to debug
+			logSQLError($statement->errorInfo()); 
+                        print_r('We FUCKED UP');// Log error to debug
 		}		
         }
+        
+        
+        
         
 	function logSQLError($errorInfo) {
 		$errorMessage = $errorInfo[2];

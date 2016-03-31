@@ -1,7 +1,7 @@
  <?php
   
     $title = "Database Tests";
-    require '../view/headerInclude.php';  
+   // require '../view/headerInclude.php';  
  ?>
 <div id="body">
     <section id="page-breadcrumb">
@@ -12,34 +12,60 @@
                         <div class="col-sm-12">
                             <h1 class="title">Test Case 1 </h1>
                             <div>
-   <?php 
-   $username = 'C.Gillis@eagle.clarion.edu';
-   $password = 'Gk$98pbw';
-        function loginStudent($username,$password){
-       //"{outlook.office365.com:993/imap/ssl}",
-        if ($mbox=@imap_open("{outlook.office365.com:993/imap/ssl/novalidate-cert}", $username, $password))
-        {
-         echo "<h1>Connected</h1>\n";
-         $imap_obj = imap_check($mbox);
-            if(isset($imap_obj)){
-                return true;
-                //Call Check-in Function
-            }else{
-                return false;
+                                <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 24.886, lng: -70.269},
+          zoom: 5,
+        });
+
+        var buildingCoords = [
+            {lat: 41.206851, lng:-79.381930},
+            {lat: 41.206786, lng:-79.375321},
+            {lat: 41.204695, lng:-79.375397},
+            {lat: 41.204711, lng:-79.381437}
+        ];
+
+        var bermudaTriangle = new google.maps.Polygon({paths: buildingCoords});
+
+        google.maps.event.addListener(map, 'click', function(e) {
+          var resultColor =
+              google.maps.geometry.poly.containsLocation(e.latLng, bermudaTriangle) ?
+              'red' :
+              'green';
+
+          new google.maps.Marker({
+            position: e.latLng,
+            map: map,
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              fillColor: resultColor,
+              fillOpacity: .2,
+              strokeColor: 'white',
+              strokeWeight: .5,
+              scale: 10
             }
-         imap_close($mbox);
-        }else{
-         echo "<h1>FAIL!</h1>\n Errors: <br/>";
-            print_r(imap_errors());
-            echo "<br/> Alerts: \n";
-            print_r(imap_alerts());
-            return false;
-        }
-        
-        //return false;
-    }
-    loginStudent($username, $password);
-                          ?>  </div>
+          });
+        });
+      }
+      </script>
+   <script async defer
+    src="https://maps.googleapis.com/maps/api/js?sensor=fail&libraries=geometry&callback=initMap">
+    </script>   
+                      </div>
                      </div>
                 </div>
          
@@ -51,8 +77,7 @@
             <div>
 
                 <p id="test"></p>
-             <!-- <button onclick="myFunction()">Try it</button> -->
-              <button onclick="locationCheck()">Get Location</button>
+       
               
 
             </div>
