@@ -31,7 +31,7 @@
                        //print_r($_SESSION['user_name']);
                         
                         ?>
-                <h2> Welcome <?php echo $_SESSION['user_name']?> </h2>
+                <h2> Welcome </h2>
                 <table id="eventsTable" class="table table-hover table-bordered">
                     <thead>
                         <tr>
