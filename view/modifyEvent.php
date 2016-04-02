@@ -65,17 +65,19 @@
                     <div class="form-group">
                         <h2>Eligible Classes:</h2>
                         <select id="classesList" class="form-control">
-                        <?php foreach ($class as $row1){ ?><option><?php echo $row1['class_number'], ' ',$row1['class_section']; ?></option>
+                        <?php foreach ($class as $row1){ ?><option><?php echo $row1['class_number'], ' ',$row1['class_section'], ' ', $row1['name']; ?></option>
                         <?php }?></select>
                     </div>
                     <div class="form-group">
                         <ul id="classesList" class="nav navbar-nav navbar-default">
                         <?php if($mode === 'Edit'){foreach ($class as $row1){ ?>
-                            <li><a><i class="fa fa-check-square"></i><?php echo $row1['class_number'], ' ',$row1['class_name'],' ',$row1['class_section'], ' ', $row1['last_name']; ?></a></li>
+                            <li><a><i class="fa fa-check-square"></i><?php echo $row1['class_number'], ' ',$row1['class_name'],' ',$row1['class_section'], ' ', $row1['name']; ?></a></li>
                         <?php }} ?>
                         </ul>
                     </div>
                     <div class="form-group">
+                        <!-- Thinking of doing an AJAX array like we do for eligible classes to push to the DB -->
+                        
                         <a href="#" role="button" class="btn btn-common uppercase">Save Event</a>
                     </div>
                 </div>
@@ -99,6 +101,10 @@
                     format: 'LL'
                 });
             });
+            
+       function addAnotherClass(){
+           
+       }
     </script>
 <?php
     require '../view/footerInclude.php';

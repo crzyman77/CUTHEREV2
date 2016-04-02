@@ -56,7 +56,7 @@ if (isset($_POST['action'])) {  // check get and post
             addStory();
             break;
         default:
-            include '../view/index.php';
+            listAllEvents();
             break;
     } //END SWITCH
     

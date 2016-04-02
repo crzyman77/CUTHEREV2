@@ -34,11 +34,11 @@
                     <div class="studentLogin overflow">
                         
                         <h3> E-mail </h3> 
-                        <input type="text" class="form-control" id="studentEmail" name ='E-mail' value="c.gillis"/>
+                        <input type="text" class="form-control" id="studentEmail" name ='E-mail' value=""/>
                         @eagle.clarion.edu 
                         <br/>
                         <h3> Password </h3>
-                        <input type="password" class="form-control" id="studentPass" value="Gk$98pbw"/>
+                        <input type="password" class="form-control" id="studentPass" value=""/>
                        
                     </div> <!-- END EMAIL CONTROLS -->
                     
@@ -78,13 +78,8 @@
             }
 
              });
-       }
-        
-            
+       }     
         var selectedClasses = [];
-        
-      
-        
     </script>
 <?php
     require '../view/footerInclude.php';

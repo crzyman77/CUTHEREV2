@@ -41,7 +41,32 @@ global $venueLocation;
 //                            logSQLError($statement->errorInfo());  // Log error to debug
 //                    }		
 //        }
-	
+		
+        function getClassList() {
+		try {
+			$dataBase = getDBConnection();
+			$query = "SELECT DISTINCT \n"
+                                    . "	class.class_number, \n"
+                                    . "	class.class_section, \n"
+                                    . "	class.class_name, \n"
+                                    . "	class.event_id, \n"
+                                    . "	instructor.name, \n"
+                                    . "	instructor.email \n"
+                            . "FROM \n"
+                            . "	class \n"
+                            . "	INNER JOIN instructor ON class.instructor_id = instructor.id";
+			$statement = $dataBase->prepare($query);
+			$statement->execute();
+			$results = $statement->fetchAll();
+			$statement->closeCursor();
+			return $results;           // Assoc Array of Rows
+		} catch (PDOException $e) {
+			$errorMessage = $e->getMessage();
+                        echo $errorMessage;
+			include '../view/404.php';
+			die;
+		}		
+	}
         
         
         function getEventDetails($eventid){
