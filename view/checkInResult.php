@@ -3,7 +3,7 @@
     $title = "Check-In Results";
     require '../view/headerInclude.php';
     require_once '../model/model.php';
-    
+   // require_once '../model/extraCreditAjax.php';
 ?>
 <script src="../js/locationCompare.js"></script>
 <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
@@ -26,30 +26,21 @@
         <div class="container" id='body'>
             <div class="row">
                 <!-- CG: Just Was Printing out for test purposes, feel free to delete whenver -->
-                <?php 
-                        
-                      // print_r($_SESSION);
-                      // print_r($_SESSION['preferred_username']);
-                      // print_r($_SESSION['user_name']);
-                      // print_r($_SESSION['venue']);
-                        ?>
+          
               <!--  <div id ='gmap' class="col-sm-6" style="background-color: #DDD">Insert map here? Maybe allow a picture to be uploaded? If not, it's cool.</div>
                 --><div class="col-sm-6">
                     <div class="project-name overflow">
-                        
-                        <h2> Welcome <?php echo $_SESSION['user_name']?> </h2>
+                       
+                      <h2> Welcome </h2>
                         <h1> You Were <?php
-                                    if($isWithinPolygon == "true")
+                                    if($result == 'true')
                                         { 
                                             echo 'Succesfully Checked - In' ;
                                         }else{ //False Result
                                             echo 'Unable to Check-In, Please make sure location services are enabled and try again';
                                         }
                                         ?></h1>
-                                    
-                        <h2> <?php echo $studentLocation ?> </h2>
                         
-                        <?php checkInTesting($username,$email,$studentLocation , $isWithinPolygon); ?>
                     </div>
                     
                     
