@@ -61,6 +61,7 @@ function myFunction() {
      corner3_lng = parseFloat(array[5]);
      corner4_lat = parseFloat(array[6]);
      corner4_lng = parseFloat(array[7]);
+
   });   
 } //END GET BUILDING FUNC
 
@@ -135,6 +136,112 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     alert("You were unable to check-in, Please Try again");
     window.location.assign("../controller/controller.php?action=EventDetails&EventID="+$('#eventId').html()+"&VenueID=6"+$('#venueId')+"");
     }    
+    },function(err) {
+  console.warn('ERROR(' + err.code + '): ' + err.message);
+},{maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
+       
+ }
+     function getSelectedClasses(){
+            selectedClasses = [];
+        
+            var valueString;
+            var event = $('#eventId').html();
+            var email = $('#studentEmail')[0].value + '@eagle.clarion.edu';
+            $("input:checkbox:checked").each(function(){
+                valueString = ($(this).val());
+                tempRes = valueString.split("/"); // Changed split to '/' due to spaces in instructor names
+                res = {class_number: tempRes[0], class_section: tempRes[1], instructor_id: tempRes[2], event_id: event, student_email: email };
+               // alert(JSON.stringify(res));
+                selectedClasses.push(res);
+              //alert(JSON.stringify(selectedClasses));
+            });
+           
+        //Print's out selected checkboxes
+        //This is a test thing, not needed for actal use
+//           for(i = 0; i < selectedClasses.length; i++)
+//           {
+//               $("#test").append(selectedClasses[i].class_number.toString() + " " + selectedClasses[i].class_section.toString() + " " + selectedClasses[i].instructor_name.toString() + "\n");
+//           }
+      //  alert(JSON.stringify(selectedClasses));
+        return selectedClasses;
+         }  
+ 
+ 
+};
+
+//Testing Function to save lots of pionts to DB to build better POLYGONS
+function LocationTesting(){
+        
+    myFunction();
+    
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function(position) {
+        initialLocation = new google.maps.LatLng({lat:position.coords.latitude,lng:position.coords.longitude});
+        polyCheck();  
+        }, 
+        function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        }, 
+        {maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
+      } 
+     else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+function error() 
+    {
+	alert("Cannot locate user. Please enable Location (and high accuracy mode) on your phone and try again");
+    }
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+}
+
+    // Define the LatLng coordinates for the polygon's path.
+ function polyCheck(){
+     
+     //Grab the user location Again, hopefully to help with accuarcy issues
+     var userLocation;
+     navigator.geolocation.getCurrentPosition(function(user) {
+        userLocation = new google.maps.LatLng({lat:user.coords.latitude,lng:user.coords.longitude}); 
+       
+         //Define The Polygon of the building we are in for the event
+        var polyCoords = [
+         {lat: corner1_lat, lng: corner1_lng},
+         {lat: corner2_lat, lng: corner2_lng},
+         {lat: corner3_lat, lng: corner3_lng},
+         {lat: corner4_lat, lng: corner4_lng}    
+         ];
+       
+         //Write out location for testing
+    console.log(JSON.stringify(userLocation));
+            //Build the polygon and compare the loaction
+    var buildingPoly = new google.maps.Polygon({path: polyCoords});
+    var isWithinPolygon =  google.maps.geometry.poly.containsLocation(userLocation, buildingPoly);
+       
+       //Print out result
+    console.log(isWithinPolygon); 
+   
+    if(isWithinPolygon === true){
+        var event = $('#eventId').html();
+        window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"&CurrentLocation="+userLocation+"&EventId="+event+"&VenueID="+$('#venueId').html()+"");
+//         var selectedClasses =JSON.stringify(getSelectedClasses());
+//         $.post('../model/extraCreditAjax.php',{'class': selectedClasses},function(response){ 
+//             console.log(response);
+//            });
+//     window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"");
+    } else{ // NOT IN POLYGON
+ 
+//    alert("You were unable to check-in, Please Try again");
+//    window.location.assign("../controller/controller.php?action=EventDetails&EventID="+$('#eventId').html()+"&VenueID=6"+$('#venueId')+"");
+       var event = $('#eventId').html;
+       window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"&CurrentLocation="+userLocation+"EventId="+event+"");
+
+         
+         
+         }    
     },function(err) {
   console.warn('ERROR(' + err.code + '): ' + err.message);
 },{maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
