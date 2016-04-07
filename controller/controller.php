@@ -49,17 +49,26 @@ if (isset($_POST['action'])) {  // check get and post
             include '../view/shortcodes.php';
             break;
         case 'AddStudent':
-          //  updateStudentTable();
             addStudentForExtraCredit();
+          //  locationTesting();
             break;
         case 'AddStory':
             addStory();
             break;
         default:
-            include '../view/index.php';
+            listAllEvents();
             break;
     } //END SWITCH
     
+    function locationTesting(){
+        $studentLocation = $_GET['CurrentLocation'];
+        $isWithinPolygon = $_GET['IsWithinPolygon'];
+        $EventID = $_GET['EventId'];
+        $VenueID = $_GET['VenueID'];
+        checkInTesting($studentLocation, $isWithinPolygon,  $EventID);
+        include '../view/eventDetails.php';
+        
+    }
     
     function addStudentForExtraCredit(){
       $result = $_GET['IsWithinPolygon'];
@@ -109,6 +118,7 @@ function addEvent() {
     $EventDescription = "";
     $EventDate = date('m/d/y');
     $class = getClassList();
+    $venue = getVenueOptions();
     
     include '../view/modifyEvent.php';
     }

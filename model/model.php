@@ -6,8 +6,6 @@ if(!isset($_SESSION))
 /*
  * ME Testing the change log system of git, and did the repo change locations. So One folder fits all
  */
-//mysql:host=myphpadmin.cegillis.com for Production
-global $venueLocation;
         function getDBConnection() {
 		$dataSetName = 'mysql:host=localhost; dbname=cis411_eventregistration';
 		$username = 's_cgillis';
@@ -23,25 +21,91 @@ global $venueLocation;
 		}
 		return $dataBase;
 	}
+        
+        function addNewEvent($name, $start, $end, $date, $desciption, $venue){ 
+            $db = getDBConnection();
+            $query = "INSERT INTO `event`(`name`, `start_time`, `end_time`, `event_date`, `description`, `venue_id`) "
+                    . "VALUES( :name, :start_time, :end_time, :event_date, :description, :venue_id);";
+            $statement = $db -> prepare ($query);
+            $statement->bindValue(':name',$name);
+            $statement->bindValue(':start_time',$start);
+            $statement->bindValue(':end_time', $end);
+            $statement->bindValue(':event_date', $date);
+            $statement->bindValue(':description', $desciption);
+            $statement->bindValue(':venue_id', $venue);
+            $success  = $statement ->execute();
+            $statement->closeCursor();
+            if ($success) {
+			return $db->lastInsertId(); // Get generated EventId
+		} else {
+			logSQLError($statement->errorInfo()); 
+                        print_r('We FUCKED UP');// Log error to debug
+		}		
+        }
+        function addNewEligibleClassesForEvent($class_number, $class_section,$class_name,$instructor_id,$event_id){
+            $db = getDBConnection();
+            $query = "INSERT INTO `class`(`class_number`, `class_section`, `class_name`, `instructor_id`, `event_id`)"
+                    . "VALUES (:class_num, :class_section,:class_name, :instructor_id, :event_id)";
+            $statement = $db -> prepare ($query);
+            $statement->bindValue (':class_num',$class_number);
+            $statement->bindValue (':class_section', $class_section);
+            $statement->bindValue(':class_name', $class_name);
+            $statement->bindValue (':instructor_id', $instructor_id);
+            $statement->bindValue (':event_id', $event_id);
+            $success  = $statement ->execute();
+            $statement->closeCursor();
+            if ($success) {
+			return $db->lastInsertId(); // Get generated StoryID
+		} else {
+			logSQLError($statement->errorInfo()); 
+                        print_r('We FUCKED UP');// Log error to debug
+		}		
+        }  
+            
+        
+        
 	//JUNK FUNCTION FOR OLD SET UP
-//	function checkInTesting($username, $email, $curLocation, $checkIn){
-//           
-//            $db = getDBConnection();
-//                $query = 'INSERT INTO locationTestingData (userName , userEmail, curLocation,checkIn) VALUES (:name, :email, :location, :check)';
-//                $statement = $db -> prepare ($query);
-//                $statement->bindValue (':name',$username);
-//                $statement->bindValue (':email', $email);
-//                $statement->bindValue(':location',$curLocation);
-//                $statement->bindValue(':check',$checkIn);
-//                $success  = $statement ->execute();
-//                $statement->closeCursor();
-//                 if ($success) {
-//                            return $db->lastInsertId(); // Get generated StoryID
-//                    } else {
-//                            logSQLError($statement->errorInfo());  // Log error to debug
-//                    }		
-//        }
-	
+	function checkInTesting($curLocation, $checkIn, $event_id){
+           
+            $db = getDBConnection();
+                $query = 'INSERT INTO locationTestingData (curLocation,checkIn, event_id) VALUES (:location, :check, :event)';
+                $statement = $db -> prepare ($query);
+                $statement->bindValue(':location',$curLocation);
+                $statement->bindValue(':check',$checkIn);
+                $statement->bindValue(':event',$event_id);
+                $success  = $statement ->execute();
+                $statement->closeCursor();
+                 if ($success) {
+                            return $db->lastInsertId(); // Get generated StoryID
+                    } else {
+                            logSQLError($statement->errorInfo());  // Log error to debug
+                    }		
+        }
+		
+        function getClassList() {
+		try {
+			$dataBase = getDBConnection();
+			$query = "SELECT DISTINCT \n"
+                                    . "	class.class_number, \n"
+                                    . "	class.class_section, \n"
+                                    . "	class.class_name, \n"
+                                    . "	instructor.name, \n"
+                                    . "	instructor.id \n"
+                            . "FROM \n"
+                            . "	class \n"
+                            . "	INNER JOIN instructor ON class.instructor_id = instructor.id";
+			$statement = $dataBase->prepare($query);
+			$statement->execute();
+			$results = $statement->fetchAll();
+			$statement->closeCursor();
+			return $results;           // Assoc Array of Rows
+		} catch (PDOException $e) {
+			$errorMessage = $e->getMessage();
+                        echo $errorMessage;
+			include '../view/404.php';
+			die;
+		}		
+	}
         
         
         function getEventDetails($eventid){
@@ -73,6 +137,7 @@ global $venueLocation;
 
             }
         }
+        
         function getEligibleClasses($eventid){
                 $dataBase = getDBConnection();
                 $query = "SELECT \n"
@@ -124,15 +189,27 @@ global $venueLocation;
             }
         }
         
-        function locationForEvent($venue){
-            global $venueLocation;
-            $venueLocation = $venue;
-        }
-        function getLocationForEvent(){
-            global $venueLocation;
-            $restrictedVenue = $venueLocation;
-            print_r($restrictedVenue);
-            return $restrictedVenue;
+        function getVenueOptions(){
+            try {
+			$dataBase = getDBConnection();
+			$query = "SELECT \n"
+                                    . "	`id`, \n"
+                                    . "	`building_name`, \n"
+                                    . "	`room_number`\n"
+                                    . "FROM \n"
+                                    . "	`venue`";           
+			$statement = $dataBase->prepare($query);
+			$statement->execute();
+			$results = $statement->fetchAll();
+			$statement->closeCursor();
+			return $results;           // Assoc Array of Rows
+		} catch (PDOException $e) {
+			$errorMessage = $e->getMessage();
+                        echo $errorMessage;
+			include '../view/404.php';
+			die;
+		}	
+            
         }
         
         function locationCheckBecker(){
@@ -171,8 +248,7 @@ global $venueLocation;
 			die;
             }
         }
-        function insertStudent($username, $email)
-        {
+        function insertStudent($username, $email){
             $exsist = checkIfStudentExsists($email);
             if($exsist != ''){
                 return $exsist;    
@@ -195,6 +271,7 @@ global $venueLocation;
         
         }
         
+        // Extra Credit Lists
         function addToClassList($class_number, $class_section, $instructor_id, $event_id, $student_email){
             $db = getDBConnection();
             $query = 'INSERT INTO extra_credit_list (`class_number`, `class_section`, `instructor_id`, `event_id`,`student_email`)'
