@@ -76,7 +76,7 @@
                         <br/>  
                       
                        <select multiple id="classesList" class="form-control" style='height:300px;'>        
-                             <?php foreach ($class as $row1){ ?><option value='<?php echo $row1['class_number']. "/" .$row1['class_section']. "/" .$row1['class_name']. "/" .$row1['id']; ?>'><?php echo $row1['class_number'], ' ',$row1['class_section'], ' ', $row1['name']; ?></option>
+                             <?php foreach ($class as $row1){ ?><option value='<?php echo $row1['class_number']. "/" .$row1['class_section']. "/" .$row1['class_name']. "/" .$row1['id']; ?>'><?php echo $row1['class_number'], ' ',$row1['class_section'], ' ',$row1['class_name'],' ', $row1['name']; ?></option>
                                 <?php }?></select>
                     </div>
                     <div class="form-group">
