@@ -15,7 +15,7 @@
 
     <section id="action" class="responsive">
         
-       <a class='btn-lg btn' href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">Log IN </a>  
+       <a class='btn btn-common uppercase' href="<?php echo oAuthService::getLoginUrl($redirectUri)?>">Log IN </a>  
     
         
    </section>
