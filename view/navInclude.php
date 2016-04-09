@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse" role="banner">
+<div class="navbar navbar-inverse hidden-xs hidden-sm" role="banner">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

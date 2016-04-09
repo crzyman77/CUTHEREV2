@@ -32,7 +32,7 @@
                         
                         ?>
                 <h2> Welcome </h2>
-                <table id="eventsTable" class="table table-hover table-bordered">
+                <table id="eventsTable" class="table table-hover table-bordered table-responsive">
                     <thead>
                         <tr>
                             <th>Event Name</th>
@@ -44,8 +44,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i=0; foreach ($events as $row){ $i++; ?><tr>
-                            <td><a href="../controller/controller.php?action=EventDetails&amp;EventID=<?php echo $row['id'] ?>&amp;VenueID=<?php echo $row['location']?>"> <?php echo $row['name'] ?></a></td>
+                        <?php $i=0; foreach ($events as $row){ $i++; ?><tr class ="clickable-row" data-href="../controller/controller.php?action=EventDetails&amp;EventID=<?php echo $row['id'] ?>&amp;VenueID=<?php echo $row['location']?>">
+                            <td><a> <?php echo $row['name'] ?></a></td>
                             <td><?php echo $row['building_name'] ?></td>
                             <td><?php echo $row['room_number'] ?></td>
                             <td><?php echo toReadableDate($row['event_date']) ?></td>
@@ -57,6 +57,14 @@
             </div>
         </div>
     </section>
+    
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
 <?php
     require '../view/footerInclude.php';
 ?>
