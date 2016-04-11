@@ -7,7 +7,7 @@ if(!isset($_SESSION))
  * ME Testing the change log system of git, and did the repo change locations. So One folder fits all
  */
         function getDBConnection() {
-		$dataSetName = 'mysql:host=localhost; dbname=cis411_eventregistration';
+		$dataSetName = 'mysql:host=localhost; dbname=cis411_EventRegistration';
 		$username = 's_cgillis';
 		$password = 'Gk$98pbw';
 

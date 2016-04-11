@@ -19,7 +19,7 @@
                         <!-- End HIDDEN DIV -->
                         <h1 id="eventName" class="bold"><?php echo $row['name'] ?></h1>
                         <ul class="nav navbar-nav navbar-default">
-                            <li><a><i class="fa fa-clock-o"></i><span id='eventDate'><?php echo date('l  F jS \, Y', strtotime($row['event_date'])); ?></span></a></li>
+                            <li><a><i class="fa fa-clock-o"></i><span id='eventDate'><?php echo toReadableDate($row['event_date']); ?></span></a></li>
                             <li><a><i class="fa fa-bullseye"></i><span  id="eventBuilding"><?php echo $row['building_name'] ?></span>, <span id="eventRoom">Room <?php echo $row['room_number'] ?></span></a></li>
                         </ul>
                     </div>
@@ -28,7 +28,7 @@
                         <p> <?php echo $row['description'] ?> </p>
                         <h3>Time</h3>
                         <ul class="elements">
-                            <li><i class="fa fa-angle-right"></i>From <span id='eventStartTime'><?php echo $row['start_time'] ?></span> to <span id='eventEndTime'><?php echo $row['end_time'] ?></span></li>
+                            <li><i class="fa fa-angle-right"></i>From <span id='eventStartTime'><?php echo to12HourTime($row['start_time']) ?></span> to <span id='eventEndTime'><?php echo to12HourTime($row['end_time']) ?></span></li>
                         </ul>
                     </div>
                     <div class="studentLogin overflow">
@@ -45,13 +45,14 @@
                     <div class="skills overflow">
                         <h3>Eligible Classes:</h3>
                         <ul id="classesList" class="nav navbar-nav navbar-default">
-                        <?php foreach ($class as $row){ ?><li><label class="btn btn-common <?php if($i%2) echo "checkboxinline"; ?>"><input type ="checkbox" value="<?php echo $row[class_number] . "/" . $row[class_section] . "/" .  $row[id]; ?>"></input><?php echo '  ',$row['class_number'], ' ',$row['class_name'],' ',$row['class_section'], ' ', $row['name']; ?></label></li>
+                        <?php foreach ($class as $row){ ?><li><label class="btn btn-common"><input type ="checkbox" value="<?php echo $row[class_number] . "/" . $row[class_section] . "/" .  $row[id]; ?>"></input><?php echo '  ',$row['class_number'], ' ',$row['class_name'],' ',$row['class_section'], ' ', $row['name']; ?></label></li>
                         <?php } ?>
                         </ul>
                     </div>
                     <div class="live-preview">
                         <input type='submit' class ='btn btn-common uppercase' onclick="authorizeEmail();"  name='Check-In' value='checkin' />
                      <!--   <a role="button" class="btn btn-common uppercase" onclick="makeMyArray()"> Check-In</a> -->
+                        <a href="../controller/controller.php?action=EditEvent&amp;EventID=<?php echo $EventID ?>" role="button" class="btn btn-common uppercase">Edit Event</a>
                     </div>
                     <div id ="test"></div>
                     <div id="map"></div>
