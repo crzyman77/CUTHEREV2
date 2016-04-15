@@ -9,6 +9,13 @@ $eventIdCheck = json_decode($_POST['eventId'],true);
 $selectedClassArray = json_decode($_POST['classList'],true);
 $eventDetailsArray = json_decode($_POST['eventDetails'],true);
 $newClassesArray = json_decode($_POST['classesToAdd'],true);
+
+//WHAT YOU NEED FOR CISPROD
+//$eventIdCheck = $_POST['eventId'];
+//$selectedClassArray = json_decode(stripslashes($_POST['classList']),true);
+//$eventDetailsArray = json_decode(stripslashes($_POST['eventDetails']),true);
+//$newClassesArray = json_decode(stripslashes($_POST['classesToAdd']),true);
+
 //Set up vars for Event Table
     $name = $eventDetailsArray[name];
     $venue =$eventDetailsArray[venue];
@@ -17,7 +24,7 @@ $newClassesArray = json_decode($_POST['classesToAdd'],true);
     $start = toTimeStore($eventDetailsArray[start]);
     $end = toTimeStore($eventDetailsArray[end]); 
 
-if(eventIdCheck == '0'){
+if(eventIdCheck == '0' || eventIdCheck == 0){ //depending on system, may see it as a numeric
 //Make call out to insert into Database
     $eventId = addNewEvent($name, $start, $end, $date, $desc, $venue);
 }
