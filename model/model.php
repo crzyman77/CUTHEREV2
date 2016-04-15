@@ -61,9 +61,7 @@ if(!isset($_SESSION))
                         print_r('We FUCKED UP');// Log error to debug
 		}		
         }  
-            
-        
-        
+
 	//JUNK FUNCTION FOR OLD SET UP
 	function checkInTesting($curLocation, $checkIn, $event_id){
            
@@ -81,7 +79,40 @@ if(!isset($_SESSION))
                             logSQLError($statement->errorInfo());  // Log error to debug
                     }		
         }
-		
+        
+        function deleteClasses($eventID){
+            $db = getDBConnection();
+            $query = 'DELETE FROM class 
+                        WHERE event_id = :eventID';
+            $statement = $db -> prepare($query);
+            $statement -> bindValue(':eventID',$eventID); 
+            $success = $statement ->execute();
+            $statement ->closeCursor();
+            if ($success) {
+		return $statement->rowCount();
+            } 
+            else {
+                logSQLError($statement->errorInfo());  // Log error to debug
+            }
+        }
+        
+        function deleteEvent($eventID){
+            deleteClasses($eventID);
+            $db = getDBConnection();
+            $query = 'DELETE FROM event 
+                        WHERE id = :eventID';
+            $statement = $db -> prepare($query);
+            $statement -> bindValue(':eventID',$eventID); 
+            $success = $statement ->execute();
+            $statement ->closeCursor();
+            if ($success) {
+		return $statement->rowCount();
+            } 
+            else {
+                logSQLError($statement->errorInfo());  // Log error to debug
+            }
+        }
+	
         function getClassList() {
 		try {
 			$dataBase = getDBConnection();
@@ -93,7 +124,8 @@ if(!isset($_SESSION))
                                     . "	instructor.id \n"
                             . "FROM \n"
                             . "	class \n"
-                            . "	INNER JOIN instructor ON class.instructor_id = instructor.id";
+                            . "	INNER JOIN instructor ON class.instructor_id = instructor.id \n"
+                            . " ORDER BY class_number ASC, class_section ASC";
 			$statement = $dataBase->prepare($query);
 			$statement->execute();
 			$results = $statement->fetchAll();
@@ -106,8 +138,7 @@ if(!isset($_SESSION))
 			die;
 		}		
 	}
-        
-        
+
         function getEventDetails($eventid){
             try{
                 $dataBase = getDBConnection();
@@ -145,11 +176,13 @@ if(!isset($_SESSION))
                             . " class.class_number, \n"
                             . " class.class_section,\n"
                             . " instructor.name,\n"
+                            . " instructor.email, \n"
                             . " instructor.id \n"
                             . "FROM \n"
                             . " class INNER JOIN instructor ON class.instructor_id = instructor.id \n"
                             . "WHERE \n"
-                            . " class.event_id = :id";
+                            . " class.event_id = :id \n"
+                            . "ORDER BY class_number ASC, class_section ASC";
                 $statement = $dataBase->prepare($query);
                 $statement->bindValue(':id', $eventid);
                 $statement->execute();
@@ -215,8 +248,21 @@ if(!isset($_SESSION))
         function locationCheckBecker(){
           try{ 
                 $dataBase = getDBConnection();
-                $sql = "select venue.id,venue.building_name,venue.room_number,venue.corner1_lat,venue.corner1_lng,venue.corner2_lat,venue.corner2_lng,venue.corner3_lat,venue.corner3_lng,"
-                . "venue.corner4_lat,venue.corner4_lng FROM venue WHERE id = :location ";      
+                $sql = "SELECT \n"
+                    . "	`corner1_lat`, \n"
+                    . "	`corner1_lng`, \n"
+                    . "	`corner2_lat`, \n"
+                    . "	`corner2_lng`, \n"
+                    . "	`corner3_lat`, \n"
+                    . "	`corner3_lng`, \n"
+                    . "	`corner4_lat`, \n"
+                    . "	`corner4_lng`, \n"
+                    . "	`corner5_lat`, \n"
+                    . "	`corner5_lng`, \n"
+                    . "	`corner6_lat`, \n"
+                    . "	`corner6_lng` \n"
+                    . "FROM \n"
+                    . "	`venue`  WHERE id = :location ";      
                 $statement = $dataBase->prepare($sql);
                 $statement->bindValue(':location', $_SESSION['venue']);
                 $statement->execute();
@@ -231,10 +277,10 @@ if(!isset($_SESSION))
             }
         }
        
-        function checkIfStudentExsists($email){
+        function checkIfInstructorExsists($email){
             try{
             $db = getDBConnection();
-            $query = 'SELECT user.id FROM user WHERE user.email = :email';
+            $query = 'SELECT instructor.id FROM instructor WHERE instructor.email = :email';
             $statement = $db -> prepare ($query);
             $statement->bindValue (':email', $email);
             $statement ->execute();
@@ -248,22 +294,22 @@ if(!isset($_SESSION))
 			die;
             }
         }
-        function insertStudent($username, $email){
-            $exsist = checkIfStudentExsists($email);
+        function insertInstructor($username, $email){
+            $exsist = checkIfInstructorExsists($email);
             if($exsist != ''){
-                return $exsist;    
+                return $exsist;  //Return Exsisting Instructor ID   
             }else
             {
                 $db = getDBConnection();
-                $query = 'INSERT INTO user (name , email, is_student)'
-                        . 'VALUES (:name, :email, Y)';
+                $query = 'INSERT INTO instructor (name , email)'
+                        . 'VALUES (:name, :email)';
                 $statement = $db -> prepare ($query);
                 $statement->bindValue (':name',$username);
                 $statement->bindValue (':email', $email);
                 $success  = $statement ->execute();
                 $statement->closeCursor();
                 if ($success) {
-                            return $db->lastInsertId(); // Get generated StoryID
+                            return $db->lastInsertId(); // Get generated Instructor Id
                     } else {
                             logSQLError($statement->errorInfo());  // Log error to debug
                     }		
@@ -292,6 +338,33 @@ if(!isset($_SESSION))
 		}		
         }
         
+        function updateEvent($name, $start, $end, $date, $desciption, $venue, $eventId){ 
+            $db = getDBConnection();
+            $query = "UPDATE `event` SET \n"
+                    . "`name` = :name, \n"
+                    . "`start_time` = :start_time, \n"
+                    . "`end_time` = :end_time, \n"
+                    . "`event_date` = :event_date, \n"
+                    . "`description`= :description, \n"
+                    . "`venue_id` = :venue_id \n"
+                    . "WHERE id = :event_id";
+            $statement = $db -> prepare ($query);
+            $statement->bindValue(':name',$name);
+            $statement->bindValue(':start_time',$start);
+            $statement->bindValue(':end_time', $end);
+            $statement->bindValue(':event_date', $date);
+            $statement->bindValue(':description', $desciption);
+            $statement->bindValue(':venue_id', $venue);
+            $statement->bindValue(':event_id', $eventId);
+            $success  = $statement ->execute();
+            $statement->closeCursor();
+            if ($success) {
+			return $db->lastInsertId(); // Get generated EventId
+		} else {
+			logSQLError($statement->errorInfo()); 
+                        print_r('We FUCKED UP');// Log error to debug
+		}		
+        }
         
         
         

@@ -17,9 +17,8 @@ require_once '../model/model.php';
 header("Content-type: application/json");
 
     $row = locationCheckBecker();
+    
     //foreach ($results as $row){
-        $building = $row['building_name'];
-        $room = $row['room_number'];
         $corner1_lat = $row['corner1_lat'];
         $corner1_lng = $row['corner1_lng'];
         $corner2_lat = $row['corner2_lat'];
@@ -28,6 +27,11 @@ header("Content-type: application/json");
         $corner3_lng = $row['corner3_lng'];
         $corner4_lat = $row['corner4_lat']; 
         $corner4_lng = $row['corner4_lng'];
+        $corner5_lat = $row['corner5_lat']; 
+        $corner5_lng = $row['corner5_lng'];
+        $corner6_lat = $row['corner6_lat']; 
+        $corner6_lng = $row['corner6_lng'];
+        
         
   
     
@@ -37,7 +41,7 @@ header("Content-type: application/json");
      */
        
     
-    $array = array($corner1_lat,$corner1_lng,$corner2_lat,$corner2_lng,$corner3_lat,$corner3_lng,$corner4_lat,$corner4_lng);
+    $array = array($corner1_lat,$corner1_lng,$corner2_lat,$corner2_lng,$corner3_lat,$corner3_lng,$corner4_lat,$corner4_lng,$corner5_lat,$corner5_lng,$corner6_lat,$corner6_lng);
    
     echo json_encode($array, JSON_NUMERIC_CHECK);
     return $array;

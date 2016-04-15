@@ -1031,6 +1031,7 @@ ul.elements li > i{
 #portfolio .row{
   margin-left: -10px;
   margin-right: -10px;
+  width: 100%;
 }
 
 .portfolio-view {

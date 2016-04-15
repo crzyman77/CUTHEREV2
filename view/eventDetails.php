@@ -2,8 +2,7 @@
   
     $title = "Event Details";
     require '../view/headerInclude.php';
-   error_reporting(0); // Needed put in for LocalHost
-    
+   error_reporting(0); // Needed put in for LocalHost    
 ?>
 <script src="../js/locationCompare.js"></script>
 <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
@@ -16,6 +15,8 @@
                         <!-- HIDDEN DIVS TO GET DATA FROM DB TO JS FAST -->
                         <div id="eventId" style="visibility:hidden;"><?php echo $EventID;?></div>
                         <div id="venueId" style="visibility:hidden;"><?php echo $VenueID; ?></div>
+                        <div id="startTime" style="visibility:hidden;"><?php echo $row['start_time']; ?></div>
+                        <div id='eventDateNoFormat' style="visibility:hidden;"><?php echo $row['event_date']; ?></div>
                         <!-- End HIDDEN DIV -->
                         <h1 id="eventName" class="bold"><?php echo $row['name'] ?></h1>
                         <ul class="nav navbar-nav navbar-default">
@@ -50,7 +51,7 @@
                         </ul>
                     </div>
                     <div class="live-preview">
-                        <input type='submit' class ='btn btn-common uppercase' onclick="authorizeEmail();"  name='Check-In' value='checkin' />
+                        <input type='submit' class ='btn btn-common uppercase' onclick="beginCheckIn();"  name='Check-In' value='checkin' />
                      <!--   <a role="button" class="btn btn-common uppercase" onclick="makeMyArray()"> Check-In</a> -->
                         <a href="../controller/controller.php?action=EditEvent&amp;EventID=<?php echo $EventID ?>" role="button" class="btn btn-common uppercase">Edit Event</a>
                     </div>
@@ -64,7 +65,47 @@
         <br />
         
         <script>
+            // Call Begin Check In -> Checks Times of the Event
+                // IF True will authorize email  -- False error and Redirect
+                    // IF Good will check location -- False error and Redirect
+                        // If Good will allow post users selected classes to DB --False Error and Redirect
+        
             
+      function beginCheckIn(){
+            var start = $('#startTime').html();
+            var eventDate = $('#eventDateNoFormat').html();
+            var preEventStart = 30; //Subtract Off Value For Proper Check-IN Allow
+            var time = start.split(':');
+            var date = eventDate.split('-');
+            var startTime = new Date();
+                startTime.setFullYear(date[0]);
+                startTime.setMonth(date[1]-1); //Minus 1 since setMonth(jan = 0)
+                startTime.setDate(date[2]);
+                startTime.setHours(+time[0]); 
+                startTime.setMinutes(parseInt(time[1]) - preEventStart); 
+                startTime.setSeconds(time[2]);
+            //Set Lock time for event Check IN
+           var endTime = new Date();
+                endTime.setFullYear(date[0]);
+                endTime.setMonth(date[1]-1); //Minus 1 since setMonth(jan = 0)
+                endTime.setDate(date[2]);
+                endTime.setHours(+time[0]); 
+                endTime.setMinutes(parseInt(time[1]) + 20); 
+                endTime.setSeconds(time[2]);
+            
+            var currentTime = new Date(); //Current Time of User
+            console.log("Start " + startTime);
+            console.log("End " + endTime);
+            console.log("Current " + currentTime);
+            if(currentTime < endTime && currentTime > startTime){
+                authorizeEmail();
+            }
+            else
+               alert("The Event is not available for check in at the current time, please try again closer to the start of the event");
+            // Check to see if user is within Acceptable Time Range
+            
+            
+      }
       
       function authorizeEmail(){
           var email = $('#studentEmail')[0].value + '@eagle.clarion.edu';
@@ -75,7 +116,8 @@
             if(response === 'true'){
              eventListLocationCheck(); //LocationCompareJavaScript Function Call if the user was loggin in
             }else{
-                alert(response);
+                //alert(response);
+                alert("Can Not Check In Please Enter a Valid Clarion University Email and Password.");
             }
 
              });

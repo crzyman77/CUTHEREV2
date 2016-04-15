@@ -1,27 +1,10 @@
-/* 
- * Same functionality as the the cuThereMaps.js file
- * Wanted to copy off so when I tear down to insert the php data I dont break exsisiting functionality
- * Hopefully wont break anything major
+/*Main Functionality to compare a succesfully logged in user to the polygon for the venue of the event they are attending
  * 
- * 
- * Created: 02.22 
+ *  Uses HTML5 geolocation and the google maps API 
+ *
+ * Created: 04.15 
  * Last to Edit: Chris
  */
-
-/*
- * The hope is the json_encoded array from the php will come in here
- *  Assign each element to a variable
- *  Thorw the varialbes into the polygon set up we have below
- *  Then be able to compare against the users current location we recieve
- *  
- *  We will then print out a result based on if they hit the polygon or not
- *          Green Scree = Good
- *          Yellow Screen = Try Again
- *          Red Screen = BAD
- *          
- *           
- */
-
 //----------------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -34,21 +17,16 @@ var corner3_lat;
 var corner3_lng;
 var corner4_lat;
 var corner4_lng;
+var corner5_lat;
+var corner5_lng;
+var corner6_lat;
+var corner6_lng;
 
 /*
  * Function that retrieves the json object from the PHP file
  *  Assigns each element of the array object to the correct variable
  *  Since its always the same data, I just hard coded
- *
- *
- *Becker Hard Code Value:
- *                      Clarion, PA 16214
-                        41.205796, -79.379616
- *  
- *   
  */
-count = 0;
-error = "I messed up";
 var watchPosArray = [];
 function myFunction() {
  
@@ -61,7 +39,10 @@ function myFunction() {
      corner3_lng = parseFloat(array[5]);
      corner4_lat = parseFloat(array[6]);
      corner4_lng = parseFloat(array[7]);
-
+     corner5_lat = parseFloat(array[8]);
+     corner5_lng = parseFloat(array[9]);
+     corner6_lat = parseFloat(array[10]);
+     corner6_lng = parseFloat(array[11]);
   });   
 } //END GET BUILDING FUNC
 
@@ -85,7 +66,7 @@ if (navigator.geolocation) {
   }
 function error() 
     {
-	alert("Cannot locate user. Please enable Location (and high accuracy mode) on your phone and try again");
+        alert("Error With Location'>Cannot locate user. Please enable Location (and high accuracy mode) on your phone and try again");
     }
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
@@ -107,11 +88,13 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
          {lat: corner1_lat, lng: corner1_lng},
          {lat: corner2_lat, lng: corner2_lng},
          {lat: corner3_lat, lng: corner3_lng},
-         {lat: corner4_lat, lng: corner4_lng}    
+         {lat: corner4_lat, lng: corner4_lng},
+         {lat: corner5_lat, lng: corner5_lng},
+         {lat: corner6_lat, lng: corner6_lng}
          ];
        
          //Write out location for testing
-    console.log(JSON.stringify(userLocation));
+    //console.log(JSON.stringify(polyCoords));
             //Build the polygon and compare the loaction
     var buildingPoly = new google.maps.Polygon({path: polyCoords});
     var isWithinPolygon =  google.maps.geometry.poly.containsLocation(userLocation, buildingPoly);
@@ -125,16 +108,9 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
              console.log(response);
             });
      window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"");
-    } else{ // NOT IN POLYGON
-   // var selectedClasses =JSON.stringify(getSelectedClasses());
-    // ONLY HERE FOR TESTING, SINCE WE ARE ALWAYS FALSE
-    // Need to redirect back to a page...... ??????eventList?????????
-   // Would like this to be the event they are on, may take some work because we need venueID and eventID
-//    $.post('../model/extraCreditAjax.php',{'class': selectedClasses},function(response){
-//        console.log(response);
-//       });
-    alert("You were unable to check-in, Please Try again");
-    window.location.assign("../controller/controller.php?action=EventDetails&EventID="+$('#eventId').html()+"&VenueID=6"+$('#venueId')+"");
+    } else{ 
+       alert("Error With Location Check In Due to limitations on the hardware of your device, we are unable to verify your current location. Please try again and if the problem persits, please use the paper sign in option at the enterance of the venue. We are sorry for the inconvience.");
+        window.location.assign("../controller/controller.php?action=EventDetails&EventID="+$('#eventId').html()+"&VenueID="+$('#venueId')+"");
     }    
     },function(err) {
   console.warn('ERROR(' + err.code + '): ' + err.message);
@@ -151,25 +127,14 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                 valueString = ($(this).val());
                 tempRes = valueString.split("/"); // Changed split to '/' due to spaces in instructor names
                 res = {class_number: tempRes[0], class_section: tempRes[1], instructor_id: tempRes[2], event_id: event, student_email: email };
-               // alert(JSON.stringify(res));
                 selectedClasses.push(res);
-              //alert(JSON.stringify(selectedClasses));
             });
-           
-        //Print's out selected checkboxes
-        //This is a test thing, not needed for actal use
-//           for(i = 0; i < selectedClasses.length; i++)
-//           {
-//               $("#test").append(selectedClasses[i].class_number.toString() + " " + selectedClasses[i].class_section.toString() + " " + selectedClasses[i].instructor_name.toString() + "\n");
-//           }
-      //  alert(JSON.stringify(selectedClasses));
         return selectedClasses;
          }  
- 
- 
 };
 
 //Testing Function to save lots of pionts to DB to build better POLYGONS
+// JUNK FUNCTION THAT I REALLY DONT NEED ANYMORE
 function LocationTesting(){
         
     myFunction();
@@ -212,7 +177,9 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
          {lat: corner1_lat, lng: corner1_lng},
          {lat: corner2_lat, lng: corner2_lng},
          {lat: corner3_lat, lng: corner3_lng},
-         {lat: corner4_lat, lng: corner4_lng}    
+         {lat: corner4_lat, lng: corner4_lng},
+         {lat: corner5_lat, lng: corner5_lng},
+         {lat: corner6_lat, lng: corner6_lng}
          ];
        
          //Write out location for testing
@@ -224,24 +191,15 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
        //Print out result
     console.log(isWithinPolygon); 
    
-    if(isWithinPolygon === true){
+     if(isWithinPolygon === true){
         var event = $('#eventId').html();
         window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"&CurrentLocation="+userLocation+"&EventId="+event+"&VenueID="+$('#venueId').html()+"");
-//         var selectedClasses =JSON.stringify(getSelectedClasses());
-//         $.post('../model/extraCreditAjax.php',{'class': selectedClasses},function(response){ 
-//             console.log(response);
-//            });
-//     window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"");
     } else{ // NOT IN POLYGON
  
-//    alert("You were unable to check-in, Please Try again");
-//    window.location.assign("../controller/controller.php?action=EventDetails&EventID="+$('#eventId').html()+"&VenueID=6"+$('#venueId')+"");
-       var event = $('#eventId').html;
-       window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"&CurrentLocation="+userLocation+"EventId="+event+"");
+       var event = $('#eventId').html();
+        window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"&CurrentLocation="+userLocation+"&EventId="+event+"&VenueID="+$('#venueId').html()+"");
 
-         
-         
-         }    
+          }    
     },function(err) {
   console.warn('ERROR(' + err.code + '): ' + err.message);
 },{maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});

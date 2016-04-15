@@ -50,7 +50,7 @@ if (isset($_POST['action'])) {  // check get and post
             break;
         case 'AddStudent':
             addStudentForExtraCredit();
-          //  locationTesting();
+          //locationTesting();
             break;
         case 'AddStory':
             addStory();
@@ -66,8 +66,7 @@ if (isset($_POST['action'])) {  // check get and post
         $EventID = $_GET['EventId'];
         $VenueID = $_GET['VenueID'];
         checkInTesting($studentLocation, $isWithinPolygon,  $EventID);
-        include '../view/eventDetails.php';
-        
+        include '../view/eventDetails.php';   
     }
     
     function addStudentForExtraCredit(){
@@ -86,41 +85,41 @@ if (isset($_POST['action'])) {  // check get and post
     }
     
     function showEventDetails() {
-    $EventID = $_GET['EventID'];
-    $VenueID = $_GET['VenueID'];
-    $_SESSION['venue'] = $VenueID;
+        $EventID = $_GET['EventID'];
+        $VenueID = $_GET['VenueID'];
+        $_SESSION['venue'] = $VenueID;
     //$result = locationForEvent($VenueID);
-    //print_r($result);
-    if (!isset($EventID)) {
-	$errorMessage = 'You must provide an EventID to display.';
-	include '../view/404.php';
-    } else {
-	$row = getEventDetails($EventID);
-        $class = getEligibleClasses($EventID);
-        if ($row == FALSE) {
-            $errorMessage = 'No event was found.';
+    //print_r($_SESSION['venue']);
+        if (!isset($EventID)) {
+            $errorMessage = 'You must provide an EventID to display.';
             include '../view/404.php';
         } else {
-            include '../view/eventDetails.php';
-        }
+            $row = getEventDetails($EventID);
+            $class = getEligibleClasses($EventID);
+            if ($row == FALSE) {
+                $errorMessage = 'No event was found.';
+                include '../view/404.php';
+            } else {
+                include '../view/eventDetails.php';
+            }
+         }
     }
-}
 
-function addEvent() {
-    $mode = "Add";
-    $EventID = 0;
-    $EventName = "";
-    $LocationID = 0;
-    $BuildingName = "";
-    $RoomNum = "";
-    $EventStart = "";
-    $EventEnd = "";
-    $EventDescription = "";
-    $EventDate = date('m/d/y');
-    $class = getClassList();
-    $venue = getVenueOptions();
-    
-    include '../view/modifyEvent.php';
+    function addEvent() {
+        $mode = "Add";
+        $EventID = 0;
+        $EventName = "";
+        $LocationID = 0;
+        $BuildingName = "";
+        $RoomNum = "";
+        $EventStart = "";
+        $EventEnd = "";
+        $EventDescription = "";
+        $EventDate = date('m/d/y');
+        $allClasses = getClassList();
+        $venue = getVenueOptions();
+
+        include '../view/modifyEvent.php';
     }
     
     function editEvent() {
@@ -135,9 +134,8 @@ function addEvent() {
                 include '../view/404.php';
             } else {
                 $mode = "Edit";
-                $EventID = $row['id'];
+                $EventID = $_GET['EventID'];
                 $EventName = $row['name'];
-                $LocationID = $row['location'];
                 $EventBuilding = $row['building_name'];
                 $EventRoom = $row['room_number'];
                 $EventStart = $row['start_time'];
@@ -145,16 +143,9 @@ function addEvent() {
                 $EventDate = $row['event_date'];
                 $EventDescription = $row['description'];
                 $class = getEligibleClasses($EventID);
-                
+                $allClasses = getClassList();
+                $venue = getVenueOptions();
                 include '../view/modifyEvent.php';
             }
         }		
     }
-    
- 
-
-  
-   
-    
-    
-    
