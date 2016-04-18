@@ -7,17 +7,12 @@
 <script src="../js/locationCompare.js"></script>
 <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
     
-    <section id="portfolio-information" class="padding-top">
+    <section id="portfolio-information">
         <div class="container" id='body'>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="project-name overflow">
-                        <!-- HIDDEN DIVS TO GET DATA FROM DB TO JS FAST -->
-                        <div id="eventId" style="visibility:hidden;"><?php echo $EventID;?></div>
-                        <div id="venueId" style="visibility:hidden;"><?php echo $VenueID; ?></div>
-                        <div id="startTime" style="visibility:hidden;"><?php echo $row['start_time']; ?></div>
-                        <div id='eventDateNoFormat' style="visibility:hidden;"><?php echo $row['event_date']; ?></div>
-                        <!-- End HIDDEN DIV -->
+                        
                         <h1 id="eventName" class="bold"><?php echo $row['name'] ?></h1>
                         <ul class="nav navbar-nav navbar-default">
                             <li><a><i class="fa fa-clock-o"></i><span id='eventDate'><?php echo toReadableDate($row['event_date']); ?></span></a></li>
@@ -36,7 +31,7 @@
                         
                         <h3> E-mail </h3> 
                         <input type="text" class="form-control" id="studentEmail" name ='E-mail' value=""/>
-                        @eagle.clarion.edu 
+                        <label>@eagle.clarion.edu </label>
                         <br/>
                         <h3> Password </h3>
                         <input type="password" class="form-control" id="studentPass" value=""/>
@@ -51,12 +46,17 @@
                         </ul>
                     </div>
                     <div class="live-preview">
-                        <input type='submit' class ='btn btn-common uppercase' onclick="beginCheckIn();"  name='Check-In' value='checkin' />
+                        <input type='submit' class ='btn btn-common uppercase' onclick="authorizeEmail();"  name='Check-In' value='checkin' />
                      <!--   <a role="button" class="btn btn-common uppercase" onclick="makeMyArray()"> Check-In</a> -->
                         <a href="../controller/controller.php?action=EditEvent&amp;EventID=<?php echo $EventID ?>" role="button" class="btn btn-common uppercase">Edit Event</a>
                     </div>
-                    <div id ="test"></div>
-                    <div id="map"></div>
+                   
+                    <!-- HIDDEN DIVS TO GET DATA FROM DB TO JS FAST -->
+                        <div id="eventId" style="visibility:hidden;"><?php echo $EventID;?></div>
+                        <div id="venueId" style="visibility:hidden;"><?php echo $VenueID; ?></div>
+                        <div id="startTime" style="visibility:hidden;"><?php echo $row['start_time']; ?></div>
+                        <div id='eventDateNoFormat' style="visibility:hidden;"><?php echo $row['event_date']; ?></div>
+                        <!-- End HIDDEN DIV -->
                 </div>
             </div>
         </div>
@@ -108,16 +108,20 @@
       }
       
       function authorizeEmail(){
-          var email = $('#studentEmail')[0].value + '@eagle.clarion.edu';
+          var userEmail = $('#studentEmail')[0].value;
+          var splitEmail = userEmail.split('@');
+          var email = splitEmail[0] + '@eagle.clarion.edu';
+          //console.log(email);
+          //console.log('Split: ' + splitEmail[0]);
           var pass = $('#studentPass')[0].value;
           var ajaxurl = '../model/authorize.php',
-        data =  {'username': email,'pass':pass};
+          data =  {'username': email,'pass':pass};
         $.post(ajaxurl,data, function (response) {
             if(response === 'true'){
              eventListLocationCheck(); //LocationCompareJavaScript Function Call if the user was loggin in
             }else{
                 //alert(response);
-                alert("Can Not Check In Please Enter a Valid Clarion University Email and Password.");
+                alert("We are unable to process your request at this time. Please Enter a Valid Clarion University Email and Password.");
             }
 
              });

@@ -169,6 +169,37 @@ if(!isset($_SESSION))
             }
         }
         
+        function getExtraCreditLists(){
+            try{
+                $dataBase = getDBConnection();
+                $query = "SELECT \n"
+                            . "	`class_number`, \n"
+                            . "	`class_section`, \n"
+                            . "	`instructor_id`, \n"
+                            . "	`event_id`, \n"
+                            . "	`student_email` \n"
+                            . "FROM \n"
+                            . "	`extra_credit_list` \n"
+                            . "ORDER BY \n"
+                            . "	`event_id` ASC, \n"
+                            . "	`class_number` ASC, \n"
+                            . "	`class_section` ASC";
+                $statement = $dataBase->prepare($query);
+                $statement->execute();
+                $results = $statement->fetchAll();
+                $statement->closeCursor();
+                return $results;           // Assoc Array of Rows
+                
+            } catch (PDOException $e) {
+			$errorMessage = $e->getMessage();
+                        echo $errorMessage;
+			include '../view/404.php';
+			die;
+
+            }
+            
+        }
+        
         function getEligibleClasses($eventid){
                 $dataBase = getDBConnection();
                 $query = "SELECT \n"
@@ -207,6 +238,34 @@ if(!isset($_SESSION))
                             . " INNER JOIN venue ON event.venue_id = venue.id \n"
                             . "WHERE \n"
                             . " event.event_date >= CURDATE() \n"
+                            . " && event.event_date <= (CURRENT_DATE + 7)\n"
+                            . "ORDER BY \n"
+                            . " event.event_date";
+                $statement = $dataBase->prepare($query);
+                $statement->execute();
+                $result = $statement->fetchAll();  // Should be 0 or 1 row
+                $statement->closeCursor();
+                return $result;			 // False if 0 rows
+            } catch (PDOException $e) {
+                $errorMessage = $ex->getMessage();
+                echo $errorMessage;
+                include '../view/404.php';
+                die;
+            }
+        }
+        
+        function getPastEventList(){
+            try{
+                $dataBase = getDBConnection();
+                $query = "SELECT \n"
+                            . " event.id, \n"
+                            . " event.name, \n"
+                            . " event.event_date \n"
+                            . "FROM \n"
+                            . " event \n"
+                            . "WHERE \n"
+                            . "event.event_date >= (CURRENT_DATE - 14) \n"
+                            . " && event.event_date <= (CURRENT_DATE)\n"
                             . "ORDER BY \n"
                             . " event.event_date";
                 $statement = $dataBase->prepare($query);
@@ -365,8 +424,6 @@ if(!isset($_SESSION))
                         print_r('We FUCKED UP');// Log error to debug
 		}		
         }
-        
-        
         
 	function logSQLError($errorInfo) {
 		$errorMessage = $errorInfo[2];

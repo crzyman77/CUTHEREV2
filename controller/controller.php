@@ -45,8 +45,8 @@ if (isset($_POST['action'])) {  // check get and post
         case 'dbTest':
             locationCheck();
             break;
-        case 'Shortcodes':
-            include '../view/shortcodes.php';
+        case 'GenReports':
+            include '../view/generateReports.php';
             break;
         case 'AddStudent':
             addStudentForExtraCredit();

@@ -110,7 +110,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
      window.location.assign("../controller/controller.php?action=AddStudent&IsWithinPolygon="+isWithinPolygon+"");
     } else{ 
        alert("Error With Location Check In Due to limitations on the hardware of your device, we are unable to verify your current location. Please try again and if the problem persits, please use the paper sign in option at the enterance of the venue. We are sorry for the inconvience.");
-        window.location.assign("../controller/controller.php?action=EventDetails&EventID="+$('#eventId').html()+"&VenueID="+$('#venueId')+"");
+        window.location.assign("../controller/controller.php?action=EventDetails&EventID="+$('#eventId').html()+"&VenueID="+$('#venueId').html()+"");
     }    
     },function(err) {
   console.warn('ERROR(' + err.code + '): ' + err.message);

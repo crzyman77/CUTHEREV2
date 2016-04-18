@@ -25,7 +25,7 @@
                                 <li><a href="../controller/controller.php?action=About">About</a></li>
                             </ul>
                         </li> 
-                        <li><a href="../controller/controller.php?action=Shortcodes">Shortcodes</a></li>               
+                        <li><a href="../controller/controller.php?action=GenReports">Generate Reports</a></li>               
                     </ul>
                 </div>
             </div>
