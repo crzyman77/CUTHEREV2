@@ -112,6 +112,31 @@ if(!isset($_SESSION))
                 logSQLError($statement->errorInfo());  // Log error to debug
             }
         }
+        
+        function getStudentClassList($classNum,$classSec,$event){
+            try {
+			$dataBase = getDBConnection();
+			$query = "SELECT \n"
+                                . "`student_email` \n"
+                                . " FROM \n"
+                                    . "`extra_credit_list` \n"
+                                . "WHERE "
+                                . " event_id = :eventid && class_number = :classNum && class_section = :classSec";
+			$statement = $dataBase->prepare($query);
+                        $statement->bindValue(':eventid', $event);
+                        $statement->bindValue(':classNum', $classNum);
+                        $statement->bindValue(':classSec', $classSec);
+			$statement->execute();
+			$results = $statement->fetchAll();
+			$statement->closeCursor();
+			return $results;           // Assoc Array of Rows
+		} catch (PDOException $e) {
+			$errorMessage = $e->getMessage();
+                        echo $errorMessage;
+			include '../view/404.php';
+			die;
+		}		
+        }
 	
         function getClassList() {
 		try {
@@ -199,6 +224,7 @@ if(!isset($_SESSION))
             }
             
         }
+        
         
         function getEligibleClasses($eventid){
                 $dataBase = getDBConnection();

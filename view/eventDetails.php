@@ -46,7 +46,7 @@
                         </ul>
                     </div>
                     <div class="live-preview">
-                        <input type='submit' class ='btn btn-common uppercase' onclick="authorizeEmail();"  name='Check-In' value='checkin' />
+                        <input type='submit' class ='btn btn-common uppercase' onclick="beginCheckIn();"  name='Check-In' value='checkin' />
                      <!--   <a role="button" class="btn btn-common uppercase" onclick="makeMyArray()"> Check-In</a> -->
                         <a href="../controller/controller.php?action=EditEvent&amp;EventID=<?php echo $EventID ?>" role="button" class="btn btn-common uppercase">Edit Event</a>
                     </div>

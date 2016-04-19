@@ -148,13 +148,17 @@
             selectedClasses = [];
             $("#multiselect_to option").prop('selected', true);
             var valueString;  
+           
             $("#multiselect_to").each(function(){
                 valueString = ($(this).val());
+                console.log(valueString);
+                if(valueString  !== null){
                 for(i=0; i<valueString.length; i++){
                    tempRes=valueString[i].split("/");
                     res={class_number: tempRes[0], class_section: tempRes[1],class_name: tempRes[2], instructor_id: tempRes[3] };
                     selectedClasses.push(res);
                 }
+            }
             });
             return selectedClasses;
          }
