@@ -2,9 +2,6 @@
     //header("Content-type:application/ajax");
            $username = $_POST['username'];
            $password = $_POST['pass'];
-       //"{outlook.office365.com:993/imap/ssl}",
-        //$username = 'C.Gillis@eagle.clarion.edu';
-        //$password = 'Gk$98pbw';
            
         if ($mbox=@imap_open("{outlook.office365.com:993/imap/ssl/novalidate-cert}", $username, $password))
         {
