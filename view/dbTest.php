@@ -203,10 +203,12 @@
         // Define the LatLng coordinates for the polygon.
     // Still Hall 112								
         var triangleCoords = [
-           { lat: 41.212437,lng:-79.378113},
-           {lat:41.212399,lng:-79.377983},
-           {lat:41.212261,lng:-79.378036},
-           {lat:41.212322,lng:-79.378189}
+           {lat: 41.212460814,lng:-79.378018558},
+           {lat:41.212411414,lng:-79.377887596},
+           {lat:41.212228400,lng:-79.378013300},
+           {lat:41.212193700,lng:-79.378057300},
+           {lat:41.212342433,lng:-79.378207658},
+           {lat:41.212431071,lng:-79.378094701}
         ];
 
         // Construct the polygon.

@@ -12,7 +12,12 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="project-name overflow">
-                        
+                            <!-- HIDDEN DIVS TO GET DATA FROM DB TO JS FAST -->
+                        <div id="eventId" style="visibility:hidden;"><?php echo $EventID;?></div>
+                        <div id="venueId" style="visibility:hidden;"><?php echo $VenueID; ?></div>
+                        <div id="startTime" style="visibility:hidden;"><?php echo $row['start_time']; ?></div>
+                        <div id='eventDateNoFormat' style="visibility:hidden;"><?php echo $row['event_date']; ?></div>
+                        <!-- End HIDDEN DIV -->
                         <h1 id="eventName" class="bold"><?php echo $row['name'] ?></h1>
                         <ul class="nav navbar-nav navbar-default">
                             <li><a><i class="fa fa-clock-o"></i><span id='eventDate'><?php echo toReadableDate($row['event_date']); ?></span></a></li>
@@ -50,13 +55,6 @@
                      <!--   <a role="button" class="btn btn-common uppercase" onclick="makeMyArray()"> Check-In</a> -->
                         <a href="../controller/controller.php?action=EditEvent&amp;EventID=<?php echo $EventID ?>" role="button" class="btn btn-common uppercase">Edit Event</a>
                     </div>
-                   
-                    <!-- HIDDEN DIVS TO GET DATA FROM DB TO JS FAST -->
-                        <div id="eventId" style="visibility:hidden;"><?php echo $EventID;?></div>
-                        <div id="venueId" style="visibility:hidden;"><?php echo $VenueID; ?></div>
-                        <div id="startTime" style="visibility:hidden;"><?php echo $row['start_time']; ?></div>
-                        <div id='eventDateNoFormat' style="visibility:hidden;"><?php echo $row['event_date']; ?></div>
-                        <!-- End HIDDEN DIV -->
                 </div>
             </div>
         </div>

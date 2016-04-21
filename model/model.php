@@ -200,7 +200,7 @@ if(!isset($_SESSION))
                 $query = "SELECT \n"
                             . "	`class_number`, \n"
                             . "	`class_section`, \n"
-                            . "	`instructor_id`, \n"
+                            . "	`inst_id`, \n"
                             . "	`event_id`, \n"
                             . "	`student_email` \n"
                             . "FROM \n"
@@ -405,14 +405,14 @@ if(!isset($_SESSION))
         // Extra Credit Lists
         function addToClassList($class_number, $class_section, $instructor_id, $event_id, $student_email){
             $db = getDBConnection();
-            $query = 'INSERT INTO extra_credit_list (`class_number`, `class_section`, `instructor_id`, `event_id`,`student_email`)'
-                    . 'VALUES (:class_num, :class_section,:instructor_id, :event_id, :student_email)';
+            $query = "INSERT INTO extra_credit_list (`class_number`, `class_section`, `inst_id`, `event_id`,`student_email`) \n"
+                    . "VALUES (:class_number, :class_sec, :inst_id, :ev_id, :email)";
             $statement = $db -> prepare ($query);
-            $statement->bindValue (':class_num',$class_number);
-            $statement->bindValue (':class_section', $class_section);
-            $statement->bindValue (':instructor_id', $instructor_id);
-            $statement->bindValue (':event_id', $event_id);
-            $statement->bindValue (':student_email', $student_email);
+            $statement->bindValue (':class_number',$class_number);
+            $statement->bindValue (':class_sec', $class_section);
+            $statement->bindValue (':inst_id', $instructor_id);
+            $statement->bindValue (':ev_id', $event_id);
+            $statement->bindValue (':email', $student_email);
             $success  = $statement ->execute();
             $statement->closeCursor();
             if ($success) {
