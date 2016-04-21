@@ -25,14 +25,12 @@
                         <?php if (userIsAuthorized("dbTest")) { ?>
                         <li><a href="../controller/controller.php?action=dbTest">DB Test Page</a></li>
                         <?php } ?>
-                        <li class="dropdown"><a href="#">Pages <i class="fa fa-angle-down"></i></a>
-                            <ul role="menu" class="sub-menu">
-                                <li><a href="../controller/controller.php?action=About">About</a></li>
-                            </ul>
-                        </li>
                         <?php if(userIsAuthorized("GenReports")) { ?>
                         <li><a href="../controller/controller.php?action=GenReports">Generate Reports</a></li>   
-                        <?php } 
+                        <?php } ?>
+                        <?php if(userIsAuthorized("DeleteData")){ ?>
+                        <li><a href="../controller/controller.php?action=DeleteData">Remove Old Data</a></li>
+                        <?php }
 			if (!loggedIn()) {
                             echo "<li><a href='../security/index.php?action=SecurityLogin&RequestedPage=" . urlencode($_SERVER['REQUEST_URI'])  .  "'>Admin Log In</a></li>";
 			}else {

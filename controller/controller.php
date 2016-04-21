@@ -59,8 +59,8 @@ if (isset($_POST['action'])) {  // check get and post
             addStudentForExtraCredit();
           //locationTesting();
             break;
-        case 'AddStory':
-            addStory();
+        case 'DeleteData':
+            include '../view/cleanTables.php';
             break;
         default:
             listAllEvents();
