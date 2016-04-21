@@ -7,6 +7,7 @@ if(!isset($_SESSION))
 
 //DOES THIS WORK NOW?
 //require_once '../model/locationModel.php';
+require_once("../security/model.php");
 require_once '../model/model.php';
 require_once '../lib/basic_funcs.php';
 
@@ -19,6 +20,12 @@ if (isset($_POST['action'])) {  // check get and post
         include('../view/index.php');  // default action
         exit();
     }
+    
+    if (isset($_SERVER['HTTPS'])) {
+                    $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                    header("Location: " . $url);
+                    exit();
+        }
     
     switch ($action){
         case 'Home':
