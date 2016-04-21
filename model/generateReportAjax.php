@@ -2,7 +2,8 @@
 require_once '../model/model.php';
    error_reporting(0); // Needed put in for LocalHost
 
-$selectedClass = stipslashes($_POST['classList']);
+$selectedClass = $_POST['classList'];
+//print_r($selectedClass);
 //class_number: tempRes[0], class_section: tempRes[1], event_id: eventId
 $headers = array('Student Email');
 
