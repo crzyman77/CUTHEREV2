@@ -5,12 +5,9 @@
         <group>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/CUThereV2/js/locationCompare.js</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/CUThereV2/model/model.php</file>
-<<<<<<< HEAD
-=======
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/CUThereV2/view/dbTest.php</file>
->>>>>>> chris_dev
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/CUThereV2/model/extraCreditAjax.php</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/CUThereV2/view/eventDetails.php</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/CUThereV2/controller/controller.php</file>
         </group>
     </open-files>
 </project-private>

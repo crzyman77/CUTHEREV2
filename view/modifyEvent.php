@@ -19,7 +19,7 @@
     .toggleDiv { display: none; }
 </style>
     <!--/#action-->
-    <section id="portfolio-information" class="padding-top">
+    <section id="portfolio-information" class="padding-top" >
         <div class="container" id='body'>
             <div class="row">
               <!--  <div id ='gmap' class="col-sm-6" style="background-color: #DDD">Insert map here? Maybe allow a picture to be uploaded? If not, it's cool.</div>
@@ -35,10 +35,7 @@
                         <?php }?>
                             </select>
                             </div>
-<!--                            <h3>Building</h3>
-                            <input type="text" class="form-control" id="eventBuilding" value="<?php if($mode === 'Edit'){echo $EventBuilding;} ?>"/>
-                            <h3>Room</h3>
-                            <input type="text" class="form-control" id="eventRoom" value="<?php if($mode === 'Edit'){echo $EventRoom;} ?>"/>-->
+                            <div id='eventIdCheck' style='visibility: hidden;'> <?php echo $EventID; ?> </div>
                             <h2>Event Description</h2>
                             <textarea class="form-control" rows="5" id="eventDescription"><?php if($mode === 'Edit'){echo $EventDescription;} ?></textarea>
                         </div>
@@ -74,42 +71,59 @@
                     <div class="form-group">
                         <h2>Eligible Classes:</h2>
                         <br/>  
-                      
-                       <select multiple id="classesList" class="form-control" style='height:300px;'>        
-                             <?php foreach ($class as $row1){ ?><option value='<?php echo $row1['class_number']. "/" .$row1['class_section']. "/" .$row1['class_name']. "/" .$row1['id']; ?>'><?php echo $row1['class_number'], ' ',$row1['class_section'], ' ', $row1['name']; ?></option>
-                                <?php }?></select>
-                    </div>
-                    <div class="form-inline">
-                        <h2>Add Classes:</h2>
-                        <label for="newClassName">Class Name:</label>
-                        <input type="text" class="form-control" id="newClassName" placeholder="Intro to Porgamming"></input>
-                        <label for="newClassNumber">Class Number:</label>
-                        <input type="text" class="form-control" id="newClassNumber" placeholder="CIS110"></input>
-                        <label for="newClassSection">Class Section:</label>
-                        <input type="text" class="form-control" id="newClassSection" placeholder="C01"></input><br />
-                        <label for="newClassInstructor">Class Instructor:</label>
-                        <input type="text" class="form-control" id="newClassInstructor" placeholder="Jody Strausser"></input><br />
-                        <label for="newInstructorEmail">Instructor Email:</label>
-                        <input type="email" class="form-control" id="newInstructorEmail" placeholder="jstrausser@clarion.edu"></input>
-                    </div>
+                           <div class="row">
+                               <!-- Print OUT ALl Possible Classes in System -->
+                            <div class="col-md-6">
+                              <select name="from" id="multiselect" class="form-control" style='height: 300px;' multiple="multiple">
+                                   <?php foreach ($allClasses as $row1){ ?><option value='<?php echo $row1['class_number']. "/" .$row1['class_section']. "/" .$row1['class_name']. "/" .$row1['id']; ?>'><?php echo $row1['class_number'], ' ',$row1['class_section'], ' ', $row1['name']; ?></option>
+                                                          <?php }?>
+                              </select>
+                            </div>
+                            <div class="col-md-1">
+                              <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                              <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                              <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                              <button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                            </div>
+                               <!-- If in Edit mode show what we have deemed as eligible -->
+                            <div class="col-md-5">
+                              <select name="to" id="multiselect_to" class="form-control" style='height: 300px;'size="9" multiple="multiple">
+                                  <?php if($mode === 'Edit'){ 
+                                   foreach ($class as $row1){ ?><option value='<?php echo $row1['class_number']. "/" .$row1['class_section']. "/" .$row1['class_name']. "/" .$row1['id']; ?>'><?php echo $row1['class_number'], ' ',$row1['class_section'], ' ', $row1['name']; ?></option>
+                                  <?php }   }            
+                                  ?>
+                              </select>
+                            </div>
+                          </div>     
+                        </div>
+                        <div class="form-inline">
+                            <h2>Add Classes:</h2>
+                            <label for="newClassName">Class Name:</label>
+                            <input type="text" class="form-control" id="newClassName" value="" placeholder="Intro to Porgamming"></input>
+                            <label for="newClassNumber">Class Number:</label>
+                            <input type="text" class="form-control" id="newClassNumber" value="" placeholder="CIS110"></input>
+                            <label for="newClassSection">Class Section:</label>
+                            <input type="text" class="form-control" id="newClassSection" value="" placeholder="C01"></input><br />
+                            <label for="newClassInstructor">Class Instructor:</label>
+                            <input type="text" class="form-control" id="newClassInstructor" value="" placeholder="Jody Strausser"></input><br />
+                            <label for="newInstructorEmail">Instructor Email:</label>
+                            <input type="email" class="form-control" id="newInstructorEmail" value="" placeholder="jstrausser@clarion.edu"></input>
+                        </div>
                     <br/>
                     <a href="#newClassName" role="button" class="btn btn-common uppercase" onclick="addAnotherClass()">Add Class</a>                    
                     <br />
-                    <div class="form-group">
+                     <div class="form-group">
                         <div id="newClasses">
-                            <?php $addClassNumber=0; if($mode === 'Edit'){foreach ($class as $row1){ ?>
-                            <div data-addinstructoremail="<?php echo $row1[id] /* This is the id until we decide if we need email or not */?>" data-addclassinstructor="<?php echo $row1[name] ?>" data-addclasssection="<?php echo $row1[class_section] ?>" data-addclassnumber="<?php echo $row1[class_number] ?>" data-addclassname="<?php echo $row1[class_name] ?>" id="addClass<?php echo $addClassNumber ?>">
-                                <?php echo $row1[class_name] . " " . $row1[class_number] . " " . $row1[class_secton] . " " . $row1[name] ?>
-                                <a onclick="editClass(<?php echo "addClass" . $addClassNumber ?>); return false" role="button" class="btn btn-common uppercase" href="#">Edit Class</a>
-                                <a onclick="removeClass(<?php echo "addClass" . $addClassNumber ?>)" role="button" class="btn btn-common uppercase" href="#newClassName">Remove Class</a>
-                            </div>
-                        <?php $addClassNumber++;}} ?>
+                            
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <!-- Thinking of doing an AJAX array like we do for eligible classes to push to the DB -->
 <!--                        <a href="#" role="button" class="btn btn-common uppercase">Save Event</a>-->
+<!--                        <button role="button" class="btn btn-common uppercase" onclick='createNewEvent();'>Save Event</button>-->
                         <button role="button" class="btn btn-common uppercase" onclick='createNewEvent();'>Save Event</button>
+
                     </div>
                 </div>
             </div>
@@ -123,25 +137,28 @@
     var selectedClasses = [];   
     var eventInfo =[];
     
+    $( document ).ready(function() {
+    $('#multiselect').multiselect();
+});
   
     //Function to create the array we need to post to the database
         // Table Will Need:
             // class_number, class_section, class_name, instructor_id(use name for now), event_id(wont be created yet)
      function addClassList(){
             selectedClasses = [];
-            
+            $("#multiselect_to option").prop('selected', true);
             var valueString;  
-            $("#classesList").each(function(){
+           
+            $("#multiselect_to").each(function(){
                 valueString = ($(this).val());
                 console.log(valueString);
-                //console.log(valueString.length); //Test ValueString
+                if(valueString  !== null){
                 for(i=0; i<valueString.length; i++){
                    tempRes=valueString[i].split("/");
-                    console.log(tempRes); 
                     res={class_number: tempRes[0], class_section: tempRes[1],class_name: tempRes[2], instructor_id: tempRes[3] };
                     selectedClasses.push(res);
                 }
-                //console.log(JSON.stringify(selectedClasses));
+            }
             });
             return selectedClasses;
          }
@@ -153,19 +170,24 @@
          var date = $('#eventDate').val();
          var startTime = $('#eventStartTime').val();
          var endTime = $('#eventEndTime').val();
-         eventInfo = {name: eventName, venue: venue, description: eventDesc, eventDate: date, start: startTime, end: endTime};
-        // eventInfo.push(result);
-         console.log(JSON.stringify(eventInfo));  
+         eventInfo = {name: eventName, venue: venue, description: eventDesc, eventDate: date, start: startTime, end: endTime}; 
          return eventInfo;
      } 
      
        function createNewEvent(){
+        var eventIdCheck = $('#eventIdCheck').html();
+        console.log(eventIdCheck);
         var classList = JSON.stringify(addClassList());
+            console.log(classList);
         var eventDetails = JSON.stringify(createEventData());
-         $.post('../model/addEventAjax.php',{'classList': classList, 'eventDetails': eventDetails},function(response){ 
-             console.log(response);
-            });
-        
+            console.log(eventDetails);
+        var classesToAdd = JSON.stringify(createNewClassesArray());
+            console.log(classesToAdd);
+         $.post('../model/addEventAjax.php',{'eventId': eventIdCheck, 'classList': classList, 'eventDetails': eventDetails, 'classesToAdd':classesToAdd},function(response){ 
+             var event = response;
+             var venue = $('#venue').val();
+             window.location.assign("../controller/controller.php?action=EventDetails&EventID="+event+"&VenueID="+venue+"");
+            });        
     }
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
@@ -183,7 +205,8 @@
                 });
             });
             
-        var addClassCounter = <?php echo $addClassNumber ?>;
+        var addClassCounter = 0;
+        var newClassesForDB = [];
         function addAnotherClass(){
 			//increment the class counter
 			addClassCounter++;
@@ -195,16 +218,17 @@
 			var addClassSection = $("#newClassSection").val();
 			var addClassInstructor = $("#newClassInstructor").val();
 			var addInstructorEmail = $("#newInstructorEmail").val();
-			
+                           
+                            
 			//set up data attributes so we can pull those later to store in DB
 			divNode.id = "addClass" + addClassCounter;
-			divNode.setAttribute("data-addClassName", addClassName);
-			divNode.setAttribute("data-addClassNumber", addClassNumber);
-			divNode.setAttribute("data-addClassSection", addClassSection);
+			divNode.setAttribute("data-class_number", addClassNumber);
+ 			divNode.setAttribute("data-class_section", addClassSection);
+			divNode.setAttribute("data-class_name", addClassName);
 			divNode.setAttribute("data-addClassInstructor", addClassInstructor);
 			divNode.setAttribute("data-addInstructorEmail", addInstructorEmail);
 			divNode.appendChild(document.createTextNode(addClassNumber + " " + addClassSection + " " + addClassInstructor));
-			
+//		s	
 			//set up an edit button to change any discrepancies with classes
 			var editBtn = document.createElement("a");
 			editBtn.setAttribute("href", "#"+divNode.id);
@@ -235,9 +259,9 @@
 		//Called to set up the ability to edit the values of an eligible class
 		function editClass(id){
 			var tempIdNum = parseInt(($(id).attr("id")).match(/(\d+)$/)[0], 10); //Currently limits add to only 9 classes (>9 BREAKS)
-			var tempClassName = $(id).data("addclassname");
-			var tempClassNumber = $(id).data("addclassnumber");
-			var tempClassSection = $(id).data("addclasssection");
+			var tempClassName = $(id).data("class_name");
+			var tempClassNumber = $(id).data("class_number");
+			var tempClassSection = $(id).data("class_section");
 			var tempClassInstructor = $(id).data("addclassinstructor");
 			var tempInstructorEmail = $(id).data("addinstructoremail");
 			$(id).html('<input id="' +"editClassName"+tempIdNum+ '" type="text" class="form-control" value="'+tempClassName+'"></input>'
@@ -259,9 +283,9 @@
 			var tempClassInstructor = $("#editClassInstructor"+tempIdNum).val();
 			var tempInstructorEmail = $("#editInstructorEmail"+tempIdNum).val();
 			
-			$(id).attr("data-addclassname", tempClassName);
-			$(id).attr("data-addclassnumber", tempClassNumber);
-			$(id).attr("data-addclasssection", tempClassSection);
+			$(id).attr("data-class_name", tempClassName);
+			$(id).attr("data-class_number", tempClassNumber);
+			$(id).attr("data-class_section", tempClassSection);
 			$(id).attr("data-addclassinstructor", tempClassInstructor);
 			$(id).attr("data-addinstructoremail", tempInstructorEmail);
                         $(id).attr("value", tempClassName + "/" + tempClassNumber + "/" + tempClassSection + "/" + tempClassInstructor + "/" + tempInstructorEmail);
@@ -270,7 +294,20 @@
 			+ '<a onclick="editClass(' + $(id).attr("id") + '); return false" role="button" class="btn btn-common uppercase" href="#'+$(id).attr("id")+'">Edit Class</a>'
 			+ '<a onclick="removeClass(' + $(id).attr("id") + '); return false" role="button" class="btn btn-common uppercase" href="#'+$(id).attr("id")+'">Remove Class</a> <br />');			
 		}
-    </script>
+                
+                
+                function createNewClassesArray(){
+                    var idCounter;
+                    for(var i = 1; i <= addClassCounter; i++){
+                        idCounter = "#addClass" + i;
+                        tempRes = $(idCounter).data();
+                        //console.log(tempRes);
+                        newClassesForDB.push(tempRes);
+                }
+               // console.log(JSON.stringify(newClassesForDB));
+                return newClassesForDB;
+            } 
+   </script>
 <?php
     require '../view/footerInclude.php';
 ?>
