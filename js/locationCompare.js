@@ -118,21 +118,18 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 },{maximumAge: 30000, timeout: 10000, enableHighAccuracy: true});
        
  }
-     function getSelectedClasses(){
-            selectedClasses = [];
-        
-            var valueString;
-            var event = $('#eventId').html();
-            var email = $('#studentEmail')[0].value + '@eagle.clarion.edu';
-            $("input:checkbox:checked").each(function(){
-                valueString = ($(this).val());
-                tempRes = valueString.split("/"); // Changed split to '/' due to spaces in instructor names
-                res = {class_number: tempRes[0], class_section: tempRes[1], instructor_id: tempRes[2], event_id: event, student_email: email };
-                selectedClasses.push(res);
-            });
-        return selectedClasses;
-         }  
-};
+ function getSelectedClasses(){
+       selectedClasses = [];
 
-//Testing Function to save lots of pionts to DB to build better POLYGONS
-// JUNK FUNCTION THAT I REALLY DONT NEED ANYMORE
+       var valueString;
+       var event = $('#eventId').html();
+       var email = $('#studentEmail')[0].value + '@eagle.clarion.edu';
+       $("input:checkbox:checked").each(function(){
+           valueString = ($(this).val());
+           tempRes = valueString.split("/"); // Changed split to '/' due to spaces in instructor names
+           res = {class_number: tempRes[0], class_section: tempRes[1], instructor_id: tempRes[2], event_id: event, student_email: email };
+           selectedClasses.push(res);
+       });
+   return selectedClasses;
+    }  
+};

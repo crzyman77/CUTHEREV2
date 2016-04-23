@@ -80,6 +80,64 @@ if(!isset($_SESSION))
                     }		
         }
         
+        function clearEventsTable(){
+            $db = getDBConnection();
+            $query ="DELETE FROM  `event`";
+            $statement = $db -> prepare($query); 
+            $success = $statement ->execute();
+            $statement ->closeCursor();
+            if ($success) {
+		return $statement->rowCount();
+            } 
+            else {
+                logSQLError($statement->errorInfo());  // Log error to debug
+            }
+        }
+        
+        function clearClassTable(){
+            $db = getDBConnection();
+            $query ="DELETE FROM  `class`";
+            $statement = $db -> prepare($query);
+            $success = $statement ->execute();
+            $statement ->closeCursor();
+            if ($success) {
+		return $statement->rowCount();
+            } 
+            else {
+                logSQLError($statement->errorInfo());  // Log error to debug
+            }
+        }
+        
+        
+        function clearInstructorTable(){
+            $db = getDBConnection();
+            $query ="DELETE FROM  `instructor`";
+            $statement = $db -> prepare($query);
+            $success = $statement ->execute();
+            $statement ->closeCursor();
+            if ($success) {
+		return $statement->rowCount();
+            } 
+            else {
+                logSQLError($statement->errorInfo());  // Log error to debug
+            }
+            
+        }
+        
+        function clearExtraCreditTable(){
+            $db = getDBConnection();
+            $query ="DELETE FROM  `extra_credit_list`";
+            $statement = $db -> prepare($query);
+            $success = $statement ->execute();
+            $statement ->closeCursor();
+            if ($success) {
+		return $statement->rowCount();
+            } 
+            else {
+                logSQLError($statement->errorInfo());  // Log error to debug
+            }  
+        }
+        
         function deleteClasses($eventID){
             $db = getDBConnection();
             $query = 'DELETE FROM class 
@@ -200,7 +258,7 @@ if(!isset($_SESSION))
                 $query = "SELECT \n"
                             . "	`class_number`, \n"
                             . "	`class_section`, \n"
-                            . "	`inst_id`, \n"
+                            . "	`instructor_id`, \n"
                             . "	`event_id`, \n"
                             . "	`student_email` \n"
                             . "FROM \n"
@@ -405,7 +463,7 @@ if(!isset($_SESSION))
         // Extra Credit Lists
         function addToClassList($class_number, $class_section, $instructor_id, $event_id, $student_email){
             $db = getDBConnection();
-            $query = "INSERT INTO extra_credit_list (`class_number`, `class_section`, `inst_id`, `event_id`,`student_email`) \n"
+            $query = "INSERT INTO extra_credit_list (`class_number`, `class_section`, `instructor_id`, `event_id`,`student_email`) \n"
                     . "VALUES (:class_number, :class_sec, :inst_id, :ev_id, :email)";
             $statement = $db -> prepare ($query);
             $statement->bindValue (':class_number',$class_number);

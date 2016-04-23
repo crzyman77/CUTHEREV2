@@ -42,7 +42,6 @@
             <button role="button" class="btn btn-common uppercase" onclick='getSelectedClasses()'>Generate Reports</button>
 
             </div>
-            <script src="http://alasql.org/console/alasql.min.js"></script> <!-- Need this for download of csv -->
             
             <script>
                 var eventId;
@@ -57,7 +56,7 @@
                     $.post('../model/getEligibleClassesAjax.php',{'eventId': eventId},function(response){ 
                         var event =$.parseJSON(response);    
                    $.each(event, function(i,item) {
-                       liHtml += '<li><label class="btn btn-common"><input type ="checkbox" value="'+item.class_number + '/' + item.class_section + '"></input>' + item.class_name + " " + item.class_number + " " + item.class_section + " " + item.name + '</label></li>';
+                       liHtml += '<li><label class="btn btn-common"><input type ="checkbox" value="'+item.class_number + '/' + item.class_section + '/' + item.name + '"></input>' + item.class_name + " " + item.class_number + " " + item.class_section + " " + item.name + '</label></li>';
                   });
                     $('#details').css("visibility","visible");
                     $('#classes').append(liHtml);
@@ -76,6 +75,7 @@
                         valueString = ($(this).val());
                         tempRes = valueString.split("/"); // Changed split to '/' due to spaces in instructor names
                         var classInfo = tempRes[0] + tempRes[1];
+                        var instructor = tempRes[2];
                         res = {class_number: tempRes[0], class_section: tempRes[1], event_id: eventId };
                         selectedClasses.push(res);
                         $.ajax({
@@ -94,7 +94,8 @@
                                     a.style = "display: none";
                                     return function (data, fileName) {
                                         var csvData = new Array();
-                                        csvData.push('"Student Email"');
+                                        csvData.push('"Instructor: ' + instructor + '"' );
+                                        csvData.push('"Student Emails: "');
                                         data.forEach(function(item, index, array) {
                                           csvData.push('"' + item.student_email + '"');
                                         });
