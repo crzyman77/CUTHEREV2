@@ -14,6 +14,7 @@
   
   body {
     background-image: url(../images/grunge_wall.png);
+    background: #fff;
     font-family: 'Lato', sans-serif;
     font-weight: 300;
     font-size: 14px;
@@ -168,7 +169,7 @@
 
 #header{
   margin-bottom: 0;
-  padding: 30px 0 60px 0;
+  padding: 0px 0 0px 0;
 }
 
 #header .navbar-inverse .container{
@@ -252,7 +253,7 @@
 }
 
 #header .navbar {
-  background: #fff;
+  background: #9b8542;
   border: 0;
   margin-bottom: 0;
 }
@@ -276,9 +277,9 @@
 }
 
 #header .navbar-nav.navbar-right >li a {
-  color: #000;
+  color: #fff;
   font-size: 12px;
-  padding: 20px;
+  padding: 15px;
   text-transform: uppercase;
   font-weight: 300;
 }
@@ -411,9 +412,6 @@ footer {
     margin-bottom: 1.42857em; 
   font-family: 'Baskerville Old Face', 'Times Roman';
     font-size: 46px;}
-    @media only screen and (min-width: 48em) {
-      footer .logo {
-        float: left; } }
   footer section {
     margin-bottom: 0px; }
   footer p {
@@ -425,14 +423,6 @@ footer {
       color: #fff;
       text-decoration: underline; }
 
-@media only screen and (min-width: 48em) {
-  .link-footer div {
-    float: left;
-    width: 31.62393%;
-    margin-left: 2.5641%;
-    margin-top: 0; }
-    .link-footer div:first-child {
-      margin-left: 0; } }
 
 .footer-nav {
   border-top: 3px solid #fff;
@@ -442,18 +432,8 @@ footer {
     margin-bottom: 30px; }
   .footer-nav button {
     text-align: center; }
-  @media only screen and (min-width: 48em) {
-    .footer-nav .row div {
-      float: left;
-      margin-left: 2.5641%;
-      width: 23.07692%; }
-      .footer-nav .row div:first-child {
-        margin-left: 0; } }
   .footer-nav .footer-nav-list {
     display: none; }
-    @media only screen and (min-width: 48em) {
-      .footer-nav .footer-nav-list {
-        display: block; } }
   .footer-nav.menu-open button {
     border-bottom: 3px solid #fff; }
   .footer-nav.menu-open .fa-chevron-down {
@@ -468,20 +448,11 @@ footer {
 
 .misc-links ul {
   border-top: none; }
-@media only screen and (min-width: 48em) {
-  .misc-links {
-    float: right !important; } }
 
 .footer-info {
   background-color: #9b8542; }
   .footer-info ul {
     margin-bottom: 1.42857em; }
-  @media only screen and (min-width: 48em) {
-    .footer-info .container div {
-      float: left;
-      margin-left: 2.5641%; }
-      .footer-info .container div:first-child {
-        margin-left: 0; } }
   .footer-info li {
     float: left; }
     .footer-info li a {
@@ -492,9 +463,6 @@ footer {
     .footer-info li:first-child a {
       border: none;
       padding-left: 0; }
-  @media only screen and (min-width: 48em) {
-    .footer-info {
-      font-size: 1em; } }
 
 #social-footer a {
   border: none;
@@ -807,13 +775,14 @@ footer {
 }
 
 .title {
-  color: #404040;
+  color: #fff;
   font-weight: 300;
+  font-family: 'Baskerville Old Face', 'Times Roman';
 }
 
 .single-features {
   overflow: hidden;
-  padding-top: 65px;
+  padding-top: 25px;
   padding-bottom: 40px;
 }
 
@@ -859,10 +828,9 @@ footer {
 }
 
 #page-breadcrumb {
-  background-image: url(../images/home/tour-bg.png);
-  background-color: #fbfafa;
+  background-color: #193b69;
   background-repeat: repeat-x;
-  height: 130px;
+  height: 100px;
   background-position: center;
   display: table;
   position: static;
@@ -1555,7 +1523,7 @@ Portfolio Details
 *****************************/
 
 #portfolio-information.padding-top{
-  padding-top: 100px;
+  padding-top: 25px;
 }
 
 .project-name h2{
