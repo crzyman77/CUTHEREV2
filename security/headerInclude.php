@@ -2,6 +2,9 @@
 <section class="content">
     <script type="text/javascript" src="attributes.js"></script>
 
+    <div class="container" id='body'>
+            <div class="row">
+                <div class="col-sm-6">
 		<h1>Control Panel</h1>
                 <div class="security">
 		<?php if (userIsAuthorized("SecurityManageUsers")) {  ?>

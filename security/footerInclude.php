@@ -1,3 +1,6 @@
+            </div>
+        </div>
+   </div>
 </div>
 <br class ="clear">
 </section>		

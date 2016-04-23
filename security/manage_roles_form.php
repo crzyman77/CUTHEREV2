@@ -10,7 +10,7 @@
         }
     ?>
     <form action="../security/index.php?action=SecurityRoleDelete" method="post">
-        <table border>
+        <table class="table table-hover table-bordered table-responsive">
             <tr>
                     <td><b>Name</b></td> <td><b>Description</b></td> <td></td> <td></td>
             </tr>

@@ -3,14 +3,13 @@ if(!isset($_SESSION))
   { 
     session_start();
   }
- 
 
 //DOES THIS WORK NOW?
 //require_once '../model/locationModel.php';
 require_once("../security/model.php");
 require_once '../model/model.php';
 require_once '../lib/basic_funcs.php';
-
+ 
 unQuoteMe();
 if (isset($_POST['action'])) {  // check get and post
         $action = $_POST['action'];

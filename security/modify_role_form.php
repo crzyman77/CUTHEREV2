@@ -18,7 +18,7 @@
         ++$i;
     }
 
-    $select1 = "<select id=\"hasAttributes\" name=\"hasAttributes[]\" size=\"10\" style=\"width:200px;\" multiple=\"multiple\">\n";
+    $select1 = "<select id=\"hasAttributes\" class=\"form-control\" name=\"hasAttributes[]\" size=\"10\" style=\"width:300px;\" multiple=\"multiple\">\n";
     for($i = 0; $i < count($has_attributes); ++$i) {
         $attrid = $has_attributes[$i]["id"];
         $attrname = $has_attributes[$i]["name"];
@@ -26,7 +26,7 @@
     }
     $select1 .= "</select>";
 
-    $select2 = "<select id=\"hasntAttributes\" name=\"hasntAttributes[]\" size=\"10\" style=\"width:200px;\" multiple=\"multiple\">\n";
+    $select2 = "<select id=\"hasntAttributes\" class=\"form-control\" name=\"hasntAttributes[]\" size=\"10\" style=\"width:300px;\" multiple=\"multiple\">\n";
     for($i = 0; $i < count($hasnt_attributes); ++$i) {
         $attrid = $hasnt_attributes[$i]["id"];
         $attrname = $hasnt_attributes[$i]["name"];
@@ -48,9 +48,9 @@
                     </td>
 
                     <td>
-                        <input type="button" value=">>" onclick="swap('hasAttributes','hasntAttributes')"><br/>
+                        <button type="button" class="btn btn-block" onclick="swap('hasAttributes','hasntAttributes')"><i class="glyphicon glyphicon-chevron-right"></i></button><br/>
                         <br/>
-                        <input type="button" value="<<" onclick="swap('hasntAttributes','hasAttributes')"><br/>
+                        <button type="button" class="btn btn-block" onclick="swap('hasntAttributes','hasAttributes')"><i class="glyphicon glyphicon-chevron-left"></i></buton><br/>
                     </td>
 
                     <td>

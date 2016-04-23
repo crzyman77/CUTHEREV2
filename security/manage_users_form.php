@@ -11,7 +11,7 @@
     }
 ?>
     <form action="../security/index.php?action=SecurityUserDelete" method="post">
-        <table border>
+        <table class="table table-hover table-bordered table-responsive">
             <tr>
                 <td><b>First Name</b></td>
                 <td><b>Last Name</b></td>
