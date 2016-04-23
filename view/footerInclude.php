@@ -8,8 +8,8 @@
                     <strong>University</strong>
                 </a>
                 <div class="col-md-4">
-                    <p><a href="http://a.cms.clarion.edu/10?skin=oucampus&amp;account=clarion&amp;site=www&amp;action=de&amp;path=/index.pcf" id="direct-edit">© </a> Clarion University of Pennsylvania <br> GPS Address: <a href="https://www.google.com/maps/place/909+E+Wood+St,+Clarion,+PA+16214/@41.2108797,-79.3794223,17z/data=!3m1!4b1!4m2!3m1!1s0x89ccccca95cc9d17:0x292a07243852113b" target="_blank">909 E Wood St. Clarion PA, 16214</a> <br> 
-                    Mailing Address: 840 Wood St. Clarion PA, 16214 <br>
+                    <p><a href="http://a.cms.clarion.edu/10?skin=oucampus&amp;account=clarion&amp;site=www&amp;action=de&amp;path=/index.pcf" id="direct-edit">© </a> Clarion University of Pennsylvania <br /> GPS Address: <a href="https://www.google.com/maps/place/909+E+Wood+St,+Clarion,+PA+16214/@41.2108797,-79.3794223,17z/data=!3m1!4b1!4m2!3m1!1s0x89ccccca95cc9d17:0x292a07243852113b" target="_blank">909 E Wood St. Clarion PA, 16214</a> <br /> 
+                    Mailing Address: 840 Wood St. Clarion PA, 16214 <br />
                     <a href="#">800-672-7171</a> or <a>814-393-2000</a></p>
                 </div>
                 <div id="footer-logos" class="col-md-4">

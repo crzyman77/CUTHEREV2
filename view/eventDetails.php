@@ -33,14 +33,14 @@
                         </ul>
                     </div>
                     <div class="studentLogin overflow">
-                        
-                        <h3> E-mail </h3> 
-                        <input type="text" class="form-control" id="studentEmail" name ='E-mail' value=""/>
-                        <label>@eagle.clarion.edu </label>
-                        <br/>
-                        <h3> Password </h3>
-                        <input type="password" class="form-control" id="studentPass" value=""/>
-                       
+                        <div class="form-inline">
+                            <h4> E-mail </h4>
+                            <input type="text" class="form-control" style="" id="studentEmail" name ='E-mail' value=""/>
+                            <label for="studentEmail"">@eagle.clarion.edu </label>
+                            <br/>
+                            <h4> Password </h4>
+                            <input type="password" class="form-control" id="studentPass" value=""/>
+                        </div>
                     </div> <!-- END EMAIL CONTROLS -->
                     
                     <div class="skills overflow">
