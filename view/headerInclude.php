@@ -11,7 +11,6 @@
     <title><?php echo $title; ?></title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/lightbox.css" rel="stylesheet">
     <link href="../css/animate.min.css" rel="stylesheet"> 
     <link href="../css/main.css" rel="stylesheet">
     <link href="../css/responsive.css" rel="stylesheet">
@@ -20,7 +19,7 @@
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
  
-<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
 
 
@@ -38,7 +37,6 @@
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../js/jquery.isotope.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/lightbox.min.js"></script>
     <script type="text/javascript" src="../js/wow.min.js"></script>
     <script type="text/javascript" src="../js/jquery.fitvids.js"></script>
     <script type="text/javascript" src="../js/holder.js"></script>
