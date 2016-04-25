@@ -23,9 +23,9 @@
         <div class="container" id='body'>
             <div class="row">
               <!--  <div id ='gmap' class="col-sm-6" style="background-color: #DDD">Insert map here? Maybe allow a picture to be uploaded? If not, it's cool.</div>
-                --><div class="col-sm-6">
+                --><div class="col-sm-12">
                     <div class="project-info">
-                        <div class="form-group">
+                        <div class="form-group col-sm-4">
                             <h2>Event Name</h2>
                             <input type="text" class="form-control" id="eventName" value="<?php if($mode === 'Edit'){echo $EventName;} ?>"/>
                             <div class='form-group'>
@@ -36,50 +36,57 @@
                             </select>
                             </div>
                             <div id='eventIdCheck' style='visibility: hidden;'> <?php echo $EventID; ?> </div>
+                        </div>
+                        <div class="col-sm-4">
                             <h2>Event Description</h2>
-                            <textarea class="form-control" rows="5" id="eventDescription"><?php if($mode === 'Edit'){echo $EventDescription;} ?></textarea>
+                            <textarea class="form-control" rows="6" id="eventDescription"><?php if($mode === 'Edit'){echo $EventDescription;} ?></textarea>
                         </div>
-                        <h2>Time and Date</h2>
-                        <h3>Date</h3>
-                        <div class="form-group">
-                            <div class='input-group date' id='datePicker'>
-                                <input type='text' class="form-control" id="eventDate" value="<?php if($mode === 'Edit'){echo toReadableDate($EventDate);} ?>"/>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-time"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <h3>Start Time</h3>
-                        <div class="form-group">
-                            <div class='input-group date' id='startTimePicker'>
-                                <input type='text' class="form-control" id="eventStartTime" value="<?php if($mode === 'Edit'){echo to12HourTime($EventStart);} ?>"/>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-time"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <h3>End Time</h3>
-                        <div class="form-group">
-                            <div class='input-group date' id='endTimePicker'>
-                                <input type='text' class="form-control" id="eventEndTime" value="<?php if($mode === 'Edit'){echo to12HourTime($EventEnd);} ?>" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-time"></span>
-                                </span>
+                        <div class="form-group col-sm-12">
+                            <h2>Time and Date</h2>
+                            <div class="col-sm-4">
+                                <h3>Date</h3>
+                                <div class='input-group date' id='datePicker'>
+                                    <input type='text' class="form-control" id="eventDate" value="<?php if($mode === 'Edit'){echo toReadableDate($EventDate);} ?>"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+
+                                <h3>Start Time</h3>
+                                <div class="form-group">
+                                    <div class='input-group date' id='startTimePicker'>
+                                        <input type='text' class="form-control" id="eventStartTime" value="<?php if($mode === 'Edit'){echo to12HourTime($EventStart);} ?>"/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <h3>End Time</h3>
+                                <div class="form-group">
+                                    <div class='input-group date' id='endTimePicker'>
+                                        <input type='text' class="form-control" id="eventEndTime" value="<?php if($mode === 'Edit'){echo to12HourTime($EventEnd);} ?>" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-12">
                     <div class="form-group">
                         <h2>Eligible Classes:</h2>
                         <br/>  
                            <div class="row">
                                <!-- Print OUT ALl Possible Classes in System -->
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                               <select name="from" id="multiselect" class="form-control" style='height: 300px;' multiple="multiple">
                                    <?php foreach ($allClasses as $row1){ ?><option value='<?php echo $row1['class_number']. "/" .$row1['class_section']. "/" .$row1['class_name']. "/" .$row1['id']; ?>'><?php echo $row1['class_number'], ' ',$row1['class_section'], ' ', $row1['name']; ?></option>
                                                           <?php }?>
                               </select>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                               <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
                               <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
                               <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
@@ -94,36 +101,42 @@
                                   ?>
                               </select>
                             </div>
-                          </div>     
-                        </div>
+                        </div>     
+                    </div>
+                </div>
+                <div class="col-sm-12">
                         <div class="form-inline">
                             <h2>Add Classes:</h2>
                             <label for="newClassName">Class Name:</label>
-                            <input type="text" class="form-control" id="newClassName" value="" placeholder="Intro to Porgamming"></input>
+                            <input type="text" class="form-control" id="newClassName" value="" placeholder="Intro to Business"></input>
                             <label for="newClassNumber">Class Number:</label>
-                            <input type="text" class="form-control" id="newClassNumber" value="" placeholder="CIS110"></input>
+                            <input type="text" class="form-control" id="newClassNumber" value="" placeholder="BUS100"></input>
                             <label for="newClassSection">Class Section:</label>
                             <input type="text" class="form-control" id="newClassSection" value="" placeholder="C01"></input><br />
                             <label for="newClassInstructor">Class Instructor:</label>
-                            <input type="text" class="form-control" id="newClassInstructor" value="" placeholder="Jody Strausser"></input><br />
+                            <input type="text" class="form-control" id="newClassInstructor" value="" placeholder="Paul Woodburne"></input>
                             <label for="newInstructorEmail">Instructor Email:</label>
-                            <input type="email" class="form-control" id="newInstructorEmail" value="" placeholder="jstrausser@clarion.edu"></input>
+                            <input type="email" class="form-control" id="newInstructorEmail" value="" placeholder="pwoodburne@clarion.edu"></input>
                         </div>
+                </div>
                     <br/>
                     <a href="#newClassName" role="button" class="btn btn-common uppercase" onclick="addAnotherClass()">Add Class</a>                    
-                    <br />
-                     <div class="form-group">
-                        <div id="newClasses">
+                    <br /><br />
+                     <div class="form-group col-sm-12">
+                        <h3>Manually Added Classes:</h3>
+                        <div id="newClasses" class="col-sm-6">
                             
                         </div>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="form-group col-sm-12">
                         <!-- Thinking of doing an AJAX array like we do for eligible classes to push to the DB -->
 <!--                        <a href="#" role="button" class="btn btn-common uppercase">Save Event</a>-->
 <!--                        <button role="button" class="btn btn-common uppercase" onclick='createNewEvent();'>Save Event</button>-->
                         <button role="button" class="btn btn-common uppercase" onclick='createNewEvent();'>Save Event</button>
-
+                        <?php if(userIsAuthorized('AddEvent') && $mode ==='Edit') { ?>
+                        <button role="button" class="btn btn-common uppercase" onclick="">Delete Event</button>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -232,17 +245,15 @@
 			//set up an edit button to change any discrepancies with classes
 			var editBtn = document.createElement("a");
 			editBtn.setAttribute("href", "#"+divNode.id);
-			editBtn.setAttribute("class", "btn btn-common uppercase");
-			editBtn.setAttribute("role", "button");
 			editBtn.setAttribute("onclick", "editClass(" + divNode.id + "); return false");
-			editBtn.appendChild(document.createTextNode("Edit Class"));
+			editBtn.appendChild(document.createTextNode(" Edit Class"));
 			divNode.appendChild(editBtn);
+                        
+                        divNode.appendChild(document.createTextNode(" | "));
 			
 			//set up a remove button to quickly remove eligible classes
 			var rmvBtn = document.createElement("a");
 			rmvBtn.setAttribute("href", "#newClassName");
-			rmvBtn.setAttribute("class", "btn btn-common uppercase");
-			rmvBtn.setAttribute("role", "button");
 			rmvBtn.setAttribute("onclick", "removeClass(" + divNode.id + ")");
 			rmvBtn.appendChild(document.createTextNode("Remove Class"));
 			divNode.appendChild(rmvBtn);
@@ -291,8 +302,8 @@
                         $(id).attr("value", tempClassName + "/" + tempClassNumber + "/" + tempClassSection + "/" + tempClassInstructor + "/" + tempInstructorEmail);
 			
 			$(id).html(tempClassNumber + " " + tempClassSection + " " + tempClassInstructor 
-			+ '<a onclick="editClass(' + $(id).attr("id") + '); return false" role="button" class="btn btn-common uppercase" href="#'+$(id).attr("id")+'">Edit Class</a>'
-			+ '<a onclick="removeClass(' + $(id).attr("id") + '); return false" role="button" class="btn btn-common uppercase" href="#'+$(id).attr("id")+'">Remove Class</a> <br />');			
+			+ '<a onclick="editClass(' + $(id).attr("id") + '); return false" href="#'+$(id).attr("id")+'"> Edit Class</a> | '
+			+ '<a onclick="removeClass(' + $(id).attr("id") + '); return false" href="#'+$(id).attr("id")+'">Remove Class</a> <br />');			
 		}
                 
                 

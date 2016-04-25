@@ -41,6 +41,9 @@
                             <th>Date</th>
                             <th>Begin Time</th>
                             <th>End Time</th>
+                            <?php if(userIsAuthorized("AddEvent")) { //If a user can add events, they should be allowed to delete them?>
+                            <th>Delete Events</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +54,9 @@
                             <td><?php echo toReadableDate($row['event_date']) ?></td>
                             <td><?php echo to12HourTime($row['start_time']) ?></td>
                             <td><?php echo to12HourTime($row['end_time']) ?></td>
+                            <?php if(userIsAuthorized("AddEvent")) { //If a user can add events, they should be allowed to delete them?>
+                            <td><button role="button" class="btn btn-common uppercase" onclick="">Delete Event</button></td>
+                            <?php } ?>
                         </tr>
                         <?php } ?></tbody>
                 </table>
