@@ -27,13 +27,13 @@
 							</tr>
 						</thead>
 						<tr>
-							<td>Intro to Porgramming</td>
+							<td>Intro to Programming</td>
 							<td>CIS202</td><td>C01</td>
 							<td>Jody Strausser</td>
 							<td>jstrausser@clarion.edu</td>
 						</tr>
 						<tr>
-							<td>Intro to Porgramming</td>
+							<td>Intro to Programming</td>
 							<td>CIS202</td>
 							<td>C03</td>
 							<td>Jody Strausser</td>
@@ -65,7 +65,7 @@
                 window.document.location = $(this).data("href");
             });
         });
-		
+		var uploadClassArray = [];
 		function DisplayFile() {
 		var fileUpload = document.getElementById("file");
 		var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv)$/;
@@ -79,7 +79,7 @@
 					var rows = e.target.result.split("\n");
 					var haveBody = false;
 					var body;
-					for (var i = 0; i < rows.length; i++) {
+					for (var i = 0; i < rows.length-1; i++) {
 						if(i===0){
 							var header = table.createTHead();
 							var row = header.insertRow(-1);
@@ -96,9 +96,19 @@
 							}
 							var row = body.insertRow(-1);
 							var cells = rows[i].split(",");
+                                                        var classString="";
 							for (var j = 0; j < cells.length; j++) {
 								var cell = row.insertCell(-1);
 								cell.innerHTML = cells[j];
+                                                                    //Class Name/Class Number/Class Section/Isntructor Name/Instructor Email
+                                                                        if(j==cells.length-1){
+                                                                            classString += cells[j].toString();
+                                                                            tempRes = classString.split("/");
+                                                                            res={class_name: tempRes[0], class_number: tempRes[1], class_section: tempRes[2], instructor_name: tempRes[3], instructor_email: tempRes[4] };
+                                                                            uploadClassArray.push(res);
+                                                                        }
+                                                                        else
+                                                                          classString += cells[j].toString() + "/";
 							}
 						}
 					}
@@ -108,6 +118,7 @@
 				}
 				reader.readAsText(fileUpload.files[0]);
 				document.getElementById("upload").removeAttribute("disabled");
+                                console.log(uploadClassArray);
 			} else {
 				alert("This browser does not support HTML5.");
 			}
