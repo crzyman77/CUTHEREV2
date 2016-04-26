@@ -17,7 +17,7 @@
                 <td><b>Last Name</b></td>
                 <td><b>User Name</b></td>
                 <td><b>Email</b></td>
-                <td></td>
+                <td><b>Credentials & Role</b></td>
                 <td></td>
             </tr>
 	<?php

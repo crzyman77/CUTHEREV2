@@ -12,7 +12,7 @@
     <form action="../security/index.php?action=SecurityRoleDelete" method="post">
         <table class="table table-hover table-bordered table-responsive">
             <tr>
-                    <td><b>Name</b></td> <td><b>Description</b></td> <td></td> <td></td>
+                <td><b>Name</b></td> <td><b>Description</b></td> <td><b>Privileges</b></td> <td></td>
             </tr>
             <?php
                 $j = 0;

@@ -81,12 +81,14 @@
                            <div class="row">
                                <!-- Print OUT ALl Possible Classes in System -->
                             <div class="col-md-5">
+                              <label for="multiselect">Usable Classes</label>
                               <select name="from" id="multiselect" class="form-control" style='height: 300px;' multiple="multiple">
                                    <?php foreach ($allClasses as $row1){ ?><option value='<?php echo $row1['class_number']. "/" .$row1['class_section']. "/" .$row1['class_name']. "/" .$row1['id']; ?>'><?php echo $row1['class_number'], ' ',$row1['class_section'], ' ', $row1['name']; ?></option>
                                                           <?php }?>
                               </select>
                             </div>
                             <div class="col-md-2">
+                              <label></label>
                               <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
                               <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
                               <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
@@ -94,6 +96,7 @@
                             </div>
                                <!-- If in Edit mode show what we have deemed as eligible -->
                             <div class="col-md-5">
+                              <label for="multiselect-to">Classes For the Event</label>
                               <select name="to" id="multiselect_to" class="form-control" style='height: 300px;'size="9" multiple="multiple">
                                   <?php if($mode === 'Edit'){ 
                                    foreach ($class as $row1){ ?><option value='<?php echo $row1['class_number']. "/" .$row1['class_section']. "/" .$row1['class_name']. "/" .$row1['id']; ?>'><?php echo $row1['class_number'], ' ',$row1['class_section'], ' ', $row1['name']; ?></option>
