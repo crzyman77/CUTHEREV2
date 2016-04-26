@@ -18,7 +18,6 @@
     <link href="../css/style.css" rel="stylesheet">
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
- 
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
 
@@ -53,7 +52,8 @@
 </head><!--/head-->
 
 <body>     
-	<header id="header">
-        <?php include '../view/navInclude.php'; ?>
- 	</header>
+    <header id="header">
+    <?php include '../view/navInclude.php'; ?>
+    </header>
     <!--/#header-->
+    <div class="wrapper">

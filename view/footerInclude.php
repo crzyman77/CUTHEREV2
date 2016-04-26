@@ -1,10 +1,12 @@
-    <footer id="footer" class="footer">
-        <section class="footer-info">
-            <div class="container">
+    </div>
+    <footer>
+        <section>
+            <div class="push"></div>
+            <div class="footer footer-info">
                 <br />
                 <a href="http://clarion.edu/" class="logo col-md-4 hidden-sm hidden-xs">
                     <strong>Clarion</strong>
-                    <br />
+                    
                     <strong>University</strong>
                 </a>
                 <div class="col-md-4">

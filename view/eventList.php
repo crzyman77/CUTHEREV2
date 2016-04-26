@@ -20,8 +20,8 @@
    </section>
     <!--/#action-->
     
-    <section id="portfolio-information" class="padding-top">
-        <div class="container">
+    <section id="portfolio-information" class="padding-top padding-bottom">
+        <div class="container padding-bottom">
             <div class="row">
                 <!-- CG: Just Was Printing out for test purposes, feel free to delete whenver -->
                 <?php 

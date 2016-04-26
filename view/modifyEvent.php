@@ -108,15 +108,15 @@
                         <div class="form-inline">
                             <h2>Add Classes:</h2>
                             <label for="newClassName">Class Name:</label>
-                            <input type="text" class="form-control" id="newClassName" value="" placeholder="Intro to Business"></input>
+                            <input type="text" class="form-control" id="newClassName" value="" placeholder="Intro to Business" required></input>
                             <label for="newClassNumber">Class Number:</label>
-                            <input type="text" class="form-control" id="newClassNumber" value="" placeholder="BUS100"></input>
+                            <input type="text" class="form-control" id="newClassNumber" value="" pattern="[A-Za-z]{1,6}+[0-9]{2,3}" placeholder="BUS100" required></input>
                             <label for="newClassSection">Class Section:</label>
-                            <input type="text" class="form-control" id="newClassSection" value="" placeholder="C01"></input><br />
+                            <input type="text" class="form-control" id="newClassSection" value="" pattern="[A-Za-z]{1,5}+[0-9]{2,3}" placeholder="C01" required></input><br />
                             <label for="newClassInstructor">Class Instructor:</label>
-                            <input type="text" class="form-control" id="newClassInstructor" value="" placeholder="Paul Woodburne"></input>
+                            <input type="text" class="form-control" id="newClassInstructor" value="" placeholder="Paul Woodburne" required></input>
                             <label for="newInstructorEmail">Instructor Email:</label>
-                            <input type="email" class="form-control" id="newInstructorEmail" value="" placeholder="pwoodburne@clarion.edu"></input>
+                            <input type="email" class="form-control" id="newInstructorEmail" value="" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="pwoodburne@clarion.edu" required></input>
                         </div>
                 </div>
                     <br/>
@@ -221,18 +221,18 @@
         var addClassCounter = 0;
         var newClassesForDB = [];
         function addAnotherClass(){
+            var addClassName = $("#newClassName").val();
+            var addClassNumber = $("#newClassNumber").val();
+            var addClassSection = $("#newClassSection").val();
+            var addClassInstructor = $("#newClassInstructor").val();
+            var addInstructorEmail = $("#newInstructorEmail").val();    
+            if(addClassName != "" && addClassNumber !="" && addClassInstructor != "" && addInstructorEmail != ""){
 			//increment the class counter
 			addClassCounter++;
 			
 			//create a new div element node and populate it with the necessary values
 			var divNode = document.createElement("div");
-			var addClassName = $("#newClassName").val();
-			var addClassNumber = $("#newClassNumber").val();
-			var addClassSection = $("#newClassSection").val();
-			var addClassInstructor = $("#newClassInstructor").val();
-			var addInstructorEmail = $("#newInstructorEmail").val();
-                           
-                            
+			
 			//set up data attributes so we can pull those later to store in DB
 			divNode.id = "addClass" + addClassCounter;
 			divNode.setAttribute("data-class_number", addClassNumber);
@@ -260,6 +260,20 @@
 			
 			//make the div real
 			document.getElementById("newClasses").appendChild(divNode);
+                    }
+                    else{
+                        var alertString = "Please amend the following:\n";
+                        if(addClassName == "")
+                            alertString += "Add a Class Name\n";
+                        if(addClassNumber =="")
+                            alertString += "Add a Class Number\n";
+                        if(addClassInstructor == "")
+                            alertString += "Add an Instructor\n";
+                        if(addInstructorEmail == "")
+                            alertString += "Add an Instructor Email";
+                        alert(alertString);
+                        window.location.hash = '#newClassName';
+                    }
         }
 		
 		//removes a given DOM element using jquery

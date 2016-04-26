@@ -17,7 +17,7 @@
    </section>
     <div class="container" id='body'>
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                 <div class="security">
 		<?php if (userIsAuthorized("SecurityManageUsers")) {  ?>
 				<a href="../security/index.php?action=SecurityManageUsers">Manage Users</a> &nbsp;

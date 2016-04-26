@@ -14,16 +14,21 @@
   
   body {
     background-image: url(../images/grunge_wall.png);
-    background: #fff;
     font-family: 'Lato', sans-serif;
     font-weight: 300;
     font-size: 14px;
     line-height: 22px;
     color: #000;
+    margin:0;
   }
-
+  
+  .container{
+      min-height: 100%;
+  }
+  
   html {
-    height: 100%;
+    background-image: url(../images/grunge_wall.png);
+    height:100%;
   }
 
 
@@ -388,7 +393,7 @@ ul.sub-menu {
 **************************/
 
 #footer {
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   background-image: url(../images/home/footer.png);
   background-repeat: repeat-x;
   background-position: bottom;
@@ -396,22 +401,44 @@ ul.sub-menu {
 }
 
 #footer h1{
-  margin-bottom: 65px;
+  margin-bottom: 45px;
   margin-top: 36px;
 }
 
 #footer .bottom-separator {
-  margin-bottom: 60px;
+  margin-bottom: 0px;
 }
 
-footer {
+.footer {
   font-size: 0.85714em;
-  color: #fff; }
+  color: #fff;
+  height: 150px;
+  width:100%
+  clear: both
+  }
+  
+  .push {
+      clear: both;
+      150px;
+  }
+
+  .wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto 0px;
+  }
+  
   footer .logo {
     display: block;
-    margin-bottom: 1.42857em; 
-  font-family: 'Baskerville Old Face', 'Times Roman';
+    margin-bottom: 0em; 
+    font-family: 'Baskerville Old Face', 'Times Roman';
     font-size: 46px;}
+  footer .logo strong{
+      display:block;
+      clear:both;
+      padding:0px;
+  }
   footer section {
     margin-bottom: 0px; }
   footer p {
@@ -1524,6 +1551,7 @@ Portfolio Details
 
 #portfolio-information.padding-top{
   padding-top: 25px;
+  height:100%;
 }
 
 .project-name h2{
