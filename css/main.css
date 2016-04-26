@@ -415,13 +415,13 @@ ul.sub-menu {
   font-size: 0.85714em;
   color: #fff;
   height: 150px;
-  width:100%
-  clear: both
+  width:100%;
+  clear: both;
   }
   
   .push {
       clear: both;
-      150px;
+     // 150px;
   }
 
   .wrapper {
