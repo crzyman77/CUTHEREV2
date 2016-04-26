@@ -47,7 +47,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i=0; foreach ($events as $row){ $i++; ?><tr class ="clickable-row" data-href="../controller/controller.php?action=EventDetails&amp;EventID=<?php echo $row['id'] ?>&amp;VenueID=<?php echo $row['location']?>">
+                        <?php $i=0; foreach ($events as $row){ $i++; ?>
+                        <tr class ="clickable-row eventRow" data-event= "<?php echo $row['id']?>" data-href="../controller/controller.php?action=EventDetails&amp;EventID=<?php echo $row['id'] ?>&amp;VenueID=<?php echo $row['location']?>">
                             <td><a> <?php echo $row['name'] ?></a></td>
                             <td><?php echo $row['building_name'] ?></td>
                             <td><?php echo $row['room_number'] ?></td>
@@ -55,12 +56,13 @@
                             <td><?php echo to12HourTime($row['start_time']) ?></td>
                             <td><?php echo to12HourTime($row['end_time']) ?></td>
                             <?php if(userIsAuthorized("AddEvent")) { //If a user can add events, they should be allowed to delete them?>
-                            <td><button role="button" class="btn btn-common uppercase" onclick="">Delete Event</button></td>
+                            <td><button role="button" class="btn btn-common uppercase deleteEventButton" onclick="bindEvents">Delete Event</button></td>
                             <?php } ?>
                         </tr>
                         <?php } ?></tbody>
                 </table>
             </div>
+           
         </div>
     </section>
     
@@ -69,7 +71,23 @@
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
             });
+            
         });
+
+        
+        function bindEvents() {
+            jQuery(".deleteEventButton").click(function(e){
+                //alert(e);
+                var eventId = $('.eventRow').data("event");
+                alert(eventId);
+                $.post('../model/deleteSingleEventAjax.php',{'event':eventId},function(response){ 
+                    console.log(response);
+                });
+                jQuery(e.target).closest(".eventRow").remove();
+            });
+        }
+        
+        
     </script>
 <?php
     require '../view/footerInclude.php';

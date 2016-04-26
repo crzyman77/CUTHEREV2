@@ -39,7 +39,7 @@
                 <ul id="classes" class="nav navbar-nav navbar-default">
                     
                 </ul>
-            <button role="button" class="btn btn-common uppercase" onclick='getSelectedClasses()'>Generate Reports</button>
+            <button role="button" class="btn btn-common uppercase" onclick='getSelectedClasses()'>Download Class Attendance List</button>
 
             </div>
             
