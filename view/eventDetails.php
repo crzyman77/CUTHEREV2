@@ -14,9 +14,9 @@
                     <div class="project-name overflow">
                             <!-- HIDDEN DIVS TO GET DATA FROM DB TO JS FAST -->
                         <div id="eventId" style="visibility:hidden;"><?php echo $EventID;?></div>
-                        <div id="venueId" style="visibility:hidden;"><?php echo $VenueID; ?></div>
-                        <div id="startTime" style="visibility:hidden;"><?php echo $row['start_time']; ?></div>
-                        <div id='eventDateNoFormat' style="visibility:hidden;"><?php echo $row['event_date']; ?></div>
+                        <div id="venueId" style="visibility:hidden;display:none;"><?php echo $VenueID; ?></div>
+                        <div id="startTime" style="visibility:hidden;display:none;"><?php echo $row['start_time']; ?></div>
+                        <div id='eventDateNoFormat' style="visibility:hidden;display:none;"><?php echo $row['event_date']; ?></div>
                         <!-- End HIDDEN DIV -->
                         <h1 id="eventName" class="bold"><?php echo $row['name'] ?></h1>
                         <ul class="nav navbar-nav navbar-default">
@@ -36,7 +36,7 @@
                         <div class="form-inline">
                             <h4> E-mail </h4>
                             <input type="text" class="form-control" style="" id="studentEmail" name ='E-mail' value=""/>
-                            <label for="studentEmail">@eagle.clarion.edu </label>
+                            <label for="studentEmail"">@eagle.clarion.edu </label>
                             <br/>
                             <h4> Password </h4>
                             <input type="password" class="form-control" id="studentPass" value=""/>
@@ -57,7 +57,7 @@
                         <a href="../controller/controller.php?action=EditEvent&amp;EventID=<?php echo $EventID ?>" role="button" class="btn btn-common uppercase">Edit Event</a>
                      <?php } ?>
                      <?php if(userIsAuthorized("AddEvent")) { //If a user can add events, they should be allowed to delete them?>
-                     <button role="button" class="btn btn-common uppercase" onclick="deleteEvent()">Delete Event</button>
+                     <button role="button" class="btn btn-common uppercase" onclick="">Delete Event</button>
                      <?php } ?>
                     </div>
                 </div>
@@ -73,16 +73,7 @@
                     // IF Good will check location -- False error and Redirect
                         // If Good will allow post users selected classes to DB --False Error and Redirect
         
-      function deleteEvent(){
-          var eventId = $('#eventId').html();
-          //console.log(event);
-          $.post('../model/deleteSingleEventAjax.php',{'event':eventId},function(response){ 
-                    console.log(response);
-                    window.location.assign("../controller/controller.php?action=Home");
-                });
-          
-      }
-      
+            
       function beginCheckIn(){
             var start = $('#startTime').html();
             var eventDate = $('#eventDateNoFormat').html();

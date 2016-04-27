@@ -174,7 +174,8 @@
 
 #header{
   margin-bottom: 0;
-  padding: 0px 0 0px 0;
+  margin-top: 0;
+  padding: 0px 0px 0px 0px;
 }
 
 #header .navbar-inverse .container{
@@ -183,7 +184,7 @@
 
 .search{
   position: absolute;
-  top: 20px;
+  top: 0px;
   right: 0;
   z-index: 1;
 }
@@ -212,7 +213,7 @@
   font-weight: 300;
   outline: none;
   border: 1px solid #00aeef;
-  margin-top: 20px;
+  margin-top: 0px;
   border-radius: 4px;
 }
 
@@ -261,10 +262,11 @@
   background: #9b8542;
   border: 0;
   margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 #header .navbar-toggle{
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 #header .navbar-brand{

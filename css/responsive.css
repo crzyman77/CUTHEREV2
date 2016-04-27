@@ -78,7 +78,7 @@
   }
 
   #header .navbar-nav.navbar-right >li a {
-    padding: 20px 10px;
+    padding: 0px 10px;
   }
 
   #home-slider {
@@ -205,8 +205,8 @@
   }
 
   #header {
-    padding-bottom: 40px;
-    padding-top: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
   }
 
   .social-icons.pull-right{
