@@ -24,12 +24,19 @@
         <div class="container">
   
            Use this page at the end of each year or semester to clean out previous data within the tables of the database. 
+           This will clear out the data from the following tables:
+           <ul>
+               <li> Events </li>
+               <li> Classes </li>
+               <li> Instructors </li>
+               <li> Event Attendees </li>
+           </ul>
            <br/>
-           <button role="button" class="btn btn-common uppercase" onclick='deleteEvent();'> Delete Events </button>
+<!--           <button role="button" class="btn btn-common uppercase" onclick='deleteEvent();'> Delete Events </button>
            
            <button role="button" class="btn btn-common uppercase" onclick='deleteClass();'> Delete Classes and Instructors </button>
            
-           <button role="button" class="btn btn-common uppercase" onclick='deleteExtraCredit();'> Delete Extra-Credit-List </button>
+           <button role="button" class="btn btn-common uppercase" onclick='deleteExtraCredit();'> Delete Extra-Credit-List </button>-->
            <br/>
            <button role="button" class="btn btn-common uppercase" onclick='deleteAll();'> Clear All Tables </button>
 

@@ -130,6 +130,7 @@ if (isset($_POST['action'])) {  // check get and post
     
     function editEvent() {
         $EventID = $_GET['EventID'];
+        $VenueID = $_GET['VenueID'];
         if (!isset($EventID)) {
             $errorMessage = 'You must provide an EventID to display an event.';
             include '../view/404.php';
@@ -141,6 +142,7 @@ if (isset($_POST['action'])) {  // check get and post
             } else {
                 $mode = "Edit";
                 $EventID = $_GET['EventID'];
+                $VenueID = $_GET['VenueID'];
                 $EventName = $row['name'];
                 $EventBuilding = $row['building_name'];
                 $EventRoom = $row['room_number'];

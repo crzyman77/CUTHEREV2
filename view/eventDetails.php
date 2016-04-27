@@ -54,7 +54,7 @@
                         <input type='submit' class ='btn btn-common uppercase' onclick="beginCheckIn();"  name='Check-In' value='checkin' />
                      <!--   <a role="button" class="btn btn-common uppercase" onclick="makeMyArray()"> Check-In</a> -->
                      <?php if (userIsAuthorized("EditEvent")) { ?>
-                        <a href="../controller/controller.php?action=EditEvent&amp;EventID=<?php echo $EventID ?>" role="button" class="btn btn-common uppercase">Edit Event</a>
+                        <a href="../controller/controller.php?action=EditEvent&amp;EventID=<?php echo $EventID ?>&amp;VenueID=<?php echo $VenueID ?>" role="button" class="btn btn-common uppercase">Edit Event</a>
                      <?php } ?>
                      <?php if(userIsAuthorized("AddEvent")) { //If a user can add events, they should be allowed to delete them?>
                      <button role="button" class="btn btn-common uppercase" onclick="">Delete Event</button>

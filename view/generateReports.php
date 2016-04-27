@@ -50,6 +50,7 @@
                 var selectedClasses = [];
                 //Get the eligilbe classes from the DB based on the eventId, uses ASYNCH Ajax Call
                 function submitEvent(){
+                    $('#classes').empty();
                      eventId = ($('#event').val());
                    //var trHtml;
                    var liHtml = " ";
@@ -69,6 +70,7 @@
                     selectedClasses = [];
                     classCounter = 0;
                     var valueString;
+                    
                     $("input:checkbox:checked").each(function(){
                         selectedClasses=[];
                         res='';

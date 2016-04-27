@@ -31,7 +31,8 @@
                             <div class='form-group'>
                             <h2>Event Location</h2>
                             <select id='venue' class="form-control">
-                                <?php foreach ($venue as $row){ ?><option value='<?php echo $row['id'];?>'><?php echo $row['building_name'], ' ',$row['room_number']; ?></option>
+                                <option selected disabled>Select The Venue</option>
+                                <?php foreach ($venue as $row){ ?><option <?php if($VenueID == $row['id']){ ?> selected <?php } ?>value='<?php echo $row['id'];?>'><?php echo $row['building_name'], ' ',$row['room_number']; ?></option>
                         <?php }?>
                             </select>
                             </div>
