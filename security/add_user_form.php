@@ -20,21 +20,21 @@
     <h1>Add User</h1>
 
     <form id="AddUserForm" action="../security/index.php?action=SecurityProcessUserAddEdit" method="post">
+        <div class="form-group col-md-3">
+            <label>First Name*:</label> <input type="text" name="FirstName" class="form-control" size="20" value="" autofocus required ><br/>
 
-        <label>First Name*:</label> <input type="text" name="FirstName" size="20" value="" autofocus required ><br/>
+            <label>Last Name*:</label> <input type="text" name="LastName" class="form-control" size="20" value=""><br/>
 
-        <label>Last Name*:</label> <input type="text" name="LastName" size="20" value=""><br/>
+            <label>User Name*:</label> <input type="text" name="UserName" id="UserName" class="form-control" onchange="checkUserName(false)" size="20" value="" required ><br/>
 
-        <label>User Name*:</label> <input type="text" name="UserName" id="UserName" onchange="checkUserName(false)" size="20" value="" required ><br/>
+            <label>Password*:</label> <input type="password" name="Password" class="form-control" size="20" value=""><br/>
 
-        <label>Password*:</label> <input type="password" name="Password" size="20" value=""><br/>
+            <label>Email*:</label> <input type="text" name="Email" size="20" class="form-control" value=""><br/>
 
-        <label>Email*:</label> <input type="text" name="Email" size="20" value=""><br/>
+            <br/>
 
-        <br/>
-
-        <input type="submit" value="Submit" />
-
+            <input type="submit" class="btn btn-common" value="Submit" />
+        </div>
     </form>
 
 <?php

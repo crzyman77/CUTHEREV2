@@ -54,7 +54,7 @@
         <input type="hidden" name="numListed" value="<?php echo count($results); ?>"/>
         <?php
             if (userIsAuthorized("SecurityUserDelete")) {
-                echo "<input type=\"submit\" value=\"Delete Selected\"/>";
+                echo "<input type=\"submit\" class=\"btn btn-common\" value=\"Delete Selected\"/>";
             }
         ?>
     </form>

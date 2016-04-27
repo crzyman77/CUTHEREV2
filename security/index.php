@@ -15,7 +15,7 @@
         if(!loggedIn()) {
             header("Location:../security/index.php?action=SecurityLogin&RequestedPage=" . urlencode($_SERVER['REQUEST_URI']));
         } else {
-            include('../security/not_authorized.html');
+            include('../view/404.php');
         }
     } else {
         switch ($action) {

@@ -37,30 +37,36 @@
         <h2>Modify Role</h2>
 
         <form action="../security/index.php?action=SecurityProcessRoleAddEdit" method="post" onsubmit="selectAll('hasAttributes')">
-            <input type="hidden" name="RoleID" value="<?php echo $id; ?>"/>
-            Name:  <input type="text" name="Name" size="20" value="<?php echo $name; ?>" autofocus required  /><br/>
-            Description: <input type="text" name="Description" size="20" value="<?php echo $desc; ?>" />
-            <table>
-                <tr>
-                    <td>
-                        <b>Is</b><br/>
-                        <?php echo $select1; ?>
-                    </td>
+            <div class="col-md-12">
+                <input type="hidden" name="RoleID" value="<?php echo $id; ?>"/>
+                <div class="form-group col-md-3">
+                    Name:  <input type="text" name="Name" size="20" class="form-control" value="<?php echo $name; ?>" autofocus required  /><br/>
+                    Description: <input type="text" name="Description" class="form-control" size="20" value="<?php echo $desc; ?>" />
+                </div>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <b>Is</b><br/>
+                            <?php echo $select1; ?>
+                        </td>
 
-                    <td>
-                        <button type="button" class="btn btn-block" onclick="swap('hasAttributes','hasntAttributes')"><i class="glyphicon glyphicon-chevron-right"></i></button><br/>
-                        <br/>
-                        <button type="button" class="btn btn-block" onclick="swap('hasntAttributes','hasAttributes')"><i class="glyphicon glyphicon-chevron-left"></i></buton><br/>
-                    </td>
+                        <td>
+                            <button type="button" class="btn btn-block" onclick="swap('hasAttributes','hasntAttributes')"><i class="glyphicon glyphicon-chevron-right"></i></button><br/>
+                            <br/>
+                            <button type="button" class="btn btn-block" onclick="swap('hasntAttributes','hasAttributes')"><i class="glyphicon glyphicon-chevron-left"></i></buton><br/>
+                        </td>
 
-                    <td>
-                        <b>Is Not</b><br/>
-                        <?php echo $select2; ?>
-                    </td>
-                </tr>
-            </table>
+                        <td>
+                            <b>Is Not</b><br/>
+                            <?php echo $select2; ?>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <br/>
-            <input type="submit" value="Submit" />
+            <input type="submit" class="btn btn-common" value="Submit" />
         </form>
 <?php
 	require '../security/footerInclude.php';

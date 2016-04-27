@@ -38,44 +38,47 @@
     <h2>Modify User</h2>
 
     <form action="../security/index.php?action=SecurityProcessUserAddEdit" method="post" onsubmit="selectAll('hasAttributes')">
+        <div class="col-md-12">
+            <div class="form-group col-md-3"> 
+                <input type="hidden" name="UserID" value="<?php echo $id; ?>"/>
 
-        <input type="hidden" name="UserID" value="<?php echo $id; ?>"/>
+                First Name: <input type="text" name="FirstName" size="20" class="form-control" value="<?php echo $firstName; ?>" autofocus required ><br/>
 
-        First Name: <input type="text" name="FirstName" size="20" value="<?php echo $firstName; ?>" autofocus required ><br/>
+                Last Name: <input type="text" name="LastName" size="20" class="form-control" value="<?php echo $lastName; ?>"><br/>
 
-        Last Name: <input type="text" name="LastName" size="20" value="<?php echo $lastName; ?>"><br/>
+                User Name: <input type="text" name="UserName" size="20" class="form-control" value="<?php echo $userName; ?>"><br/>
 
-        User Name: <input type="text" name="UserName" size="20" value="<?php echo $userName; ?>"><br/>
+                Password: <input type="password" name="Password" size="20" class="form-control" value=""> <br/>
 
-        Password: <input type="password" name="Password" size="20" value=""> <br/>
+                Email: <input type="text" name="Email" size="20" class="form-control" value="<?php echo $email; ?>"><br/>
+            </div>
+        </div>
+        <div>
+            <table>
 
-        Email: <input type="text" name="Email" size="20" value="<?php echo $email; ?>"><br/>
+                <tr>
+                    <td>
+                        <b>Is</b><br/>
+                        <?php echo $select1; ?>
+                    </td>
 
-        <table>
+                    <td>
+                        <button type="button" class="btn btn-block" onclick="swap('hasAttributes','hasntAttributes')"><i class="glyphicon glyphicon-chevron-right"></i></button><br/>
+                        <br/>
+                        <button type="button" class="btn btn-block" onclick="swap('hasntAttributes','hasAttributes')"><i class="glyphicon glyphicon-chevron-left"></i></button><br/>
+                    </td>
 
-            <tr>
-                <td>
-                    <b>Is</b><br/>
-                    <?php echo $select1; ?>
-                </td>
+                    <td>
+                        <b>Is Not</b><br/>
+                        <?php echo $select2; ?>
+                    </td>
+                </tr>
 
-                <td>
-                    <button type="button" class="btn btn-block" onclick="swap('hasAttributes','hasntAttributes')"><i class="glyphicon glyphicon-chevron-right"></i></button><br/>
-                    <br/>
-                    <button type="button" class="btn btn-block" onclick="swap('hasntAttributes','hasAttributes')"><i class="glyphicon glyphicon-chevron-left"></i></button><br/>
-                </td>
-
-                <td>
-                    <b>Is Not</b><br/>
-                    <?php echo $select2; ?>
-                </td>
-            </tr>
-
-        </table>
-
+            </table>
+        </div>
         <br/>
 
-        <input type="submit" value="Submit" />
+        <input type="submit" class="btn btn-common" value="Submit" />
 
     </form>
 
