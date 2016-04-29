@@ -5,7 +5,7 @@
    error_reporting(0); // Needed put in for LocalHost    
 ?>
 <script src="../js/locationCompare.js"></script>
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
+
     
     <section id="portfolio-information">
         <div class="container" id='body'>
@@ -59,7 +59,7 @@
                         <a href="../controller/controller.php?action=EditEvent&amp;EventID=<?php echo $EventID ?>&amp;VenueID=<?php echo $VenueID ?>" role="button" class="btn btn-common uppercase">Edit Event</a>
                      <?php } ?>
                      <?php if(userIsAuthorized("AddEvent")) { //If a user can add events, they should be allowed to delete them?>
-                     <button role="button" class="btn btn-common uppercase" onclick="">Delete Event</button>
+                     <button role="button" class="btn btn-common uppercase" onclick="deleteEvent();">Delete Event</button>
                      <?php } ?>
                     </div>
                 </div>
@@ -73,9 +73,7 @@
             // Call Begin Check In -> Checks Times of the Event
                 // IF True will authorize email  -- False error and Redirect
                     // IF Good will check location -- False error and Redirect
-                        // If Good will allow post users selected classes to DB --False Error and Redirect
-        
-            
+                        // If Good will allow post users selected classes to DB --False Error and Redirect      
       function beginCheckIn(){
             var start = $('#startTime').html();
             var eventDate = $('#eventDateNoFormat').html();
@@ -130,7 +128,17 @@
             }
 
              });
-       }     
+       }  
+       
+        function deleteEvent(){
+          var eventId = $('#eventId').html();
+          //console.log(event);
+          $.post('../model/deleteSingleEventAjax.php',{'event':eventId},function(response){ 
+                    console.log(response);
+                    window.location.assign("../controller/controller.php?action=Home");
+                });
+          
+      } 
         var selectedClasses = [];
     </script>
 <?php

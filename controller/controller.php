@@ -124,6 +124,7 @@ if (isset($_POST['action'])) {  // check get and post
         $EventDate = date('m/d/y');
         $allClasses = getClassList();
         $venue = getVenueOptions();
+        $VenueID = '';
 
         include '../view/modifyEvent.php';
     }

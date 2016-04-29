@@ -139,7 +139,7 @@
 <!--                        <button role="button" class="btn btn-common uppercase" onclick='createNewEvent();'>Save Event</button>-->
                         <button role="button" class="btn btn-common uppercase" onclick='createNewEvent();'>Save Event</button>
                         <?php if(userIsAuthorized('AddEvent') && $mode ==='Edit') { ?>
-                        <button role="button" class="btn btn-common uppercase" onclick="">Delete Event</button>
+                        <button role="button" class="btn btn-common uppercase" onclick="deleteEvent();">Delete Event</button>
                         <?php } ?>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
          return eventInfo;
      } 
      
-       function createNewEvent(){
+     function createNewEvent(){
         var eventIdCheck = $('#eventIdCheck').html();
         console.log(eventIdCheck);
         var classList = JSON.stringify(addClassList());
@@ -204,8 +204,17 @@
              var event = response;
              var venue = $('#venue').val();
              window.location.assign("../controller/controller.php?action=EventDetails&EventID="+event+"&VenueID="+venue+"");
-            });        
+            });      
     }
+    function deleteEvent(){
+          var eventId = $('#eventId').html();
+          //console.log(event);
+          $.post('../model/deleteSingleEventAjax.php',{'event':eventId},function(response){ 
+                    console.log(response);
+                    window.location.assign("../controller/controller.php?action=Home");
+                });
+          
+      } 
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>

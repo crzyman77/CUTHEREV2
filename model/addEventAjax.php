@@ -52,8 +52,8 @@ else{ //Old Event, so lets edit it
 
         //Get new instructor id
         $instructor_id = insertInstructor($instName, $instEmail);
-
-        $instructor = $instructor_id[0];
+        //print_r($instructor_id);
+        $instructor = $instructor_id;
         $newEventId = $eventId;
         addNewEligibleClassesForEvent($class_num, $class_sec, $class_name, $instructor, $newEventId);
     }

@@ -23,14 +23,6 @@
     <section id="portfolio-information" class="padding-top padding-bottom">
         <div class="container padding-bottom">
             <div class="row">
-                <!-- CG: Just Was Printing out for test purposes, feel free to delete whenver -->
-                <?php 
-                        
-                        //print_r($_SESSION);
-                       //print_r($_SESSION['preferred_username']);
-                       //print_r($_SESSION['user_name']);
-                        
-                        ?>
                 <h2> Welcome </h2>
                 <table id="eventsTable" class="table table-hover table-bordered table-responsive">
                     <thead>
@@ -71,15 +63,16 @@
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
             });
+            bindEvents();
             
         });
 
         
         function bindEvents() {
             jQuery(".deleteEventButton").click(function(e){
-                //alert(e);
+               // alert(e);
                 var eventId = $('.eventRow').data("event");
-                alert(eventId);
+               // alert(eventId);
                 $.post('../model/deleteSingleEventAjax.php',{'event':eventId},function(response){ 
                     console.log(response);
                 });

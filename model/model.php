@@ -140,8 +140,7 @@ if(!isset($_SESSION))
         
         function deleteClasses($eventID){
             $db = getDBConnection();
-            $query = 'DELETE FROM class 
-                        WHERE event_id = :eventID';
+            $query = 'DELETE FROM class WHERE event_id = :eventID';
             $statement = $db -> prepare($query);
             $statement -> bindValue(':eventID',$eventID); 
             $success = $statement ->execute();
@@ -157,8 +156,7 @@ if(!isset($_SESSION))
         function deleteEvent($eventID){
             deleteClasses($eventID);
             $db = getDBConnection();
-            $query = 'DELETE FROM event 
-                        WHERE id = :eventID';
+            $query = 'DELETE FROM event WHERE id = :eventID';
             $statement = $db -> prepare($query);
             $statement -> bindValue(':eventID',$eventID); 
             $success = $statement ->execute();

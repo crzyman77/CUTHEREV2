@@ -1,6 +1,8 @@
 <?php
 require_once '../model/model.php';
-$eventIdToDelete = $_POST['event'];
- print_r($eventIdToDelete);
- deleteEvent($eventIdToDelete);
 
+//error_reporting();
+$eventIdToDelete = $_POST['event'];
+ //print_r($eventIdToDelete);
+ $return = deleteEvent($eventIdToDelete);
+print_r($return);
